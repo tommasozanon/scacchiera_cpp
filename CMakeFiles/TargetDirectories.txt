@@ -1,0 +1,7 @@
+/home/giulio/scacchiera_cpp/CMakeFiles/rebuild_cache.dir
+/home/giulio/scacchiera_cpp/CMakeFiles/edit_cache.dir
+/home/giulio/scacchiera_cpp/CMakeFiles/Main.dir
+/home/giulio/scacchiera_cpp/CMakeFiles/Pawn7.dir
+/home/giulio/scacchiera_cpp/CMakeFiles/Rook.dir
+/home/giulio/scacchiera_cpp/CMakeFiles/Board.dir
+/home/giulio/scacchiera_cpp/CMakeFiles/Pawn2.dir

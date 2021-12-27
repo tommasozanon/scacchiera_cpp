@@ -1,23 +1,22 @@
-#ifndef PAWN2_H
-#define PAWN2_H
+#ifndef ROOK_H
+#define ROOK_H
 
 #include "Piece.h"
 #include <vector>
-
-class Pawn2 : public Piece {
-  protected:
+class Rook: public Piece{
+	
+private:
     std::vector<short> position;
     bool first_move = true;
-    //int value = 1;
+    //int value = 5;
     char repr;
 	int colour;
 
 public:
-	Pawn2(short pos[2], int clr);
+	Rook(short pos[2], int clr);
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position();
+
 };
-
-
 #endif
