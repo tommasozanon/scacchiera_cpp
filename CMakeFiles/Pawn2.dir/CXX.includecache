@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/giulio/scacchiera_cpp/pieces/Pawn2.cpp
+Pawn2.h
+/home/giulio/scacchiera_cpp/pieces/Pawn2.h
+vector
+-
+
+/home/giulio/scacchiera_cpp/pieces/Pawn2.h
+Piece.h
+/home/giulio/scacchiera_cpp/pieces/Piece.h
+vector
+-
+
+/home/giulio/scacchiera_cpp/pieces/Piece.h
+vector
+-
+

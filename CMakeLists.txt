@@ -7,6 +7,11 @@ pieces/Pawn2.h
 pieces/Pawn2.cpp
 )
 
+add_library(Rook
+pieces/Rook.h
+pieces/Rook.cpp
+)
+
 add_library(Pawn7
 pieces/Pawn7.h
 pieces/Pawn7.cpp
@@ -19,4 +24,11 @@ Board.cpp
 
 add_executable(Main
 main.cpp
+)
+
+target_link_libraries(Main
+Board
+Rook
+Pawn7
+Pawn2
 )

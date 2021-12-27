@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPawn2.a CMakeFiles/Pawn2.dir/pieces/Pawn2.cpp.o
+/usr/bin/ranlib libPawn2.a
