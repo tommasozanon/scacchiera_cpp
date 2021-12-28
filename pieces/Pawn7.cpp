@@ -17,9 +17,3 @@ std::vector<std::vector<short>> Pawn7::get_allowed_moves() {
 std::vector<short> Pawn7::get_position() {
     return position;
 }
-
-Pawn7::Pawn7(short pos[2], int clr) : position{pos[0], pos[1]} {
-	colour=clr;
-	if (colour==0) {repr='p';}
-	else {repr='P';}
-}
