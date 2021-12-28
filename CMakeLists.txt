@@ -17,6 +17,11 @@ pieces/Bishop.h
 pieces/Bishop.cpp
 )
 
+add_library(Queen
+pieces/Queen.h
+pieces/Queen.cpp
+)
+
 add_library(Pawn7
 pieces/Pawn7.h
 pieces/Pawn7.cpp
@@ -37,4 +42,5 @@ Rook
 Pawn7
 Pawn2
 Bishop
+Queen
 )
