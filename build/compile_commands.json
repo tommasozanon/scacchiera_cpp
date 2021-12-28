@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/tommaso/Desktop/scacchiera_cpp/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -o CMakeFiles/Main.dir/main.cpp.o -c /home/tommaso/Desktop/scacchiera_cpp/main.cpp",
+  "file": "/home/tommaso/Desktop/scacchiera_cpp/main.cpp"
+},
+{
+  "directory": "/home/tommaso/Desktop/scacchiera_cpp/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -o CMakeFiles/Pawn7.dir/pieces/Pawn7.cpp.o -c /home/tommaso/Desktop/scacchiera_cpp/pieces/Pawn7.cpp",
+  "file": "/home/tommaso/Desktop/scacchiera_cpp/pieces/Pawn7.cpp"
+},
+{
+  "directory": "/home/tommaso/Desktop/scacchiera_cpp/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -o CMakeFiles/Bishop.dir/pieces/Bishop.cpp.o -c /home/tommaso/Desktop/scacchiera_cpp/pieces/Bishop.cpp",
+  "file": "/home/tommaso/Desktop/scacchiera_cpp/pieces/Bishop.cpp"
+},
+{
+  "directory": "/home/tommaso/Desktop/scacchiera_cpp/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -o CMakeFiles/Rook.dir/pieces/Rook.cpp.o -c /home/tommaso/Desktop/scacchiera_cpp/pieces/Rook.cpp",
+  "file": "/home/tommaso/Desktop/scacchiera_cpp/pieces/Rook.cpp"
+},
+{
+  "directory": "/home/tommaso/Desktop/scacchiera_cpp/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -o CMakeFiles/Board.dir/Board.cpp.o -c /home/tommaso/Desktop/scacchiera_cpp/Board.cpp",
+  "file": "/home/tommaso/Desktop/scacchiera_cpp/Board.cpp"
+},
+{
+  "directory": "/home/tommaso/Desktop/scacchiera_cpp/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -o CMakeFiles/Pawn2.dir/pieces/Pawn2.cpp.o -c /home/tommaso/Desktop/scacchiera_cpp/pieces/Pawn2.cpp",
+  "file": "/home/tommaso/Desktop/scacchiera_cpp/pieces/Pawn2.cpp"
+}
+]

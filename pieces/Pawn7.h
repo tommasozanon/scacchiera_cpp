@@ -18,6 +18,11 @@ class Pawn7 : public Piece {
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position();
+
+    void set_pos(short pos[2]) {
+        position[0] = pos[0];
+        position[1] = pos[1];
+    };
 };
 
 #endif

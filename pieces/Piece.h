@@ -8,11 +8,6 @@ class Piece {
     Piece(const Piece&) = delete;
     Piece& operator=(Piece const&);
 
-    void set_pos(short pos[2]) {
-        position[0] = pos[0];
-        position[1] = pos[1];
-    };
-
   protected:
     std::vector<short> position;
     bool first_move = true;
@@ -35,12 +30,9 @@ class Piece {
     */
     virtual char to_char() = 0;
 
-    /*
-    salva nella variabile repr il carattere del pezzo
-    */
-    virtual void set_char(char) = 0;
-
     //~Piece(){};
+
+    virtual void set_pos(short[2]) = 0;
 };
 
 #endif

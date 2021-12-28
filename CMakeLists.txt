@@ -12,6 +12,11 @@ pieces/Rook.h
 pieces/Rook.cpp
 )
 
+add_library(Bishop
+pieces/Bishop.h
+pieces/Bishop.cpp
+)
+
 add_library(Pawn7
 pieces/Pawn7.h
 pieces/Pawn7.cpp
@@ -31,4 +36,5 @@ Board
 Rook
 Pawn7
 Pawn2
+Bishop
 )
