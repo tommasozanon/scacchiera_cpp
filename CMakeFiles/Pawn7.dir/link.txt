@@ -1,2 +1,0 @@
-/usr/bin/ar qc libPawn7.a CMakeFiles/Pawn7.dir/pieces/Pawn7.cpp.o
-/usr/bin/ranlib libPawn7.a

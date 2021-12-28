@@ -1,2 +1,0 @@
-/usr/bin/ar qc libPosition.a CMakeFiles/Position.dir/Position.cpp.o
-/usr/bin/ranlib libPosition.a
