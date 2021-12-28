@@ -1,7 +1,9 @@
 #include "Board.h"
+#include <iostream>
 
 int main() {
-    Board b();
+    Board b;
+
     // b.print();
     return 0;
 }

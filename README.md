@@ -1,6 +1,6 @@
 # scacchiera_cpp
 
-##Da fare:
+## Da fare:
 
 - pieces/Rook.h
 - pieces/Rook.cpp

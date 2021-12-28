@@ -16,6 +16,7 @@ class Pawn2 : public Piece {
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position();
+    char to_char() { return repr; }
 };
 
 #endif
