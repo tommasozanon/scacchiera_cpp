@@ -15,18 +15,49 @@ char names_white[]{'T', 'C', 'A', 'D', 'R', 'A', 'C', 'T', 'P'};
 char names_black[]{'t', 'c', 'a', 'd', 'r', 'a', 'c', 't', 'p'};
 
 Board::Board() {
+    std::vector<std::vector<std::shared_ptr<Piece>>> board(8);
+    std::shared_ptr<Piece> p = ;
+    for (short x = 0; x < 8; x++) {
+        for (short y = 0; y < 8; y++) {
+            board[x].push_back(p);
+        }
+    }
+    std::cout << board[0][6];
+    Board::initialize_board();
+}
+
+void Board::print() {
+    std::cout << "print" << std::endl;
     /*
+    auto p = white[1];
+    std::cout << p->to_char();
+
+
+    for (short row = 0; row < 8; row++) {
+        for (short col = 0; col < 8; col++) {
+            // std::cout << board[row][col];
+
+            if (board[row][col] != nullptr)
+                std::cout << board[row][col]->to_char() << " | ";
+        }
+        std::cout << std::endl;
+    }
+    */
+}
+
+void Board::initialize_board() {
     srand(time(NULL));
     int random = rand() % 2;
+    random = 0;
     if (random == 0) {
         short x = 0;
         for (short y = 0; y < 8; y++) {
             short pos[2]{x, y};
-
             switch (names_white[y]) {
-            case 'T':
+            case 'T': {
                 white.push_back(std::shared_ptr<Piece>(new Rook(pos, names_white[y])));
                 break;
+            }
             case 'C':
                 white.push_back(std::shared_ptr<Piece>(new Knight(pos, names_white[y])));
                 break;
@@ -40,74 +71,44 @@ Board::Board() {
                 white.push_back(std::shared_ptr<Piece>(new King(pos, names_white[y])));
                 break;
             }
+            board[x][y] = white.back();
         }
         x = 1;
         for (short y = 0; y < 8; y++) {
             short pos[2]{x, y};
-            white.push_back(std::shared_ptr<Piece>(new Rook(pos, names_white[8])));
+            white.push_back(std::shared_ptr<Piece>(new Pawn2(pos, names_white[8])));
         }
+        x = 7;
+        for (short y = 0; y < 8; y++) {
+            short pos[2]{x, y};
 
-
-    short x = 7;
-    for (short y = 0; y < 8; y++) {
-        short pos[2]{x, y};
-
-        switch (names_black[y]) {
-        case 'T': {
-            Rook R(pos, names_black[y]);
-            black.push_back(&R);
-            break;
+            switch (names_white[y]) {
+            case 't':
+                black.push_back(std::shared_ptr<Piece>(new Rook(pos, names_black[y])));
+                break;
+            case 'c':
+                black.push_back(std::shared_ptr<Piece>(new Knight(pos, names_black[y])));
+                break;
+            case 'a':
+                black.push_back(std::shared_ptr<Piece>(new Rook(pos, names_black[y])));
+                break;
+            case 'd':
+                black.push_back(std::shared_ptr<Piece>(new Queen(pos, names_black[y])));
+                break;
+            case 'r':
+                black.push_back(std::shared_ptr<Piece>(new King(pos, names_black[y])));
+                break;
+            }
         }
-        case 'C': {
-            Knight C(pos, names_black[y]);
-            black.push_back(&C);
-            break;
+        x = 6;
+        for (short y = 0; y < 8; y++) {
+            short pos[2]{x, y};
+            black.push_back(std::shared_ptr<Piece>(new Pawn7(pos, names_white[8])));
         }
-        case 'A': {
-            Bishop B(pos, names_black[y]);
-            black.push_back(&B);
-            break;
-        }
-        case 'D': {
-            Queen Q(pos, names_black[y]);
-            black.push_back(&Q);
-            break;
-        }
-        case 'R': {
-            King K(pos, names_black[y]);
-            black.push_back(&K);
-            break;
-        }
-        }
-        board[x][y] = black.back();
-    }
-    x = 8;
-    for (short y = 0; y < 8; y++) {
-        short pos[2]{x, y};
-        Pawn7 P(pos, names_black[8]);
-        black.push_back(&P);
-        board[x][y] = black.back();
-    }
-}
-    */
-    // white in basso 1,2
-    // black in alto 7,8
-    /*
-    else {
+        // std::cout << board.size();
+        // white in basso 1,2
+        // black in alto 7,8
+    } else {
         exit;
     }
-*/
-}
-
-void Board::print() {
-    std::cout << "print" << std::endl;
-    /*
-    for (short row = 0; row < 8; row++) {
-        for (short col = 0; col < 8; col++) {
-            if (board[row][col] != nullptr)
-                std::cout << board[row][col]->to_char() << " | ";
-        }
-        std::cout << std::endl;
-    }
-    */
 }

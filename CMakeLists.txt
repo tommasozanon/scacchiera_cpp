@@ -42,11 +42,11 @@ Board.h
 Board.cpp
 )
 
-add_executable(Main
+add_executable(main
 main.cpp
 )
 
-target_link_libraries(Main
+target_link_libraries(main
 Board
 Rook
 Pawn7
