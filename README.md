@@ -2,10 +2,7 @@
 
 ## Da fare:
 
-- pieces/Knight.h
-- pieces/Knight.cpp
-- pieces/King.h
-- pieces/King.cpp
+- rappresentazione visiva di board
 
 ## Fatti:
 
@@ -15,6 +12,10 @@
 - pieces/Bishop.cpp
 - pieces/Queen.h
 - pieces/Queen.cpp
+- pieces/Knight.h
+- pieces/Knight.cpp
+- pieces/King.h
+- pieces/King.cpp
 
 ## Idee di Tommaso
 
