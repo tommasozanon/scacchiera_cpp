@@ -12,7 +12,7 @@ class Pawn7 : public Piece {
     char repr;
 
   public:
-    Pawn7(short pos[2]) : position{pos[0], pos[1]}, repr{'p'} {};
+    Pawn7(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
 
     char to_char() { return repr; }
 

@@ -2,10 +2,10 @@
 #include <iostream>
 #include <vector>
 
-#include "pieces/Queen.h"
+#include "pieces/King.h"
 int main() {
-    short pos[2]{0, 0};
-    Queen r(pos, 'B');
+    short pos[2]{3, 3};
+    King r(pos, 'B');
     std::vector<std::vector<short>> all_pos = r.get_allowed_moves();
 
     for (int i = 0; i < all_pos.size(); i++) {

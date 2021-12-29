@@ -12,7 +12,7 @@ class Pawn2 : public Piece {
     char repr;
 
   public:
-    Pawn2(short pos[2]) : position{pos[0], pos[1]}, repr{'P'} {};
+    Pawn2(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position();

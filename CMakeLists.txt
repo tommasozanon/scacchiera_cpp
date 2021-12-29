@@ -27,6 +27,16 @@ pieces/Pawn7.h
 pieces/Pawn7.cpp
 )
 
+add_library(Knight
+pieces/Knight.h
+pieces/Knight.cpp
+)
+
+add_library(King
+pieces/King.h
+pieces/King.cpp
+)
+
 add_library(Board
 Board.h
 Board.cpp
@@ -43,4 +53,6 @@ Pawn7
 Pawn2
 Bishop
 Queen
+Knight
+King
 )

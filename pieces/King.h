@@ -1,19 +1,19 @@
-#ifndef QUEEN_H
-#define QUEEN_H
+#ifndef KING_H
+#define KING_H
 
 #include "Piece.h"
 #include <vector>
-class Queen : public Piece {
+class King : public Piece {
 
   private:
     std::vector<short> position;
     bool first_move = true;
-    // int value = 9;
+    // int value = 0;
     char repr;
     int colour;
 
   public:
-    Queen(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+    King(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };

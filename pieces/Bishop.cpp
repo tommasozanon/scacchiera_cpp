@@ -5,7 +5,7 @@ std::vector<std::vector<short>> Bishop::get_allowed_moves() {
     const std::vector<short> pos{Bishop::get_position()};
 
     std::vector<std::vector<short>> allowed_moves;
-    std::vector<short> all_p{0, 1};
+    std::vector<short> all_p{0, 2};
 
     for (short i = 1; i < 8; i++) {
         if (pos[0] + i < 8 && pos[1] + i < 8) {
