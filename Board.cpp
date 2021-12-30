@@ -16,7 +16,7 @@ char names_black[]{'t', 'c', 'a', 'd', 'r', 'a', 'c', 't', 'p'};
 
 Board::Board() {
     std::vector<std::vector<std::shared_ptr<Piece>>> board(8);
-    std::shared_ptr<Piece> p = ;
+    std::shared_ptr<Piece> p;
     for (short x = 0; x < 8; x++) {
         for (short y = 0; y < 8; y++) {
             board[x].push_back(p);
