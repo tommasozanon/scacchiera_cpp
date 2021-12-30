@@ -1,21 +1,22 @@
-#ifndef PAWN2_H
-#define PAWN2_H
+#ifndef BISHOP_H
+#define BISHOP_H
 
 #include "Piece.h"
 #include <vector>
+class Bishop : public Piece {
 
-class Pawn2 : public Piece {
-  protected:
+  private:
     std::vector<short> position;
     bool first_move = true;
-    int value = 1;
+    // int value = 3;
     char repr;
+    int colour;
 
   public:
-    Pawn2(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+    Bishop(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
 
     std::vector<std::vector<short>> get_allowed_moves();
-    std::vector<short> get_position();
+    std::vector<short> get_position() { return position; };
     char to_char() { return repr; }
 
     void set_pos(short pos[2]) {
