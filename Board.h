@@ -16,7 +16,7 @@ class Board {
   public:
     Board();
     // solo per ricordarmi, poi va implementato tutto nel cpp
-
+	
     void print();
 };
 
