@@ -12,6 +12,9 @@ class Piece {
     */
     virtual char to_char() = 0;
 
+    /*
+    permette di impostare una nuova posizione
+    */
     virtual void set_pos(short[2]) = 0;
 
     /*
