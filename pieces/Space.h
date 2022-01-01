@@ -1,9 +1,9 @@
-#ifndef KING_H
-#define KING_H
+#ifndef SPACE_H
+#define SPACE_H
 
 #include "Piece.h"
 #include <vector>
-class King : public Piece {
+class Space : public Piece {
 
   private:
     std::vector<short> position;
@@ -12,7 +12,7 @@ class King : public Piece {
     char repr;
 
   public:
-    King(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+    Space(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
@@ -23,4 +23,5 @@ class King : public Piece {
         position[1] = pos[1];
     };
 };
+
 #endif

@@ -11,7 +11,12 @@ class Board {
     std::vector<std::shared_ptr<Piece>> black;
     std::vector<std::vector<std::shared_ptr<Piece>>> board;
 
-    void initialize_board();
+    /*
+    ehh, qua è un po' difficile. In input prende la posizione dei pezzi che non sono pedoni dei bianchi e dei
+    neri e facciamo che se avete qualche domanda ci sentiamo una volta su discord che è complicata la questione
+    Se volete semplificare... smack
+    */
+    void initialize_board(int, int);
 
   public:
     Board();
