@@ -10,7 +10,6 @@ class Queen : public Piece {
     bool first_move = true;
     // int value = 9;
     char repr;
-    int colour;
 
   public:
     Queen(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};

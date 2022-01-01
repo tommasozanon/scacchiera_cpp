@@ -10,7 +10,6 @@ class Knight : public Piece {
     bool first_move = true;
     // int value = 3;
     char repr;
-    int colour;
 
   public:
     Knight(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};

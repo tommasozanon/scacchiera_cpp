@@ -37,10 +37,17 @@ pieces/King.h
 pieces/King.cpp
 )
 
+add_library(Space
+pieces/Space.h
+pieces/Space.cpp
+)
+
+
 add_library(Board
 Board.h
 Board.cpp
 )
+
 
 add_executable(main
 main.cpp
@@ -55,4 +62,5 @@ Bishop
 Queen
 Knight
 King
+Space
 )

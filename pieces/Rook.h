@@ -10,7 +10,6 @@ class Rook : public Piece {
     bool first_move = true;
     // int value = 5;
     char repr;
-    int colour;
 
   public:
     Rook(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
