@@ -5,7 +5,8 @@
 #include <vector>
 class Queen : public Piece {
 
-  private:
+	//variabili d'istanza
+private:
     std::vector<short> position;
     bool first_move = true;
     // int value = 9;

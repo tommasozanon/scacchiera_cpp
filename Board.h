@@ -20,7 +20,7 @@ class Board {
   public:
     Board();
     // solo per ricordarmi, poi va implementato tutto nel cpp
-
+	
     void print();
     std::vector<std::vector<std::shared_ptr<Piece>>> board;
 };

@@ -118,3 +118,5 @@ void Board::initialize_board(int white_n, int black_n) {
         board[x][y] = black.back();
     }
 }
+
+
