@@ -4,9 +4,9 @@
 #include "Piece.h"
 #include <vector>
 
-class Pawn7 : public Piece {
-	//variabili d'istanza
-protected:
+class Pawn6 : public Piece {
+    // variabili d'istanza
+  protected:
     std::vector<short> position;
     bool first_move = true;
     int value = 1;
@@ -14,9 +14,9 @@ protected:
     int color;
 
   public:
-    Pawn7(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
+    Pawn6(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
-	//Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
+    // Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
     char to_char() { return repr; }
 
     std::vector<std::vector<short>> get_allowed_moves();

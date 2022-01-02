@@ -2,8 +2,8 @@
 #include "pieces/Bishop.h"
 #include "pieces/King.h"
 #include "pieces/Knight.h"
-#include "pieces/Pawn2.h"
-#include "pieces/Pawn7.h"
+#include "pieces/Pawn1.h"
+#include "pieces/Pawn6.h"
 #include "pieces/Queen.h"
 #include "pieces/Rook.h"
 #include "pieces/Space.h"
@@ -16,7 +16,6 @@ char names_white[]{'T', 'C', 'A', 'D', 'R', 'A', 'C', 'T', 'P'};
 char names_black[]{'t', 'c', 'a', 'd', 'r', 'a', 'c', 't', 'p'};
 
 Board::Board() {
-    std::shared_ptr<Piece> p;
     for (short x = 0; x < 8; x++) {
         board.push_back(std::vector<std::shared_ptr<Piece>>());
         for (short y = 0; y < 8; y++) {
@@ -24,7 +23,6 @@ Board::Board() {
             board[x].push_back(std::shared_ptr<Piece>(new Space(pos, ' ')));
         }
     }
-
     srand(time(NULL));
     int random = rand() % 2;
     if (random == 0) {
@@ -35,22 +33,22 @@ Board::Board() {
 }
 
 void Board::print() {
-    short row_n = 1;
+    short row_n = 8;
     for (short row = 7; row >= 0; row--) {
-        std::cout << row_n++ << " ";
-        for (short col = 7; col >= 0; col--) {
+        std::cout << row_n-- << " |";
+        for (short col = 0; col < 8; col++) {
             if (board[row][col] != nullptr)
                 std::cout << board[row][col]->to_char() << "|";
         }
         std::cout << std::endl;
         std::cout << "  ";
 
-        for (short i = 0; i < 16; i++) {
+        for (short i = 0; i <= 16; i++) {
             std::cout << "-";
         }
         std::cout << std::endl;
     }
-    std::cout << "  ";
+    std::cout << "   ";
     for (short i = 97; i <= 104; i++) {
         std::cout << (char)i << " ";
     }
@@ -58,8 +56,8 @@ void Board::print() {
 }
 
 void Board::initialize_board(int white_n, int black_n) {
-    short x;
-    white_n == 0 ? x = 0 : x = 7;
+    short x = white_n;
+
     for (short y = 0; y < 8; y++) {
         short pos[2]{x, y};
         switch (names_white[y]) {
@@ -71,7 +69,7 @@ void Board::initialize_board(int white_n, int black_n) {
             white.push_back(std::shared_ptr<Piece>(new Knight(pos, names_white[y], 0)));
             break;
         case 'A':
-            white.push_back(std::shared_ptr<Piece>(new Rook(pos, names_white[y], 0)));
+            white.push_back(std::shared_ptr<Piece>(new Bishop(pos, names_white[y], 0)));
             break;
         case 'D':
             white.push_back(std::shared_ptr<Piece>(new Queen(pos, names_white[y], 0)));
@@ -83,12 +81,21 @@ void Board::initialize_board(int white_n, int black_n) {
         board[x][y] = white.back();
     }
     white_n == 0 ? x = 1 : x = 6;
-    for (short y = 0; y < 8; y++) {
-        short pos[2]{x, y};
-        white.push_back(std::shared_ptr<Piece>(new Pawn2(pos, names_white[8], 0)));
-        board[x][y] = white.back();
+    if (x == 1) {
+        for (short y = 0; y < 8; y++) {
+            short pos[2]{x, y};
+            white.push_back(std::shared_ptr<Piece>(new Pawn1(pos, names_white[8], 0)));
+            board[x][y] = white.back();
+        }
+    } else {
+        for (short y = 0; y < 8; y++) {
+            short pos[2]{x, y};
+            white.push_back(std::shared_ptr<Piece>(new Pawn6(pos, names_white[8], 0)));
+            board[x][y] = white.back();
+        }
     }
-    black_n == 0 ? x = 0 : x = 7;
+
+    x = black_n;
     for (short y = 0; y < 8; y++) {
         short pos[2]{x, y};
 
@@ -100,7 +107,7 @@ void Board::initialize_board(int white_n, int black_n) {
             black.push_back(std::shared_ptr<Piece>(new Knight(pos, names_black[y], 1)));
             break;
         case 'a':
-            black.push_back(std::shared_ptr<Piece>(new Rook(pos, names_black[y], 1)));
+            black.push_back(std::shared_ptr<Piece>(new Bishop(pos, names_black[y], 1)));
             break;
         case 'd':
             black.push_back(std::shared_ptr<Piece>(new Queen(pos, names_black[y], 1)));
@@ -112,11 +119,17 @@ void Board::initialize_board(int white_n, int black_n) {
         board[x][y] = black.back();
     }
     black_n == 0 ? x = 1 : x = 6;
-    for (short y = 0; y < 8; y++) {
-        short pos[2]{x, y};
-        black.push_back(std::shared_ptr<Piece>(new Pawn7(pos, names_black[8], 1)));
-        board[x][y] = black.back();
+    if (x == 1) {
+        for (short y = 0; y < 8; y++) {
+            short pos[2]{x, y};
+            black.push_back(std::shared_ptr<Piece>(new Pawn1(pos, names_black[8], 1)));
+            board[x][y] = black.back();
+        }
+    } else {
+        for (short y = 0; y < 8; y++) {
+            short pos[2]{x, y};
+            black.push_back(std::shared_ptr<Piece>(new Pawn6(pos, names_black[8], 1)));
+            board[x][y] = black.back();
+        }
     }
 }
-
-

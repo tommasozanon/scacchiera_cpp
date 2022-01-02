@@ -1,7 +1,7 @@
-#include "Pawn2.h"
+#include "Pawn1.h"
 #include <vector>
 
-std::vector<std::vector<short>> Pawn2::get_allowed_moves() {
+std::vector<std::vector<short>> Pawn1::get_allowed_moves() {
     std::vector<std::vector<short>> list{};
     std::vector<short> move = get_position();
     move[0] += 1;
@@ -14,6 +14,6 @@ std::vector<std::vector<short>> Pawn2::get_allowed_moves() {
     return list;
 }
 
-std::vector<short> Pawn2::get_position() {
+std::vector<short> Pawn1::get_position() {
     return position;
 }
