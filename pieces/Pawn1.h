@@ -1,12 +1,12 @@
-#ifndef PAWN2_H
-#define PAWN2_H
+#ifndef PAWN1_H
+#define PAWN1_H
 
 #include "Piece.h"
 #include <vector>
 
-class Pawn2 : public Piece {
-	//variabili d'istanza
-protected:
+class Pawn1 : public Piece {
+    // variabili d'istanza
+  protected:
     std::vector<short> position;
     bool first_move = true;
     int value = 1;
@@ -14,9 +14,9 @@ protected:
     int color;
 
   public:
-    Pawn2(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
+    Pawn1(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
-	//Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
+    // Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position();
     char to_char() { return repr; }

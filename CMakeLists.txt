@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.2)
 
 project(scacchiera_cpp)
 
-add_library(Pawn2
-pieces/Pawn2.h
-pieces/Pawn2.cpp
+add_library(Pawn1
+pieces/Pawn1.h
+pieces/Pawn1.cpp
 )
 
 add_library(Rook
@@ -22,9 +22,9 @@ pieces/Queen.h
 pieces/Queen.cpp
 )
 
-add_library(Pawn7
-pieces/Pawn7.h
-pieces/Pawn7.cpp
+add_library(Pawn6
+pieces/Pawn6.h
+pieces/Pawn6.cpp
 )
 
 add_library(Knight
@@ -60,8 +60,8 @@ main.cpp
 target_link_libraries(main
 Board
 Rook
-Pawn7
-Pawn2
+Pawn6
+Pawn1
 Bishop
 Queen
 Knight
