@@ -30,14 +30,15 @@ class Piece {
     * output: la posizione attuale del pezzo
     */
     virtual std::vector<short> get_position() = 0;
+    virtual int get_color() = 0;
 
 //variabili d'istanza
   protected:
     std::vector<short> position;
     bool first_move = true;
-    int value = 1;
+    int value;
     char repr;
-
+    int color;
     Piece(){};
 
     //~Piece(){};

@@ -11,10 +11,10 @@ private:
     bool first_move = true;
     // int value = 3;
     char repr;
+    int color;
 
-public:
-	//Costruttore
-    Knight(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+  public:
+    Knight(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
 	//Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
     std::vector<std::vector<short>> get_allowed_moves();
@@ -25,5 +25,6 @@ public:
         position[0] = pos[0];
         position[1] = pos[1];
     };
+    int get_color() { return color; }
 };
 #endif

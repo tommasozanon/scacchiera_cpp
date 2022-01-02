@@ -11,10 +11,10 @@ protected:
     bool first_move = true;
     int value = 1;
     char repr;
+    int color;
 
-public:
-	//Costruttore
-    Pawn7(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+  public:
+    Pawn7(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
 	//Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
     char to_char() { return repr; }
@@ -26,6 +26,7 @@ public:
         position[0] = pos[0];
         position[1] = pos[1];
     };
+    int get_color() { return color; }
 };
 
 #endif

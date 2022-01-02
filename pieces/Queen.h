@@ -11,12 +11,11 @@ private:
     bool first_move = true;
     // int value = 9;
     char repr;
+    int color;
 
-public:
-	//Costruttore
-    Queen(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
-	
-	//Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
+  public:
+    Queen(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
+
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
     char to_char() { return repr; }
@@ -25,5 +24,6 @@ public:
         position[0] = pos[0];
         position[1] = pos[1];
     };
+    int get_color() { return color; }
 };
 #endif

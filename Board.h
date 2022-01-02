@@ -9,7 +9,6 @@ class Board {
   private:
     std::vector<std::shared_ptr<Piece>> white;
     std::vector<std::shared_ptr<Piece>> black;
-    std::vector<std::vector<std::shared_ptr<Piece>>> board;
 
     /*
     ehh, qua è un po' difficile. In input prende la posizione dei pezzi che non sono pedoni dei bianchi e dei
@@ -23,6 +22,7 @@ class Board {
     // solo per ricordarmi, poi va implementato tutto nel cpp
 	
     void print();
+    std::vector<std::vector<std::shared_ptr<Piece>>> board;
 };
 
 #endif

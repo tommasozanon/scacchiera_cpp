@@ -48,6 +48,10 @@ Board.h
 Board.cpp
 )
 
+add_library(get_moves
+get_moves.h
+get_moves.cpp
+)
 
 add_executable(main
 main.cpp
@@ -63,4 +67,5 @@ Queen
 Knight
 King
 Space
+get_moves
 )
