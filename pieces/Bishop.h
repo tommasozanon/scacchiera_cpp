@@ -10,9 +10,10 @@ class Bishop : public Piece {
     bool first_move = true;
     // int value = 3;
     char repr;
+    int color;
 
   public:
-    Bishop(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+    Bishop(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
@@ -22,6 +23,7 @@ class Bishop : public Piece {
         position[0] = pos[0];
         position[1] = pos[1];
     };
+    int get_color() { return color; }
 };
 
 #endif

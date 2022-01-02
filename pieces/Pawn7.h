@@ -10,9 +10,10 @@ class Pawn7 : public Piece {
     bool first_move = true;
     int value = 1;
     char repr;
+    int color;
 
   public:
-    Pawn7(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+    Pawn7(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
     char to_char() { return repr; }
 
@@ -23,6 +24,7 @@ class Pawn7 : public Piece {
         position[0] = pos[0];
         position[1] = pos[1];
     };
+    int get_color() { return color; }
 };
 
 #endif

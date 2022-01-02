@@ -22,6 +22,8 @@ class Space : public Piece {
         position[0] = pos[0];
         position[1] = pos[1];
     };
+
+    int get_color() { return -1; }
 };
 
 #endif
