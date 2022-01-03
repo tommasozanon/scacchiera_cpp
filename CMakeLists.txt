@@ -53,6 +53,12 @@ get_moves.h
 get_moves.cpp
 )
 
+add_library(special_moves
+special_moves.h
+special_moves.cpp
+)
+
+
 add_executable(main
 main.cpp
 )
@@ -68,4 +74,5 @@ Knight
 King
 Space
 get_moves
+special_moves
 )

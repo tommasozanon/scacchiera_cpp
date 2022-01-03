@@ -1,6 +1,11 @@
+#ifndef SPECIAL_MOVES_H
+#define SPECIAL_MOVES_H
+
+#include "pieces/Piece.h"
+#include <memory>
 #include <vector>
 
-bool is_check(short[2]);
+bool is_check(std::vector<short>, const std::vector<std::vector<std::shared_ptr<Piece>>>&);
 
 bool is_en_passant(short[2]);
 
@@ -14,3 +19,5 @@ bool is_pawn_attack();
 
 // da guardare in inglese lol
 bool scacco_di_scoperta();
+
+#endif

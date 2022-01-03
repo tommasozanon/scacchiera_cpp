@@ -5,23 +5,23 @@
 #include <vector>
 class Space : public Piece {
 
-	//variabili d'istanza
+    // variabili d'istanza
   private:
     std::vector<short> position;
     bool first_move = true;
     // int value = 0;
     char repr;
 
-public:
-	//Costruttore
+  public:
+    // Costruttore
     Space(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
-	
-	//Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
+
+    // Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
     char to_char() { return repr; }
 
-    void set_pos(short pos[2]) {
+    void set_pos(std::vector<short> pos) {
         position[0] = pos[0];
         position[1] = pos[1];
     };

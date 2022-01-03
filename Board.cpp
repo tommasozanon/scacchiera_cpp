@@ -133,3 +133,12 @@ void Board::initialize_board(int white_n, int black_n) {
         }
     }
 }
+
+void Board::move(std::vector<short> pos1, std::vector<short> pos2) {
+    auto piece = board[pos1[0]][pos1[1]];
+    board[pos2[0]][pos2[1]]->set_pos(pos1);
+    board[pos1[0]][pos1[1]]->set_pos(pos2);
+
+    board[pos1[0]][pos1[1]] = board[pos2[0]][pos2[1]];
+    board[pos2[0]][pos2[1]] = piece;
+}

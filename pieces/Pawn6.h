@@ -22,7 +22,7 @@ class Pawn6 : public Piece {
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position();
 
-    void set_pos(short pos[2]) {
+    void set_pos(std::vector<short> pos) {
         position[0] = pos[0];
         position[1] = pos[1];
     };
