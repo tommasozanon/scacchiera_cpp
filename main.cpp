@@ -45,7 +45,7 @@ int main() {
     pos1[0] = 0;
     pos1[1] = 4;
     pos2[0] = 0;
-    pos2[1] = 7;
+    pos2[1] = 0;
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
     return 0;
 }
