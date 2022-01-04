@@ -14,7 +14,7 @@ class Space : public Piece {
 
   public:
     // Costruttore
-    Space(short pos[2], char c) : position{pos[0], pos[1]}, repr{c} {};
+    Space(std::vector<short> pos, char c) : position{pos[0], pos[1]}, repr{c} {};
 
     // Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
     std::vector<std::vector<short>> get_allowed_moves();
