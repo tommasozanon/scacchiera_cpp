@@ -25,6 +25,7 @@ class Pawn6 : public Piece {
     void set_pos(std::vector<short> pos) {
         position[0] = pos[0];
         position[1] = pos[1];
+        first_move = false;
     };
     int get_color() { return color; }
 };
