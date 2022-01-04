@@ -27,6 +27,7 @@ class Space : public Piece {
     };
 
     int get_color() { return -1; }
+    bool is_first_move() { return first_move; }
 };
 
 #endif

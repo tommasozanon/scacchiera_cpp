@@ -145,10 +145,12 @@ void Board::move(std::vector<short> pos1, std::vector<short> pos2) {
 
         board[pos1[0]][pos1[1]] = board[pos2[0]][pos2[1]];
         board[pos2[0]][pos2[1]] = piece;
-    } else {
+    } else if (piece->get_color() != board[pos1[0]][pos1[1]]->get_color()) {
         board[pos1[0]][pos1[1]] = std::shared_ptr<Piece>(new Space(pos1, ' '));
         piece->set_pos(pos2);
 
         board[pos2[0]][pos2[1]] = piece;
+    } else {
+        std::cout << "input sbagliato: " << piece->to_char() << " -/-> " << board[pos2[0]][pos2[1]]->to_char() << "\n";
     }
 }

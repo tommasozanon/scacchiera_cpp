@@ -1,13 +1,13 @@
 #include "pieces/Piece.h"
+#include <cctype>
 #include <iostream>
 #include <memory>
 #include <vector>
-
 /*
- *input: la casella sulla quale bisogna eseguire la verifica dello scacco, la scacchiera
+ *input: la casella sulla quale bisogna eseguire la verifica dello scacco, la scacchiera, il colore dei pezzi che stanno facendo la verifica
  *output: vero se c'è scacco, falso altrimenti
  */
-bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_ptr<Piece>>>& board) {
+bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_ptr<Piece>>>& board, short my_color) {
     std::vector<std::vector<short>> allowed_moves;
     std::vector<short> all_p{0, 0};
     // check sulle righe e colonne (movimento della torre)
@@ -169,11 +169,34 @@ bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_
 
         while (a < piece_moves.size()) {
 
-            if (piece_moves[a][0] == pos[0] && piece_moves[a][1] == pos[1]) {
+            if (piece_moves[a][0] == pos[0] && piece_moves[a][1] == pos[1] && piece->get_color() != my_color) {
                 return true;
             }
             a++;
         }
     }
     return false;
+}
+
+bool is_castling(std::vector<short> pos_king, std::vector<short> pos_rook, const std::vector<std::vector<std::shared_ptr<Piece>>>& board) {
+    if (std::tolower(board[pos_king[0]][pos_king[1]]->to_char()) != 'r' && std::tolower(board[pos_rook[0]][pos_rook[1]]->to_char()) != 't') {
+        return false;
+    } else if (board[pos_king[0]][pos_king[1]]->is_first_move() && board[pos_rook[0]][pos_rook[1]]->is_first_move()) {
+        short x;
+        pos_king[1] > pos_rook[1] ? x = pos_rook[1] : x = pos_king[1];
+        short end;
+        pos_king[1] < pos_rook[1] ? end = pos_rook[1] : end = pos_king[1];
+        if (is_check(board[pos_king[0]][x]->get_position(), board, board[pos_king[0]][pos_king[1]]->get_color()))
+            return false;
+        else {
+            x++;
+        }
+        for (x; x < end; x++) {
+            std::vector<short> pos{pos_king[0], x};
+            if (board[pos_king[0]][x]->to_char() != ' ' || is_check(pos, board, board[pos_king[0]][pos_king[1]]->get_color())) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

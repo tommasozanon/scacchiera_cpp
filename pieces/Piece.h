@@ -31,6 +31,7 @@ class Piece {
      */
     virtual std::vector<short> get_position() = 0;
     virtual int get_color() = 0;
+    virtual bool is_first_move() = 0;
 
     // variabili d'istanza
   protected:

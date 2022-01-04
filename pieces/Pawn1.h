@@ -27,6 +27,7 @@ class Pawn1 : public Piece {
         first_move = false;
     };
     int get_color() { return color; }
+    bool is_first_move() { return first_move; }
 };
 
 #endif
