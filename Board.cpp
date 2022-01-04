@@ -19,7 +19,7 @@ Board::Board() {
     for (short x = 0; x < 8; x++) {
         board.push_back(std::vector<std::shared_ptr<Piece>>());
         for (short y = 0; y < 8; y++) {
-            short pos[2]{x, y};
+            std::vector<short> pos{x, y};
             board[x].push_back(std::shared_ptr<Piece>(new Space(pos, ' ')));
         }
     }
@@ -131,5 +131,24 @@ void Board::initialize_board(int white_n, int black_n) {
             black.push_back(std::shared_ptr<Piece>(new Pawn6(pos, names_black[8], 1)));
             board[x][y] = black.back();
         }
+    }
+}
+
+void Board::move(std::vector<short> pos1, std::vector<short> pos2) {
+
+    auto piece = board[pos1[0]][pos1[1]];
+
+    if (board[pos2[0]][pos2[1]]->to_char() == ' ') {
+
+        board[pos2[0]][pos2[1]]->set_pos(pos1);
+        board[pos1[0]][pos1[1]]->set_pos(pos2);
+
+        board[pos1[0]][pos1[1]] = board[pos2[0]][pos2[1]];
+        board[pos2[0]][pos2[1]] = piece;
+    } else {
+        board[pos1[0]][pos1[1]] = std::shared_ptr<Piece>(new Space(pos1, ' '));
+        piece->set_pos(pos2);
+
+        board[pos2[0]][pos2[1]] = piece;
     }
 }

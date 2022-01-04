@@ -3,14 +3,21 @@
 
 std::vector<std::vector<short>> Pawn6::get_allowed_moves() {
     std::vector<std::vector<short>> list{};
-    std::vector<short> move = get_position();
-    move[0] -= 1;
-    list.push_back(move);
+    std::vector<short> pos = get_position();
+    pos[0] -= 1;
+    list.push_back(pos);
     if (first_move) {
-        move[0] -= 1;
-        list.push_back(move);
-        first_move = false;
+        pos[0] -= 1;
+        list.push_back(pos);
     }
+
+    pos = get_position();
+    pos[0] -= 1;
+    pos[1] -= 1;
+    list.push_back(pos);
+    pos[1] += 2;
+    list.push_back(pos);
+    return list;
     return list;
 }
 

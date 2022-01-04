@@ -16,14 +16,19 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         // gestire anche la mangiata del pedone
         // todo
         while (i < moves.size()) {
-            if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
-                moves.erase(moves.begin() + i);
-				if (i==0){
-					i++;
-					moves.erase(moves.begin() + i);
-				}
+
+            if (piece->get_position()[1] == moves[i][1]) {
+                if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
+                    moves.erase(moves.begin() + i);
+                } else {
+                    i++;
+                }
             } else {
-                i++;
+                if (board[moves[i][0]][moves[i][1]]->to_char() == ' ' || board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()) {
+                    moves.erase(moves.begin() + i);
+                } else {
+                    i++;
+                }
             }
         }
         return moves;

@@ -17,7 +17,7 @@ class Piece {
      * input: un array di short (la nuova posizione)
      * output: -
      */
-    virtual void set_pos(short[2]) = 0;
+    virtual void set_pos(std::vector<short>) = 0;
 
     /* Metodo get_allowed_moves: studia le possibili mosse di un pezzo
      * input: -

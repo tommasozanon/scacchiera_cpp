@@ -21,9 +21,10 @@ class Pawn1 : public Piece {
     std::vector<short> get_position();
     char to_char() { return repr; }
 
-    void set_pos(short pos[2]) {
+    void set_pos(std::vector<short> pos) {
         position[0] = pos[0];
         position[1] = pos[1];
+        first_move = false;
     };
     int get_color() { return color; }
 };
