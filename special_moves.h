@@ -14,9 +14,6 @@ bool is_castling(short[2]);
 
 bool is_promotion(short[2]);
 
-// mangiata classica del pedone. Serve veramente?
-bool is_pawn_attack();
-
 // da guardare in inglese lol
 bool scacco_di_scoperta();
 
