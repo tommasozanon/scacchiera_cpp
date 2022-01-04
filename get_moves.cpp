@@ -45,54 +45,60 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         return moves;
     } else if (std::tolower(c) == 't') {
         int i = 0;
-        while (i < moves.size() && i>=0) {
+        while (i < moves.size() && i >= 0) {
             // si può migliorare il codice. Si può usare moves.erase(moves.begin() + i, moves.begin() + i + dove finire di cancellare
             if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()) {
-                //moves.erase(moves.begin() + i);
-				int temp = i;
-				int c=moves[i][1];
-				int r=moves[i][0];
-				
-				while (c==moves[i][1]) {
-					moves.erase(moves.begin() + i);
-					if (r<piece->get_position()[0]) {i--;}
-					else {i++;}
-					
-					if (i==-1){
-						i=temp+1;
-						break;
-					}
-				}
-				
-				while (r==moves[i][0]) {
-					moves.erase(moves.begin() + i);
-					if (c<piece->get_position()[0]) {i--;}
-					else {i++;}
-					
-					if (i==-1){
-						i=temp+1;
-						break;
-					}
-				}
+                // moves.erase(moves.begin() + i);
+                int temp = i;
+                int c = moves[i][1];
+                int r = moves[i][0];
+
+                while (c == moves[i][1]) {
+                    moves.erase(moves.begin() + i);
+                    if (r < piece->get_position()[0]) {
+                        i--;
+                    } else {
+                        i++;
+                    }
+
+                    if (i == -1) {
+                        i = temp + 1;
+                        break;
+                    }
+                }
+
+                while (r == moves[i][0]) {
+                    moves.erase(moves.begin() + i);
+                    if (c < piece->get_position()[0]) {
+                        i--;
+                    } else {
+                        i++;
+                    }
+
+                    if (i == -1) {
+                        i = temp + 1;
+                        break;
+                    }
+                }
             } else {
                 i++;
             }
         }
         return moves;
 
-    } 
-	else if (std::towlower(c) == 'a'){
-		
-	}
-	return moves;
-	else if (std::tolower(c) == 'd') {
-	}
+    } else if (std::towlower(c) == 'a') {
+
         return moves;
-    } else if (std::tolower(c) == 'r') {
-		 while (i < moves.size()) {
-			 std::vector<short> postn{moves[i][0], moves[i][1]};
-             if (board[moves[i][0]][moves[i][1]]->to_char() != ' ' /*|| is_chess(postn)*/ ){
-                 moves.erase(moves.begin() + i);
+    } else if (std::tolower(c) == 'd') {
+        return moves;
+    }
+
+    else if (std::tolower(c) == 'r') {
+        short i = 0;
+        while (i < moves.size()) {
+            std::vector<short> postn{moves[i][0], moves[i][1]};
+            if (board[moves[i][0]][moves[i][1]]->to_char() != ' ' /*|| is_chess(postn)*/) {
+                moves.erase(moves.begin() + i);
             } else {
                 i++;
             }
