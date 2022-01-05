@@ -4,10 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-/*
- *input: la casella sulla quale bisogna eseguire la verifica dello scacco, la scacchiera, il colore dei pezzi che stanno facendo la verifica
- *output: vero se c'è scacco, falso altrimenti
- */
+
 bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_ptr<Piece>>>& board, short my_color) {
     std::vector<std::vector<short>> allowed_moves;
     std::vector<short> all_p{0, 0};
