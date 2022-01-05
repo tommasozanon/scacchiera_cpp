@@ -45,7 +45,7 @@ int main() {
         std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
     }
     */
-    pos1[0] = 1;
+    pos1[0] = 6;
     pos1[1] = 3;
     pos2[0] = 5;
     pos2[1] = 3;
