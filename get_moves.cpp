@@ -45,7 +45,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         return moves;
     } else if (std::tolower(c) == 't') {
         int i = 0;
-        while (i < moves.size() && i >= 0) {
+        while (i < moves.size()) {
             // si può migliorare il codice. Si può usare moves.erase(moves.begin() + i, moves.begin() + i + dove finire di cancellare
             if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
                 if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()){
@@ -89,8 +89,92 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         }
         return moves;
     } else if (std::towlower(c) == 'a') {
+		std::vector<std::vector<short>> high_right;
+		std::vector<std::vector<short>> high_left;
+		std::vector<std::vector<short>> low_right;
+		std::vector<std::vector<short>> low_left;
+		
+		std::vector<short> pos = piece->get_position();
+		//suddivisione di tutte le mosse per diagonale di appartenenza (alla fine del while moves e' vuoto)
+		while (!moves.empty()){
+			if (moves[0][0]<pos[0] && moves[0][1]>pos[1]){
+				high_right.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+			else if (moves[0][0]<pos[0] && moves[0][1]<pos[1]){
+				high_left.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+			else if (moves[0][0]>pos[0] && moves[0][1]>pos[1]){
+				low_right.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+			else{
+				low_left.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+		}
+		
+		//eventuale cancellazione di mosse non accessibili
+		int i=0;
+		while (i<high_right.size()){
+			if (board[high_right[i][0]][high_right[i][1]]->to_char()!= ' '){
+				if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {i++;} //gestione della mangiata
+				high_right.erase(high_right.begin()+i, high_right.end());
+			}
+			else {i++;}
+		}
+		
+		i=0;
+		while (i<high_left.size()){
+			if (board[high_left[i][0]][high_left[i][1]]->to_char()!= ' '){
+				if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {i++;}
+				high_left.erase(high_left.begin()+i, high_left.end());
+			}
+			else {i++;}
+		}
+		
+		i=0;
+		while (i<low_right.size()){
+			if (board[low_right[i][0]][low_right[i][1]]->to_char()!= ' '){
+				if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {i++;}
+				low_right.erase(low_right.begin()+i, low_right.end());
+			}
+			else {i++;}
+		}
+		
+		i=0;
+		while (i<low_left.size()){
+			if (board[low_left[i][0]][low_left[i][1]]->to_char()!= ' '){
+				if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {i++;}
+				low_left.erase(low_left.begin()+i, low_left.end());
+			}
+			else {i++;}
+		}
+		
+		//riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input (non credo sia un problema no?))
+		while (!high_right.empty()){
+			moves.push_back(high_right.front());
+			high_right.erase(high_right.begin());
+		}
+		
+		while (!low_right.empty()){
+			moves.push_back(low_right.front());
+			low_right.erase(low_right.begin());
+		}
+		
+		while (!high_left.empty()){
+			moves.push_back(high_left.front());
+			high_left.erase(high_left.begin());
+		}
+		
+		while (!low_left.empty()){
+			moves.push_back(low_left.front());
+			low_left.erase(low_left.begin());
+		}
 		
         return moves;
+		
     } else if (std::tolower(c) == 'd') {
         return moves;
     }
