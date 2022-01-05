@@ -46,7 +46,6 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
     } else if (std::tolower(c) == 't') {
         int i = 0;
         while (i < moves.size()) {
-            // si può migliorare il codice. Si può usare moves.erase(moves.begin() + i, moves.begin() + i + dove finire di cancellare
             if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
                 if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()){
 					moves.erase(moves.begin() + i);
