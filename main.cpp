@@ -51,5 +51,21 @@ int main() {
     pos2[1] = 3;
     std::cout << "discovery check: " << is_discovery_check(b, pos1, pos2) << std::endl;
 
+    std::vector<std::vector<short>> moves = get_moves(b.board, b.board[1][1]);
+    for (int i = 0; i < moves.size(); i++) {
+        std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
+    }
+    pos1[0] = 1;
+    pos1[1] = 1;
+    pos2[0] = 5;
+    pos2[1] = 1;
+
+    b.move(pos1, pos2);
+    b.print();
+
+    moves = get_moves(b.board, b.board[1][1]);
+    for (int i = 0; i < moves.size(); i++) {
+        std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
+    }
     return 0;
 }
