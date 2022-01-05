@@ -7,6 +7,7 @@
 
 int main() {
     Board b;
+    std::cout << "Per la promozione, scrivere: coord1 coord2 carattere_del_pezzo_in_cui_si_vuole_promuovere_il_pedone (default donna)\n";
 
     /*
     std::vector<std::vector<short>> mov = b.board[0][1]->get_allowed_moves();
