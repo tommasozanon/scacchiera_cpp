@@ -199,6 +199,6 @@ bool is_castling(std::vector<short> pos_king, std::vector<short> pos_rook, const
         }
         if (is_check(board[pos_king[0]][end]->get_position(), board, board[pos_king[0]][pos_king[1]]->get_color()))
             return false;
-        }
+    }
     return true;
 }
