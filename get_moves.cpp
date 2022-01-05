@@ -47,8 +47,11 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         int i = 0;
         while (i < moves.size() && i >= 0) {
             // si può migliorare il codice. Si può usare moves.erase(moves.begin() + i, moves.begin() + i + dove finire di cancellare
-            if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()) {
-                // moves.erase(moves.begin() + i);
+            if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
+                if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()){
+					moves.erase(moves.begin() + i);
+				}
+				i++;
                 int temp = i;
                 int c = moves[i][1];
                 int r = moves[i][0];
@@ -85,9 +88,8 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
             }
         }
         return moves;
-
     } else if (std::towlower(c) == 'a') {
-
+		
         return moves;
     } else if (std::tolower(c) == 'd') {
         return moves;
