@@ -89,25 +89,29 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         }
         return moves;
     } else if (std::towlower(c) == 'a') {
-		std::vector<vector<short>> high_right;
-		std::vector<vector<short>> high_left;
-		std::vector<vector<short>> low_right;
-		std::vector<vector<short>> low_left;
+		std::vector<std::vector<short>> high_right;
+		std::vector<std::vector<short>> high_left;
+		std::vector<std::vector<short>> low_right;
+		std::vector<std::vector<short>> low_left;
 		
-		std::vector<short> pos = piece->get_pos();
+		std::vector<short> pos = piece->get_position();
 		//suddivisione di tutte le mosse per diagonale di appartenenza (alla fine del while moves e' vuoto)
 		while (!moves.empty()){
 			if (moves[0][0]<pos[0] && moves[0][1]>pos[1]){
-				high_right.push_back(moves.erase(moves.begin()));
+				high_right.push_back(moves.front());
+				moves.erase(moves.begin());
 			}
 			else if (moves[0][0]<pos[0] && moves[0][1]<pos[1]){
-				high_left.push_back(moves.erase(moves.begin()));
+				high_left.push_back(moves.front());
+				moves.erase(moves.begin());
 			}
 			else if (moves[0][0]>pos[0] && moves[0][1]>pos[1]){
-				low_right.push_back(moves.erase(moves.begin()));
+				low_right.push_back(moves.front());
+				moves.erase(moves.begin());
 			}
 			else{
-				low_left.push_back(moves.erase(moves.begin()));
+				low_left.push_back(moves.front());
+				moves.erase(moves.begin());
 			}
 		}
 		
@@ -131,10 +135,10 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 		}
 		
 		i=0;
-		while (i<low_rigth.size()){
-			if (board[low_rigth[i][0]][low_rigth[i][1]]->to_char()!= ' '){
+		while (i<low_right.size()){
+			if (board[low_right[i][0]][low_right[i][1]]->to_char()!= ' '){
 				if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {i++;}
-				low_rigth.erase(low_rigth.begin()+i, low_rigth.end());
+				low_right.erase(low_right.begin()+i, low_right.end());
 			}
 			else {i++;}
 		}
@@ -149,20 +153,24 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 		}
 		
 		//riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input (non credo sia un problema no?))
-		while (!high_rigth.empty()){
-			moves.push_back(high_rigth.erase(high_right.begin()));
+		while (!high_right.empty()){
+			moves.push_back(high_right.front());
+			high_right.erase(high_right.begin());
 		}
 		
-		while (!low_rigth.empty()){
-			moves.push_back(low_rigth.erase(low_right.begin()));
+		while (!low_right.empty()){
+			moves.push_back(low_right.front());
+			low_right.erase(low_right.begin());
 		}
 		
 		while (!high_left.empty()){
-			moves.push_back(high_rigth.erase(high_left.begin()));
+			moves.push_back(high_left.front());
+			high_left.erase(high_left.begin());
 		}
 		
 		while (!low_left.empty()){
-			moves.push_back(high_rigth.erase(low_left.begin()));
+			moves.push_back(low_left.front());
+			low_left.erase(low_left.begin());
 		}
 		
         return moves;
