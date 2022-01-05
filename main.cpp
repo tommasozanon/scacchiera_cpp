@@ -21,9 +21,10 @@ int main() {
     }
     */
 
-    std::vector<short> pos1{1, 3};
-    std::vector<short> pos2{2, 3};
-    // b.move(pos1, pos2);
+    std::vector<short> pos1{0, 3};
+    std::vector<short> pos2{5, 2};
+    b.move(pos1, pos2);
+    /*
     pos1[0] = 0;
     pos2[0] = 2;
     b.move(pos1, pos2);
@@ -33,6 +34,7 @@ int main() {
     pos1[1] = 2;
     pos2[1] = 1;
     b.move(pos1, pos2);
+    */
     b.print();
     // std::cout << is_check(b.board[7][4]->get_position(), b.board) << std::endl;
 
@@ -42,10 +44,11 @@ int main() {
         std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
     }
     */
-    pos1[0] = 0;
-    pos1[1] = 4;
-    pos2[0] = 0;
-    pos2[1] = 0;
-    std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
+    pos1[0] = 1;
+    pos1[1] = 3;
+    pos2[0] = 5;
+    pos2[1] = 3;
+    std::cout << "discovery check: " << is_discovery_check(b, pos1, pos2) << std::endl;
+
     return 0;
 }

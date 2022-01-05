@@ -1,3 +1,4 @@
+#include "Board.h"
 #include "pieces/Piece.h"
 #include <cctype>
 #include <iostream>
@@ -199,6 +200,28 @@ bool is_castling(std::vector<short> pos_king, std::vector<short> pos_rook, const
         }
         if (is_check(board[pos_king[0]][end]->get_position(), board, board[pos_king[0]][pos_king[1]]->get_color()))
             return false;
-        }
+    }
     return true;
+}
+
+// prima di chiamare discovery check bisogna controllare che pos1 non sia uno spazio vuoto. Controllo da fare nel main
+bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short> pos2) {
+    std::vector<std::shared_ptr<Piece>> list_p;
+    board.board[pos1[0]][pos1[1]]->get_color() == 1 ? list_p = board.black : list_p = board.white;
+
+    auto p = list_p[0];
+    if (board.move(pos1, pos2)) {
+        short i = 0;
+        while (i < list_p.size()) {
+            p = list_p[i];
+            if (std::tolower(p->to_char()) == 'r') {
+                i = list_p.size();
+            }
+            i++;
+        }
+        if (is_check(p->get_position(), board.board, p->get_color())) {
+            return true;
+        }
+    }
+    return false;
 }

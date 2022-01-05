@@ -7,9 +7,6 @@
 
 class Board {
   private:
-    std::vector<std::shared_ptr<Piece>> white;
-    std::vector<std::shared_ptr<Piece>> black;
-
     /*
     ehh, qua è un po' difficile. In input prende la posizione dei pezzi che non sono pedoni dei bianchi e dei
     neri e facciamo che se avete qualche domanda ci sentiamo una volta su discord che è complicata la questione
@@ -18,13 +15,17 @@ class Board {
     void initialize_board(int, int);
 
   public:
+    std::vector<std::shared_ptr<Piece>> white;
+    std::vector<std::shared_ptr<Piece>> black;
+
     Board();
     // solo per ricordarmi, poi va implementato tutto nel cpp
 
     void print();
     std::vector<std::vector<std::shared_ptr<Piece>>> board;
 
-    void move(std::vector<short> pos1, std::vector<short> pos2);
+    // ritorna true se lo spostamento è andato a buon fine
+    bool move(std::vector<short> pos1, std::vector<short> pos2);
 };
 
 #endif
