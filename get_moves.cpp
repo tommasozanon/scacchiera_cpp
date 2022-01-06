@@ -1,3 +1,5 @@
+
+
 #include "memory"
 #include "pieces/Piece.h"
 #include "special_moves.h"
@@ -11,7 +13,10 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
     std::vector<std::vector<short>> moves = piece->get_allowed_moves();
     // per tutti i casi controllare special_moves (scacco di scoperta e scacco diretto per il re)
     if (std::tolower(c) == 'p') {
+        // todo
         short i = 0;
+        // gestire anche la mangiata del pedone
+        // todo
         while (i < moves.size()) {
 
             if (piece->get_position()[1] == moves[i][1]) {
@@ -43,7 +48,6 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
     } else if (std::tolower(c) == 't') {
         int i = 0;
         while (i < moves.size()) {
-            // si può migliorare il codice. Si può usare moves.erase(moves.begin() + i, moves.begin() + i + dove finire di cancellare
             if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
                 if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()) {
                     moves.erase(moves.begin() + i);
