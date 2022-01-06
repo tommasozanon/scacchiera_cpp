@@ -8,8 +8,13 @@
 int main() {
     Board b;
     std::cout << "Per la promozione, scrivere: coord1 coord2 carattere_del_pezzo_in_cui_si_vuole_promuovere_il_pedone (default donna)\n";
-
+    // std::vector<std::vector<short>> moves = get_moves(b.board, b.board[1][7]);
     /*
+    for (int i = 0; i < moves.size(); i++) {
+        std::cout << "( " << moves[i][0] << ", " << moves[i][1] << ")" << std::endl;
+    }
+
+
     std::vector<std::vector<short>> mov = b.board[0][1]->get_allowed_moves();
     for (int i = 0; i < mov.size(); i++) {
         std::cout << "( " << mov[i][0] << ", " << mov[i][1] << ")" << std::endl;
@@ -20,8 +25,8 @@ int main() {
     for (int i = 0; i < moves.size(); i++) {
         std::cout << "( " << moves[i][0] << ", " << moves[i][1] << ")" << std::endl;
     }
-    */
 
+    */
     std::vector<short> pos1{0, 3};
     std::vector<short> pos2{5, 2};
     b.move(pos1, pos2);
@@ -38,7 +43,6 @@ int main() {
     */
     b.print();
     // std::cout << is_check(b.board[7][4]->get_position(), b.board) << std::endl;
-
     // std::vector<std::vector<short>> moves = get_moves(b.board, b.board[2][3]);
     /*
     for (int i = 0; i < moves.size(); i++) {
@@ -63,9 +67,15 @@ int main() {
     b.move(pos1, pos2);
     b.print();
 
-    moves = get_moves(b.board, b.board[1][1]);
+    moves = get_moves(b.board, b.board[5][1]);
     for (int i = 0; i < moves.size(); i++) {
         std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
     }
+
+    pos1[0] = 0;
+    pos1[1] = 4;
+    pos2[0] = 0;
+    pos2[1] = 0;
+    std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
     return 0;
 }
