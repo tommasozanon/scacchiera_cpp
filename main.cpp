@@ -67,15 +67,24 @@ int main() {
     b.move(pos1, pos2);
     b.print();
 
-    moves = get_moves(b.board, b.board[5][1]);
-    for (int i = 0; i < moves.size(); i++) {
-        std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
-    }
-
     pos1[0] = 0;
     pos1[1] = 4;
     pos2[0] = 0;
     pos2[1] = 0;
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
+    pos1[0] = 6;
+    pos1[1] = 3;
+    pos2[0] = 5;
+    pos2[1] = 3;
+    std::cout << "discovery check: " << is_discovery_check(b, pos1, pos2) << std::endl;
+
+    pos1[0] = 1;
+    pos1[1] = 0;
+    pos2[0] = 7;
+    pos2[1] = 0;
+    b.move(pos1, pos2);
+    std::cout << promotion(b, b.board[7][0], 'd') << std::endl;
+    b.print();
+
     return 0;
 }

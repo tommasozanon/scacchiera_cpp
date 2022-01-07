@@ -34,7 +34,7 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
 /*input: il pezzo che si vuole promuovere
  *output: il puntatore al pezzo eventualmente promosso
  */
-std::shared_ptr<Piece> promotion(std::shared_ptr<Piece> piece, char promote = 'd');
+bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote = 'd');
 
 // patta
 bool is_draw();

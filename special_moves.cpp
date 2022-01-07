@@ -1,9 +1,16 @@
 #include "Board.h"
+#include "pieces/Bishop.h"
+#include "pieces/King.h"
+#include "pieces/Knight.h"
 #include "pieces/Piece.h"
+#include "pieces/Queen.h"
+#include "pieces/Rook.h"
 #include <cctype>
 #include <iostream>
 #include <memory>
 #include <vector>
+
+void find_and_erase_piece(std::vector<std::shared_ptr<Piece>>& piece_list, std::shared_ptr<Piece> piece);
 
 bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_ptr<Piece>>>& board, short my_color) {
     std::vector<std::vector<short>> allowed_moves;
@@ -172,6 +179,7 @@ bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_
             }
             a++;
         }
+        piece.reset();
     }
     return false;
 }
@@ -220,5 +228,81 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
             return true;
         }
     }
+    p.reset();
     return false;
+}
+
+// ritorna vero se la promozione è andata a buon fine, falso altrimenti
+bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote = 'd') {
+    std::vector<short> pos = piece->get_position();
+    if (!(pos[0] == 0 || pos[0] == 7)) {
+        std::cout << "promozione non valida, il pedone non è arrivato all'ultima riga\n";
+        return false;
+    }
+    promote = std::tolower(promote);
+    std::vector<char> allowed_char{'t', 'c', 'a', 'd'};
+    bool check = false;
+    short i = 0;
+    while (!(check) && i < allowed_char.size()) {
+        if (promote == allowed_char[i]) {
+            check = true;
+        }
+        i++;
+    }
+    if (!(check)) {
+        std::cout << "promozione non valida, il pedone carattere inserito non è accettabile\n";
+        return false;
+    }
+    std::vector<std::shared_ptr<Piece>>* list_ptr;
+    if (piece->get_color() == 0) {
+        find_and_erase_piece(board.white, piece);
+        list_ptr = &board.white;
+    } else {
+        find_and_erase_piece(board.black, piece);
+        list_ptr = &board.black;
+    }
+    if (piece->get_color() == 0) {
+        for (int i = 0; i < allowed_char.size(); i++) {
+            allowed_char[i] = std::toupper(allowed_char[i]);
+        }
+    }
+    short color = piece->get_color();
+    short position[]{pos[0], pos[1]};
+    switch (promote) {
+    case 'd': {
+        list_ptr->push_back(std::shared_ptr<Piece>(new Queen(position, allowed_char[3], color)));
+        break;
+    }
+    case 't': {
+        list_ptr->push_back(std::shared_ptr<Piece>(new Rook(position, allowed_char[0], color)));
+        break;
+    }
+    case 'a': {
+        list_ptr->push_back(std::shared_ptr<Piece>(new Bishop(position, allowed_char[2], color)));
+        break;
+    }
+    case 'c': {
+        list_ptr->push_back(std::shared_ptr<Piece>(new Knight(position, allowed_char[1], color)));
+        break;
+    }
+    }
+    board.board[pos[0]][pos[1]].reset();
+    board.board[pos[0]][pos[1]] = list_ptr->back();
+    piece.reset();
+    return true;
+}
+
+void find_and_erase_piece(std::vector<std::shared_ptr<Piece>>& piece_list, std::shared_ptr<Piece> piece) {
+    auto p = piece_list[0];
+
+    short i = 0;
+    while (i < piece_list.size()) {
+        p = piece_list[i];
+        if (piece == piece_list[i]) {
+            piece_list[i].reset();
+            piece_list.erase(piece_list.begin() + i);
+            i = piece_list.size();
+        }
+        i++;
+    }
 }

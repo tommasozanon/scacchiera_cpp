@@ -78,6 +78,7 @@ void Board::initialize_board(int white_n, int black_n) {
             white.push_back(std::shared_ptr<Piece>(new King(pos, names_white[y], 0)));
             break;
         }
+        board[x][y].reset();
         board[x][y] = white.back();
     }
     white_n == 0 ? x = 1 : x = 6;
@@ -85,12 +86,14 @@ void Board::initialize_board(int white_n, int black_n) {
         for (short y = 0; y < 8; y++) {
             short pos[2]{x, y};
             white.push_back(std::shared_ptr<Piece>(new Pawn1(pos, names_white[8], 0)));
+            board[x][y].reset();
             board[x][y] = white.back();
         }
     } else {
         for (short y = 0; y < 8; y++) {
             short pos[2]{x, y};
             white.push_back(std::shared_ptr<Piece>(new Pawn6(pos, names_white[8], 0)));
+            board[x][y].reset();
             board[x][y] = white.back();
         }
     }
@@ -116,6 +119,7 @@ void Board::initialize_board(int white_n, int black_n) {
             black.push_back(std::shared_ptr<Piece>(new King(pos, names_black[y], 1)));
             break;
         }
+        board[x][y].reset();
         board[x][y] = black.back();
     }
     black_n == 0 ? x = 1 : x = 6;
@@ -123,12 +127,14 @@ void Board::initialize_board(int white_n, int black_n) {
         for (short y = 0; y < 8; y++) {
             short pos[2]{x, y};
             black.push_back(std::shared_ptr<Piece>(new Pawn1(pos, names_black[8], 1)));
+            board[x][y].reset();
             board[x][y] = black.back();
         }
     } else {
         for (short y = 0; y < 8; y++) {
             short pos[2]{x, y};
             black.push_back(std::shared_ptr<Piece>(new Pawn6(pos, names_black[8], 1)));
+            board[x][y].reset();
             board[x][y] = black.back();
         }
     }
@@ -145,10 +151,11 @@ bool Board::move(std::vector<short> pos1, std::vector<short> pos2) {
 
         board[pos1[0]][pos1[1]] = board[pos2[0]][pos2[1]];
         board[pos2[0]][pos2[1]] = piece;
+        piece.reset();
     } else if (piece->get_color() != board[pos2[0]][pos2[1]]->get_color()) {
 
         // toglie il pezzo mangiato dalla lista dei pezzi di quel colore
-        if (board[pos2[0]][pos2[1]]->get_color() == 1) {
+        if (board[pos2[0]][pos2[1]]->get_color() == 0) {
             short i = 0;
             while (i < white.size()) {
                 auto p = white[i];
@@ -174,6 +181,7 @@ bool Board::move(std::vector<short> pos1, std::vector<short> pos2) {
         piece->set_pos(pos2);
 
         board[pos2[0]][pos2[1]] = piece;
+        piece.reset();
     } else {
         std::cout << "input sbagliato: " << piece->to_char() << " -/-> " << board[pos2[0]][pos2[1]]->to_char() << "\n";
         return false;
