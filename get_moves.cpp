@@ -46,49 +46,42 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         }
         return moves;
     } else if (std::tolower(c) == 't') {
-        int i = 0;
-        while (i < moves.size()) {
-            if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
-                if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()) {
-                    moves.erase(moves.begin() + i);
-                }
-                i++;
-                int temp = i;
-                int c = moves[i][1];
-                int r = moves[i][0];
-
-                while (c == moves[i][1]) {
-                    moves.erase(moves.begin() + i);
-                    if (r < piece->get_position()[0]) {
-                        i--;
-                    } else {
-                        i++;
-                    }
-
-                    if (i == -1) {
-                        i = temp + 1;
-                        break;
-                    }
-                }
-
-                while (r == moves[i][0]) {
-                    moves.erase(moves.begin() + i);
-                    if (c < piece->get_position()[0]) {
-                        i--;
-                    } else {
-                        i++;
-                    }
-
-                    if (i == -1) {
-                        i = temp + 1;
-                        break;
-                    }
-                }
-            } else {
-                i++;
-            }
-        }
-        return moves;
+		std::vector<std::vector<short>> column;
+		std::vector<std::vector<short>> row;
+		
+		std::vector<short> pos = piece->get_position();
+		int c = pos[1];
+		int r = pos[0];
+		
+		//suddivisione riga e colonna
+		while (c==moves[0][1]){
+			column.push_back(moves.front());
+			moves.erase(moves.begin());
+		}
+		while (r==moves[0][0]){
+			row.push_back(moves.front());
+			moves.erase(moves.begin());
+		}
+		
+		//column.erase(column.begin()+3+1, column.end());
+		//check colonna
+		int i=0;
+		int size = column.size();
+		while (i<size){
+			if (board[column[i][0]][column[i][1]]->to_char() != ' ') {
+				if (r>column[i][0]){
+					column.erase(column.begin(), column.begin()+i+1);
+				}
+				else{
+					column.erase(column.begin()+i+1, column.end());
+				}
+				size = column.size();
+			}
+			else {i++;}
+		}
+		
+		
+        return column;
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;

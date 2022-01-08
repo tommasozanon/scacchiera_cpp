@@ -77,5 +77,18 @@ int main() {
     pos2[0] = 0;
     pos2[1] = 0;
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
+	
+	//test alfiere e torre
+	pos1[0]=0;
+	pos1[1]=0;
+	pos2[0]=1;
+	pos2[1]=1;
+	b.move(pos1, pos2);
+	b.print();
+	std::vector<std::vector<short>> movess = get_moves(b.board, b.board[1][1]);
+	for (int i = 0; i < movess.size(); i++) {
+        std::cout << "( " << movess[i][0] + 1 << ", " << movess[i][1] + 1 << ")" << std::endl;
+    }
+	
     return 0;
 }
