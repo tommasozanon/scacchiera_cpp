@@ -63,25 +63,44 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 			moves.erase(moves.begin());
 		}
 		
-		//column.erase(column.begin()+3+1, column.end());
 		//check colonna
 		int i=0;
-		int size = column.size();
-		while (i<size){
+		while (i<column.size()){
 			if (board[column[i][0]][column[i][1]]->to_char() != ' ') {
 				if (r>column[i][0]){
 					column.erase(column.begin(), column.begin()+i+1);
+					/*
+					if(board[column[i][0]][column[i][1]]->get_color() == piece->get_color()){
+						
+					}
+					else{
+						column.erase(column.begin(), column.begin()+i);
+					}
+					*/
 				}
+				
 				else{
 					column.erase(column.begin()+i+1, column.end());
+					/*
+					if(board[column[i][0]][column[i][1]]->get_color() == piece->get_color()){
+						column.erase(column.begin()+i, column.end());
+					}
+					else{
+						
+					}
+					*/
+					i=column.size();
+					
 				}
-				size = column.size();
+				
+				
 			}
 			else {i++;}
 		}
 		
 		
-        return column;
+		return column;
+		//return moves;
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;

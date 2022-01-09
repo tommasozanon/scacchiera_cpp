@@ -81,8 +81,8 @@ int main() {
 	//test alfiere e torre
 	pos1[0]=0;
 	pos1[1]=0;
-	pos2[0]=1;
-	pos2[1]=1;
+	pos2[0]=5;
+	pos2[1]=5;
 	b.move(pos1, pos2);
 	b.print();
 	std::vector<std::vector<short>> movess = get_moves(b.board, b.board[1][1]);
