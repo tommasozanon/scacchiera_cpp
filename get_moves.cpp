@@ -62,35 +62,32 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 			row.push_back(moves.front());
 			moves.erase(moves.begin());
 		}
-		
+
 		//check colonna
 		int i=0;
-		while (i<column.size()){
+		while(i<column.size()){
 			if (board[column[i][0]][column[i][1]]->to_char() != ' ') {
+				
 				if (r>column[i][0]){
-					column.erase(column.begin(), column.begin()+i+1);
-					/*
 					if(board[column[i][0]][column[i][1]]->get_color() == piece->get_color()){
-						
+						column.erase(column.begin(), column.begin()+i+1);
+						i=0;
 					}
 					else{
 						column.erase(column.begin(), column.begin()+i);
 					}
-					*/
+					
 				}
 				
 				else{
-					column.erase(column.begin()+i+1, column.end());
-					/*
 					if(board[column[i][0]][column[i][1]]->get_color() == piece->get_color()){
 						column.erase(column.begin()+i, column.end());
 					}
 					else{
-						
+						column.erase(column.begin()+i+1, column.end());
 					}
-					*/
-					i=column.size();
 					
+					i=column.size();
 				}
 				
 				
@@ -98,9 +95,49 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 			else {i++;}
 		}
 		
+		//controllo riga
+		i=0;
+		while(i<row.size()){
+			if (board[row[i][0]][row[i][1]]->to_char() != ' ') {
+				if (c>row[i][1]){
+					if(board[row[i][0]][row[i][1]]->get_color() == piece->get_color()){
+						row.erase(row.begin(), row.begin()+i+1);
+						i=0;
+					}
+					else{
+						row.erase(row.begin(), row.begin()+i);
+					}
+					
+				}
+				
+				else{
+					if(board[row[i][0]][row[i][1]]->get_color() == piece->get_color()){
+						row.erase(row.begin()+i, row.end());
+					}
+					else{
+						row.erase(row.begin()+i+1, row.end());
+					}
+					
+					i=row.size();
+				}
+				
+				
+			}
+			else {i++;}
+		}
 		
-		return column;
-		//return moves;
+		//fusione di riga e colonna finali
+		while (column.size()>0){
+			moves.push_back(column.front());
+			column.erase(column.begin());
+		}
+		
+		while (row.size()>0){
+			moves.push_back(row.front());
+			row.erase(row.begin());
+		}
+		
+		return moves;
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;

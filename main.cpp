@@ -79,13 +79,15 @@ int main() {
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
 	
 	//test alfiere e torre
+	short n=5;
+	short m=5;
 	pos1[0]=0;
 	pos1[1]=0;
-	pos2[0]=5;
-	pos2[1]=5;
+	pos2[0]=n;
+	pos2[1]=m;
 	b.move(pos1, pos2);
 	b.print();
-	std::vector<std::vector<short>> movess = get_moves(b.board, b.board[1][1]);
+	std::vector<std::vector<short>> movess = get_moves(b.board, b.board[n][m]);
 	for (int i = 0; i < movess.size(); i++) {
         std::cout << "( " << movess[i][0] + 1 << ", " << movess[i][1] + 1 << ")" << std::endl;
     }
