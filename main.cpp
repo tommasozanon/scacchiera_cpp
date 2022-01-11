@@ -79,10 +79,10 @@ int main() {
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
 	
 	//test alfiere e torre
-	short n=5;
-	short m=5;
-	pos1[0]=0;
-	pos1[1]=0;
+	short n=3;
+	short m=3;
+	pos1[0]=5;
+	pos1[1]=2;
 	pos2[0]=n;
 	pos2[1]=m;
 	b.move(pos1, pos2);
