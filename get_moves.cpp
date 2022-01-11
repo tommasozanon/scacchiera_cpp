@@ -115,7 +115,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         int i = 0;
         while (i < high_right.size()) {
             if (board[high_right[i][0]][high_right[i][1]]->to_char() != ' ') {
-                if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {
+                if (board[high_right[i][0]][high_right[i][1]]->get_color() != piece->get_color()) {
                     i++;
                 } // gestione della mangiata
                 high_right.erase(high_right.begin() + i, high_right.end());
@@ -127,7 +127,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         i = 0;
         while (i < high_left.size()) {
             if (board[high_left[i][0]][high_left[i][1]]->to_char() != ' ') {
-                if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {
+                if (board[high_left[i][0]][high_left[i][1]]->get_color() != piece->get_color()) {
                     i++;
                 }
                 high_left.erase(high_left.begin() + i, high_left.end());
@@ -139,7 +139,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         i = 0;
         while (i < low_right.size()) {
             if (board[low_right[i][0]][low_right[i][1]]->to_char() != ' ') {
-                if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {
+                if (board[low_right[i][0]][low_right[i][1]]->get_color() != piece->get_color()) {
                     i++;
                 }
                 low_right.erase(low_right.begin() + i, low_right.end());
@@ -151,7 +151,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
         i = 0;
         while (i < low_left.size()) {
             if (board[low_left[i][0]][low_left[i][1]]->to_char() != ' ') {
-                if (board[moves[i][0]][moves[i][1]]->get_color() != piece->get_color()) {
+                if (board[low_left[i][0]][low_left[i][1]]->get_color() != piece->get_color()) {
                     i++;
                 }
                 low_left.erase(low_left.begin() + i, low_left.end());
@@ -160,7 +160,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
             }
         }
 
-        // riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input (non credo sia un problema no?))
+        // riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input)
         while (!high_right.empty()) {
             moves.push_back(high_right.front());
             high_right.erase(high_right.begin());
