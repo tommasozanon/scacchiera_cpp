@@ -137,6 +137,15 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 			row.erase(row.begin());
 		}
 		
+		i=0;
+		std::vector<short> new_pos {0,0};
+		while (i<moves.size()){
+			new_pos[0]=moves[i][0];
+			new_pos[1]=moves[i][1];
+			if (is_discovery_check(pos, new_pos)) {moves.erase(moves.begin()+i);}
+			else {i++;}
+		}
+		
 		return moves;
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
