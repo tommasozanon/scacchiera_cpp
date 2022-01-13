@@ -85,6 +85,18 @@ int main() {
     b.move(pos1, pos2);
     std::cout << promotion(b, b.board[7][0], 'd') << std::endl;
     b.print();
-
+	
+	//test alfiere, torre e donna
+	pos1[0] = 0;
+    pos1[1] = 2;
+    pos2[0] = 3;
+    pos2[1] = 4;
+	b.move(pos1, pos2);
+	b.print();
+    std::vector<std::vector<short>> movess = get_moves(b.board, b.board[3][4]);
+    for (int i = 0; i < movess.size(); i++) {
+		char a = movess[i][1]+1+96;
+        std::cout << "( " << movess[i][0] + 1 << ", " << a << ")" << std::endl;
+    }
     return 0;
 }
