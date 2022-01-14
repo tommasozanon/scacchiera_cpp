@@ -35,6 +35,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 		
+		//controllo eventuale inchiodatura
 		i = 0;
 		std::vector<short> pos = piece->get_position();
         std::vector<short> new_pos{0, 0};
@@ -59,6 +60,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 		
+		//controllo eventuale inchiodatura
 		i = 0;
 		std::vector<short> pos = piece->get_position();
         std::vector<short> new_pos{0, 0};
@@ -161,6 +163,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             row.erase(row.begin());
         }
 		
+		//controllo eventuale inchiodatura
         i = 0;
         std::vector<short> new_pos{0, 0};
         while (i < moves.size()) {
@@ -270,6 +273,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             low_left.erase(low_left.begin());
         }
 		
+		//controllo eventuale inchiodatura
 		i = 0;
         std::vector<short> new_pos{0, 0};
         while (i < moves.size()) {
@@ -460,6 +464,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             low_left.erase(low_left.begin());
         }
 		
+		//controllo eventuale inchiodatura
 		i = 0;
         std::vector<short> new_pos{0, 0};
         while (i < moves.size()) {
@@ -479,7 +484,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         short i = 0;
         while (i < moves.size()) {
             std::vector<short> postn{moves[i][0], moves[i][1]};
-            if (board[moves[i][0]][moves[i][1]]->to_char() != ' ' /*|| is_chess(postn)*/) {
+            if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
                 moves.erase(moves.begin() + i);
             } else {
                 i++;
