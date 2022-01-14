@@ -8,7 +8,8 @@
 #include <iostream>
 #include <vector>
 
-std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::shared_ptr<Piece>>>& board, const std::shared_ptr<Piece>& piece) {
+std::vector<std::vector<short>> get_moves(Board b, const std::shared_ptr<Piece>& piece) {
+	std::vector<std::vector<std::shared_ptr<Piece>>>& board = b.get_board();
     char c = piece->to_char();
     std::vector<std::vector<short>> moves = piece->get_allowed_moves();
     // per tutti i casi controllare special_moves (scacco di scoperta e scacco diretto per il re)
@@ -142,7 +143,7 @@ std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::sha
 		while (i<moves.size()){
 			new_pos[0]=moves[i][0];
 			new_pos[1]=moves[i][1];
-			if (is_discovery_check(pos, new_pos)) {moves.erase(moves.begin()+i);}
+			if (is_discovery_check(b, pos, new_pos)) {moves.erase(moves.begin()+i);}
 			else {i++;}
 		}
 		

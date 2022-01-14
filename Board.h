@@ -26,6 +26,8 @@ class Board {
 
     // ritorna true se lo spostamento è andato a buon fine
     bool move(std::vector<short> pos1, std::vector<short> pos2);
+	
+	std::vector<std::vector<std::shared_ptr<Piece>>>& get_board() {return board;}
 };
 
 #endif
