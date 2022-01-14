@@ -19,7 +19,7 @@ std::vector<std::vector<short>> King::get_allowed_moves() {
             }
         }
     }
-    if (is_first_move) {
+    if (first_move) {
         all_p[0] = pos[0];
         all_p[1] = 6;
         allowed_moves.push_back(all_p);

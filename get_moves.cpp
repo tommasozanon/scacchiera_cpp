@@ -34,6 +34,19 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
             }
         }
+		
+		i = 0;
+		std::vector<short> pos = piece->get_position();
+        std::vector<short> new_pos{0, 0};
+        while (i < moves.size()) {
+            new_pos[0] = moves[i][0];
+            new_pos[1] = moves[i][1];
+            if (is_discovery_check(b, pos, new_pos)) {
+                moves.erase(moves.begin() + i);
+            } else {
+                i++;
+            }
+        }
         return moves;
         // controllare se il pedone può mangiare di lato ed eventualmente aggiungere le mosse a moves
     } else if (std::tolower(c) == 'c') {
@@ -45,6 +58,20 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
+		
+		i = 0;
+		std::vector<short> pos = piece->get_position();
+        std::vector<short> new_pos{0, 0};
+        while (i < moves.size()) {
+            new_pos[0] = moves[i][0];
+            new_pos[1] = moves[i][1];
+            if (is_discovery_check(b, pos, new_pos)) {
+                moves.erase(moves.begin() + i);
+            } else {
+                i++;
+            }
+        }
+		
         return moves;
     } else if (std::tolower(c) == 't') {
         std::vector<std::vector<short>> column;
@@ -133,7 +160,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             moves.push_back(row.front());
             row.erase(row.begin());
         }
-
+		
         i = 0;
         std::vector<short> new_pos{0, 0};
         while (i < moves.size()) {
@@ -242,7 +269,19 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             moves.push_back(low_left.front());
             low_left.erase(low_left.begin());
         }
-
+		
+		i = 0;
+        std::vector<short> new_pos{0, 0};
+        while (i < moves.size()) {
+            new_pos[0] = moves[i][0];
+            new_pos[1] = moves[i][1];
+            if (is_discovery_check(b, pos, new_pos)) {
+                moves.erase(moves.begin() + i);
+            } else {
+                i++;
+            }
+        }
+		
         return moves;
 
     } else if (std::tolower(c) == 'd') {
@@ -420,6 +459,19 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             moves.push_back(low_left.front());
             low_left.erase(low_left.begin());
         }
+		
+		i = 0;
+        std::vector<short> new_pos{0, 0};
+        while (i < moves.size()) {
+            new_pos[0] = moves[i][0];
+            new_pos[1] = moves[i][1];
+            if (is_discovery_check(b, pos, new_pos)) {
+                moves.erase(moves.begin() + i);
+            } else {
+                i++;
+            }
+        }
+		
         return moves;
     }
 
