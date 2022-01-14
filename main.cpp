@@ -55,7 +55,7 @@ int main() {
     pos2[1] = 3;
     std::cout << "discovery check: " << is_discovery_check(b, pos1, pos2) << std::endl;
 
-    std::vector<std::vector<short>> moves = get_moves(b.board, b.board[1][1]);
+    std::vector<std::vector<short>> moves = get_moves(b, b.board[1][1]);
     for (int i = 0; i < moves.size(); i++) {
         std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
     }
@@ -67,7 +67,7 @@ int main() {
     b.move(pos1, pos2);
     b.print();
 
-    moves = get_moves(b.board, b.board[5][1]);
+    moves = get_moves(b, b.board[5][1]);
     for (int i = 0; i < moves.size(); i++) {
         std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
     }
@@ -77,20 +77,20 @@ int main() {
     pos2[0] = 0;
     pos2[1] = 0;
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
-	
-	//test alfiere e torre
-	short n=3;
-	short m=3;
-	pos1[0]=5;
-	pos1[1]=2;
-	pos2[0]=n;
-	pos2[1]=m;
-	b.move(pos1, pos2);
-	b.print();
-	std::vector<std::vector<short>> movess = get_moves(b.board, b.board[n][m]);
-	for (int i = 0; i < movess.size(); i++) {
+
+    // test alfiere e torre
+    short n = 3;
+    short m = 3;
+    pos1[0] = 5;
+    pos1[1] = 2;
+    pos2[0] = n;
+    pos2[1] = m;
+    b.move(pos1, pos2);
+    b.print();
+    std::vector<std::vector<short>> movess = get_moves(b, b.board[n][m]);
+    for (int i = 0; i < movess.size(); i++) {
         std::cout << "( " << movess[i][0] + 1 << ", " << movess[i][1] + 1 << ")" << std::endl;
     }
-	
+
     return 0;
 }
