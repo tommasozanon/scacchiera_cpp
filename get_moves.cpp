@@ -12,12 +12,10 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
     std::vector<std::vector<std::shared_ptr<Piece>>> board = b.get_board();
     char c = piece->to_char();
     std::vector<std::vector<short>> moves = piece->get_allowed_moves();
-    // per tutti i casi controllare special_moves (scacco di scoperta e scacco diretto per il re)
+
     if (std::tolower(c) == 'p') {
-        // todo
+        
         short i = 0;
-        // gestire anche la mangiata del pedone
-        // todo
         while (i < moves.size()) {
 
             if (piece->get_position()[1] == moves[i][1]) {
@@ -49,7 +47,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
         return moves;
-        // controllare se il pedone può mangiare di lato ed eventualmente aggiungere le mosse a moves
+		
     } else if (std::tolower(c) == 'c') {
         short i = 0;
         while (i < moves.size()) {
@@ -73,8 +71,8 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-		
         return moves;
+		
     } else if (std::tolower(c) == 't') {
         std::vector<std::vector<short>> column;
         std::vector<std::vector<short>> row;
@@ -175,8 +173,8 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-
         return moves;
+		
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;
@@ -252,7 +250,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 
-        // riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input (non credo sia un problema no?))
+        // riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input)
         while (!high_right.empty()) {
             moves.push_back(high_right.front());
             high_right.erase(high_right.begin());
@@ -285,7 +283,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-		
         return moves;
 
     } else if (std::tolower(c) == 'd') {
@@ -326,7 +323,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 
-        // check colonna
+        // controllo colonna
         int i = 0;
         while (i < column.size()) {
             if (board[column[i][0]][column[i][1]]->to_char() != ' ') {
@@ -476,13 +473,12 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-		
         return moves;
-    }
-
-    else if (std::tolower(c) == 'r') {
+		
+    }else if (std::tolower(c) == 'r') {
         short i = 0;
-        while (i < moves.size()) {
+		//controllo tutte le mosse tranne le ultime due (gli arrocchi)
+        while (i < moves.size()-2) {
             std::vector<short> postn{moves[i][0], moves[i][1]};
             if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
                 moves.erase(moves.begin() + i);
@@ -490,6 +486,25 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
+		//controllo arrocchi
+		i=0;
+		std::vector<short> pos = piece->get_position();
+		std::vector<short> tower1_pos= {pos[0], 0};
+		std::vector<short> tower2_pos= {pos[0], 7};
+		
+		if (!is_castling(pos, tower1_pos,board)){
+			moves.erase(moves.end()-1);
+			
+			if (!is_castling(pos, tower2_pos,board)){
+				moves.erase(moves.end()-1);
+			}
+		}
+		else{
+			if (!is_castling(pos, tower2_pos,board)){
+				moves.erase(moves.end()-2);
+			}
+		}
+		
         return moves;
     }
 }
