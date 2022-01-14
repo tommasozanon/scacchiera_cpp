@@ -42,5 +42,7 @@ bool is_draw();
 // scacco matto
 bool is_checkmate();
 
+// stallo, iterare nella lista dei pezzi e vedere se ci sono mosse possibili
+
 bool is_en_passant(short[2]);
 #endif
