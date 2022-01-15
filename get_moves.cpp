@@ -1,5 +1,3 @@
-
-
 #include "memory"
 #include "pieces/Piece.h"
 #include "special_moves.h"
