@@ -8,8 +8,8 @@
 
 /*Method is_check: verifies check conditions
  *input:	-vector of shorts  (where you verify if it is check)
-            -matrix of pieces (game chessboard)
-            -pieces' colour
+				-matrix of pieces (game chessboard)
+				-pieces' colour
  *output: true if is check, false otherwise
 */
 bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_ptr<Piece>>>& board, short my_color);
@@ -38,9 +38,6 @@ std::shared_ptr<Piece> promotion(std::shared_ptr<Piece> piece, char promote = 'd
 
 // patta
 bool is_draw();
-
-// scacco matto
-bool is_checkmate();
 
 // stallo, iterare nella lista dei pezzi e vedere se ci sono mosse possibili
 

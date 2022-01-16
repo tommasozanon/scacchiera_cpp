@@ -1,5 +1,6 @@
 #include "memory"
 #include "pieces/Piece.h"
+#include "pieces/King.h"
 #include "special_moves.h"
 #include <algorithm>
 #include <cctype>
@@ -44,6 +45,8 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
+		
+		
         return moves;
 		
     } else if (std::tolower(c) == 'c') {

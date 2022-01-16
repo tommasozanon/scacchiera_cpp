@@ -17,13 +17,13 @@ class Board {
   public:
     std::vector<std::shared_ptr<Piece>> white;
     std::vector<std::shared_ptr<Piece>> black;
+	std::vector<std::vector<std::shared_ptr<Piece>>> board;
 
     Board();
     // solo per ricordarmi, poi va implementato tutto nel cpp
 
     void print();
-    std::vector<std::vector<std::shared_ptr<Piece>>> board;
-
+	
     // ritorna true se lo spostamento è andato a buon fine
     bool move(std::vector<short> pos1, std::vector<short> pos2);
 
