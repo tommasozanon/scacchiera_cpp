@@ -230,6 +230,7 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
     }
     p.reset();
     return false;
+<<<<<<< HEAD
 }
 
 // ritorna vero se la promozione è andata a buon fine, falso altrimenti
@@ -305,4 +306,6 @@ void find_and_erase_piece(std::vector<std::shared_ptr<Piece>>& piece_list, std::
         }
         i++;
     }
+=======
+>>>>>>> franco
 }

@@ -8,9 +8,9 @@
 
 /*Method get_moves: verifies what are the allowed moves a piece can do in the game among them all.
  *input:	-matrix of pieces (game chessboard)
-				-the piece 
+                                -the piece
  *output: vector of shorts (all the allowed moves in the current game)
 */
-std::vector<std::vector<short>> get_moves(const std::vector<std::vector<std::shared_ptr<Piece>>>& board, const std::shared_ptr<Piece>& piece);
+std::vector<std::vector<short>> get_moves(Board& board, const std::shared_ptr<Piece>& piece);
 
 #endif

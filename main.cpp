@@ -55,7 +55,7 @@ int main() {
     pos2[1] = 3;
     std::cout << "discovery check: " << is_discovery_check(b, pos1, pos2) << std::endl;
 
-    std::vector<std::vector<short>> moves = get_moves(b.board, b.board[1][1]);
+    std::vector<std::vector<short>> moves = get_moves(b, b.board[1][1]);
     for (int i = 0; i < moves.size(); i++) {
         std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
     }
@@ -67,36 +67,47 @@ int main() {
     b.move(pos1, pos2);
     b.print();
 
+    moves = get_moves(b, b.board[5][1]);
+    for (int i = 0; i < moves.size(); i++) {
+        std::cout << "( " << moves[i][0] + 1 << ", " << moves[i][1] + 1 << ")" << std::endl;
+    }
+
     pos1[0] = 0;
     pos1[1] = 4;
     pos2[0] = 0;
     pos2[1] = 0;
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
-    pos1[0] = 6;
-    pos1[1] = 3;
-    pos2[0] = 5;
-    pos2[1] = 3;
-    std::cout << "discovery check: " << is_discovery_check(b, pos1, pos2) << std::endl;
 
-    pos1[0] = 1;
-    pos1[1] = 0;
-    pos2[0] = 7;
-    pos2[1] = 0;
+    // test alfiere, donna, re e torre (con scacco di scoperta e arrocco)
+    short n = 3;
+    short m = 4;
+    pos1[0] = 6;
+    pos1[1] = 1;
+    pos2[0] = n;
+    pos2[1] = m + 2;
+    std::vector<short> pos3{0, 1};
+    std::vector<short> pos3a{0, 2};
+    std::vector<short> pos3b{0, 5};
+    std::vector<short> pos3c{0, 6};
+    std::vector<short> pos4{n - 1, m};
+    std::vector<short> pos4a{n, m};
+    std::vector<short> pos4b{n, m + 1};
+    std::vector<short> pos4c{n, m - 1};
+    std::vector<short> pos5{7, 2};
+    std::vector<short> pos6{n - 1, m + 1};
     b.move(pos1, pos2);
-    std::cout << promotion(b, b.board[7][0], 'd') << std::endl;
+    b.move(pos3, pos4);
+    b.move(pos3a, pos4a);
+    b.move(pos3b, pos4b);
+    b.move(pos3c, pos4c);
+    b.move(pos5, pos6);
     b.print();
-	
-	//test alfiere, torre e donna
-	pos1[0] = 0;
-    pos1[1] = 2;
-    pos2[0] = 3;
-    pos2[1] = 4;
-	b.move(pos1, pos2);
-	b.print();
-    std::vector<std::vector<short>> movess = get_moves(b.board, b.board[3][4]);
+    std::vector<std::vector<short>> movess = get_moves(b, b.board[0][4]);
+    std::cout << "Mosse del re in basso:"
+              << "\n";
     for (int i = 0; i < movess.size(); i++) {
-		char a = movess[i][1]+1+96;
-        std::cout << "( " << movess[i][0] + 1 << ", " << a << ")" << std::endl;
+        std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
     }
+
     return 0;
 }
