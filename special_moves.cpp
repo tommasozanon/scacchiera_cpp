@@ -233,7 +233,7 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
 }
 
 // ritorna vero se la promozione è andata a buon fine, falso altrimenti
-bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote = 'd') {
+bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote) {
     std::vector<short> pos = piece->get_position();
     if (!(pos[0] == 0 || pos[0] == 7)) {
         std::cout << "promozione non valida, il pedone non è arrivato all'ultima riga\n";
