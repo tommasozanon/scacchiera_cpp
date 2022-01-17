@@ -109,5 +109,7 @@ int main() {
         std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
     }
 
+    std::vector<short> pos7{2, 5};
+    // std::cout << is_protected(b, pos7) << std::endl;
     return 0;
 }

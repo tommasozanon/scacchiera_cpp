@@ -12,5 +12,6 @@
  *output: vector of shorts (all the allowed moves in the current game)
 */
 std::vector<std::vector<short>> get_moves(Board& board, const std::shared_ptr<Piece>& piece);
+bool is_protected(Board, std::vector<short>, short)
 
 #endif

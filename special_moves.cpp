@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "get_moves.h"
 #include "pieces/Bishop.h"
 #include "pieces/King.h"
 #include "pieces/Knight.h"

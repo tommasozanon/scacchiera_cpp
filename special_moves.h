@@ -8,8 +8,8 @@
 
 /*Method is_check: verifies check conditions
  *input:	-vector of shorts  (where you verify if it is check)
-				-matrix of pieces (game chessboard)
-				-pieces' colour
+                                -matrix of pieces (game chessboard)
+                                -pieces' colour
  *output: true if is check, false otherwise
 */
 bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_ptr<Piece>>>& board, short my_color);

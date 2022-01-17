@@ -3,6 +3,7 @@
 
 #include "Piece.h"
 #include <vector>
+
 class Bishop : public Piece {
 
     // variabili d'istanza
