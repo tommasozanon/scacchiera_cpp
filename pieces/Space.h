@@ -8,7 +8,7 @@ class Space : public Piece {
     // variabili d'istanza
   private:
     std::vector<short> position;
-    bool first_move = true;
+    bool first_move = false;
     // int value = 0;
     char repr;
 

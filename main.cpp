@@ -109,6 +109,19 @@ int main() {
         std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
     }
 
-    std::cout << get_moves(b, b.board[7][0]).size() << std::endl;
+    pos1[0] = 7;
+    pos1[1] = 3;
+    pos2[0] = 0;
+    pos2[1] = 1;
+    b.move(pos1, pos2);
+    b.print();
+
+    // std::cout << get_moves(b, b.board[6][0]).size() << std::endl;
+    // movess = b.board[6][0]->get_allowed_moves();
+    movess = get_moves(b, b.board[7][3]);
+    for (int i = 0; i < movess.size(); i++) {
+        std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
+    }
+    std::cout << b.board[7][3]->get_position()[0] << "\n";
     return 0;
 }

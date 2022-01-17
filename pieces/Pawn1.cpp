@@ -12,10 +12,14 @@ std::vector<std::vector<short>> Pawn1::get_allowed_moves() {
     }
     pos = get_position();
     pos[0] += 1;
-    pos[1] -= 1;
-    list.push_back(pos);
-    pos[1] += 2;
-    list.push_back(pos);
+    if (pos[0] < 8) {
+        pos[1] -= 1;
+        if (pos[1] >= 0)
+            list.push_back(pos);
+        pos[1] += 2;
+        if (pos[1] < 8)
+            list.push_back(pos);
+    }
     return list;
 }
 

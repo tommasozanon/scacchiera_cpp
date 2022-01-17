@@ -503,33 +503,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 moves.erase(moves.end() - 2);
             }
         }
-        // std::cout << is_protected(b, moves[0], piece->get_color()) << std::endl;
+
         return moves;
     }
-}
-// color=colore del pezzo di cui si vogliono sapere le mosse
-bool is_protected(Board b, std::vector<short> pos, short color) {
-    std::vector<std::shared_ptr<Piece>> list_p;
-    color == 1 ? list_p = b.black : list_p = b.white;
-
-    int i = 0;
-
-    while (i < list_p.size()) {
-        std::vector<std::vector<short>> moves = get_moves(b, list_p[i]);
-        std::cout << "aaaaa" << std::endl;
-        bool check = true;
-        int c = 0;
-        while (check && c < moves.size()) {
-            if (moves[c][0] == pos[0] && moves[c][1] == pos[1]) {
-                check = false;
-            }
-            c++;
-        }
-
-        if (!check) {
-            return true;
-        }
-        i++;
-    }
-    return false;
 }
