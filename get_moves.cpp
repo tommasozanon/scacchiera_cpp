@@ -567,12 +567,24 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         short i = 0;
 		//controllo tutte le mosse tranne le ultime due (gli arrocchi)
         while (i < moves.size()-2) {
-            std::vector<short> postn{moves[i][0], moves[i][1]};
-            if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
-                moves.erase(moves.begin() + i);
-            } else {
-                i++;
-            }
+			std::vector<short> postn = {moves[i][0], moves[i][1]};
+			if (board[moves[i][0]][moves[i][1]]->to_char() != ' '){
+				//std::cout<<is_check(postn, board, piece->get_color())<<"\n";
+				if (board[moves[i][0]][moves[i][1]] ->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())){
+					moves.erase(moves.begin()+i);
+				}
+				else{
+					i++;
+				}
+			}
+			else{
+				if (is_check(postn, board, piece->get_color())){
+					moves.erase(moves.begin()+i);
+				}
+				else{
+					i++;
+				}
+			}
         }
 		//controllo arrocchi
 		i=0;
