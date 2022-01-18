@@ -81,16 +81,27 @@ int main() {
     // test alfiere, donna, re e torre (con scacco di scoperta e arrocco)
     short n = 4;
     short m = 4;
-    pos1[0] =7;
+    pos1[0] = 7;
     pos1[1] = 3;
     pos2[0] = n;
     pos2[1] = m;
     b.move(pos1, pos2);
     b.print();
+    /*
     std::vector<std::vector<short>> movess = get_moves(b, b.board[n][m]);
     for (int i = 0; i < movess.size(); i++) {
         std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1+96) << ")" << std::endl;
     }
-
+    */
+    pos1[0] = 7;
+    pos1[1] = 1;
+    pos2[0] = 5;
+    pos2[1] = 0;
+    b.move(pos1, pos2);
+    b.print();
+    std::vector<std::vector<short>> movess = get_moves(b, b.board[7][0]);
+    for (int i = 0; i < movess.size(); i++) {
+        std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
+    }
     return 0;
 }
