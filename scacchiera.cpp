@@ -1,6 +1,7 @@
 #include "Board.h"
 #include "special_moves.h"
 #include "get_moves.h"
+#include "pieces/Space.h"
 
 #include <cstdlib>
 
@@ -48,7 +49,19 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 	}
 	
 	Board chessboard;
-	
+	//test:
+	chessboard.print();
+	std::vector<std::vector<short>> movesss = get_moves(chessboard, chessboard.board[1][0]);
+    for (int i = 0; i < movesss.size(); i++) {
+        std::cout << "( " << movesss[i][0] + 1 << ", " << (char)(movesss[i][1] + 1 + 96) << ")" << std::endl;
+    }
+	/*
+	vector<short> ciao = player_move(chessboard);
+	while (ciao[0]==-1){
+		cout<<"The move is not valid, please insert a correct one!"<<"\n";
+		ciao = player_move(chessboard);
+	}
+	*/
 	if (argv[1][1]=='c' && argv[1][0]=='p'){
 		cout<<"How to play:"<<"\n";
 		cout<<"'A1 B3' to move the piece in A1 to B3"<<"\n";
@@ -110,14 +123,10 @@ vector<short> computer_move(Board b, const std::shared_ptr<Piece>& piece){
 }
 
 //player_move(Board)
-//test:
-/*vector<short> ciao = player_move(chessboard);
-	while (ciao[0]==-1){
-		cout<<"The move is not valid, please insert a correct one!"<<"\n";
-		ciao = player_move(chessboard);
-	}
-*/
+
 vector<short> player_move(Board b){
+	vector<vector<shared_ptr<Piece>>> board = b.get_board();
+	
 	vector<short> where = {-1,-1};
 	
 	string s[2];
@@ -150,8 +159,18 @@ vector<short> player_move(Board b){
 		return where;
 	}
 	
-	vector<short> ciao = {0,0};
-	return ciao;
+	//muovo il pezzo se e' possibile
+	vector<short> initial_pos = {row1, column1};	
+	vector<short> final_pos = {row2, column2};
+	
+	vector<vector<short>> all_moves = get_moves(b, board[row1][column1]);
+	for (int i=0; i<all_moves.size(); i++){
+		if(all_moves[i][0] == row2 && all_moves[i][1] == column2){
+			b.move (initial_pos, final_pos);
+			where = final_pos;
+		}
+	}
+	return where;
 }
 #include "Board.cpp" //toglie le undefined references
 #include "special_moves.cpp"

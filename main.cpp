@@ -90,9 +90,10 @@ int main() {
 	pos1[1] = 3;
 	pos2[0] = n+1;
 	pos2[1] = m+1;
-	b.move(pos1, pos2);
+	//b.move(pos1, pos2);
     b.print();
-	std::vector<std::vector<short>> movesss = get_moves(b, b.board[n][m+1]);
+	std::vector<std::vector<short>> movesss = get_moves(b, b.board[6][3]);
+	std::cout<<b.board[6][3]->to_char()<<"\n";
     for (int i = 0; i < movesss.size(); i++) {
         std::cout << "( " << movesss[i][0] + 1 << ", " << (char)(movesss[i][1] + 1 + 96) << ")" << std::endl;
     }
