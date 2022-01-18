@@ -85,131 +85,115 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
 
         // suddivisione semi-righe e semi-colonne
         while (c == moves[0][1]) {
-			if (r>moves[0][0]){
-				down_column.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
-			else{
-				up_column.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
+            if (r > moves[0][0]) {
+                down_column.push_back(moves.front());
+                moves.erase(moves.begin());
+            } else {
+                up_column.push_back(moves.front());
+                moves.erase(moves.begin());
+            }
         }
         while (r == moves[0][0]) {
-			if (c>moves[0][1]){
-				sx_row.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
-            else{
-				dx_row.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
+            if (c > moves[0][1]) {
+                sx_row.push_back(moves.front());
+                moves.erase(moves.begin());
+            } else {
+                dx_row.push_back(moves.front());
+                moves.erase(moves.begin());
+            }
         }
-<<<<<<< HEAD
+        // inversione vettori sx_row e down_column
+        for (int j = 0; j < (int)(sx_row.size() / 2); j++) {
+            std::vector<short> temp = sx_row[sx_row.size() - 1 - j];
+            sx_row[sx_row.size() - 1 - j] = sx_row[0 + j];
+            sx_row[0 + j] = temp;
+        }
+
+        for (int j = 0; j < (int)(down_column.size() / 2); j++) {
+            std::vector<short> temp = down_column[down_column.size() - 1 - j];
+            down_column[down_column.size() - 1 - j] = down_column[0 + j];
+            down_column[0 + j] = temp;
+        }
+
+        // cancellazione mosse non valide
+        int i = 0;
+        while (i < up_column.size()) {
+            if (board[up_column[i][0]][up_column[i][1]]->to_char() != ' ') {
+                if (board[up_column[i][0]][up_column[i][1]]->get_color() == piece->get_color()) {
+                    up_column.erase(up_column.begin() + i, up_column.end());
+                } else {
+                    up_column.erase(up_column.begin() + i + 1, up_column.end());
+                    i = up_column.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        while (i < down_column.size()) {
+            if (board[down_column[i][0]][down_column[i][1]]->to_char() != ' ') {
+                if (board[down_column[i][0]][down_column[i][1]]->get_color() == piece->get_color()) {
+                    down_column.erase(down_column.begin() + i, down_column.end());
+                } else {
+                    down_column.erase(down_column.begin() + i + 1, down_column.end());
+                    i = down_column.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        while (i < sx_row.size()) {
+            if (board[sx_row[i][0]][sx_row[i][1]]->to_char() != ' ') {
+                if (board[sx_row[i][0]][sx_row[i][1]]->get_color() == piece->get_color()) {
+                    sx_row.erase(sx_row.begin() + i, sx_row.end());
+                } else {
+                    sx_row.erase(sx_row.begin() + i + 1, sx_row.end());
+                    i = sx_row.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        while (i < dx_row.size()) {
+            if (board[dx_row[i][0]][dx_row[i][1]]->to_char() != ' ') {
+                if (board[dx_row[i][0]][dx_row[i][1]]->get_color() == piece->get_color()) {
+                    dx_row.erase(dx_row.begin() + i, dx_row.end());
+                } else {
+                    dx_row.erase(dx_row.begin() + i + 1, dx_row.end());
+                    i = dx_row.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        // fusione dei 4 vettori
+        while (!up_column.empty()) {
+            moves.push_back(up_column.front());
+            up_column.erase(up_column.begin());
+        }
+
+        while (!down_column.empty()) {
+            moves.push_back(down_column.front());
+            down_column.erase(down_column.begin());
+        }
+
+        while (!sx_row.empty()) {
+            moves.push_back(sx_row.back());
+            sx_row.erase(sx_row.end());
+        }
+
+        while (!dx_row.empty()) {
+            moves.push_back(dx_row.front());
+            dx_row.erase(dx_row.begin());
+        }
 
         // controllo eventuale inchiodatura
-=======
-		
-		//inversione vettori sx_row e down_column
-		for (int j=0; j<(int)(sx_row.size()/2); j++){
-			std::vector<short> temp = sx_row[sx_row.size()-1-j];
-			sx_row[sx_row.size()-1-j] = sx_row[0+j];
-			sx_row[0+j] = temp;
-		}
-		
-		for (int j=0; j<(int)(down_column.size()/2); j++){
-			std::vector<short> temp =down_column[down_column.size()-1-j];
-			down_column[down_column.size()-1-j] = down_column[0+j];
-			down_column[0+j] = temp;
-		}
-		
-       //cancellazione mosse non valide
-		int i=0;
-		while(i<up_column.size()){
-			if (board[up_column[i][0]][up_column[i][1]]->to_char() != ' '){
-				if (board[up_column[i][0]][up_column[i][1]]->get_color() == piece->get_color()){
-					up_column.erase(up_column.begin()+i, up_column.end());
-				}
-				else{
-					up_column.erase(up_column.begin()+i+1, up_column.end());
-					i=up_column.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		i=0;
-		while(i<down_column.size()){
-			if (board[down_column[i][0]][down_column[i][1]]->to_char() != ' '){
-				if (board[down_column[i][0]][down_column[i][1]]->get_color() == piece->get_color()){
-					down_column.erase(down_column.begin()+i, down_column.end());
-				}
-				else{
-					down_column.erase(down_column.begin()+i+1, down_column.end());
-					i=down_column.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		i=0;
-		while(i<sx_row.size()){
-			if (board[sx_row[i][0]][sx_row[i][1]]->to_char() != ' '){
-				if (board[sx_row[i][0]][sx_row[i][1]]->get_color() == piece->get_color()){
-					sx_row.erase(sx_row.begin()+i, sx_row.end());
-				}
-				else{
-					sx_row.erase(sx_row.begin()+i+1, sx_row.end());
-					i=sx_row.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		i=0;
-		while(i<dx_row.size()){
-			if (board[dx_row[i][0]][dx_row[i][1]]->to_char() != ' '){
-				if (board[dx_row[i][0]][dx_row[i][1]]->get_color() == piece->get_color()){
-					dx_row.erase(dx_row.begin()+i, dx_row.end());
-				}
-				else{
-					dx_row.erase(dx_row.begin()+i+1, dx_row.end());
-					i=dx_row.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		//fusione dei 4 vettori
-		while (!up_column.empty()){
-			moves.push_back(up_column.front());
-			up_column.erase(up_column.begin());
-		}
-		
-		while(!down_column.empty()){
-			moves.push_back(down_column.front());
-			down_column.erase(down_column.begin());
-		}
-		
-		while (!sx_row.empty()){
-			moves.push_back(sx_row.back());
-			sx_row.erase(sx_row.end());
-		}
-		
-		while(!dx_row.empty()){
-			moves.push_back(dx_row.front());
-			dx_row.erase(dx_row.begin());
-		}
-		
-		//controllo eventuale inchiodatura
->>>>>>> main
         i = 0;
         std::vector<short> new_pos{0, 0};
         while (i < moves.size()) {
@@ -221,13 +205,8 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-<<<<<<< HEAD
         return moves;
 
-=======
-		return moves;
-		
->>>>>>> main
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;
@@ -339,7 +318,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         return moves;
 
     } else if (std::tolower(c) == 'd') {
-		std::vector<std::vector<short>> up_column;
+        std::vector<std::vector<short>> up_column;
         std::vector<std::vector<short>> down_column;
         std::vector<std::vector<short>> dx_row;
         std::vector<std::vector<short>> sx_row;
@@ -354,26 +333,24 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
 
         // suddivisione semi-righe, semi-colonne e diagonali
         while (c == moves[0][1]) {
-			if (r>moves[0][0]){
-				down_column.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
-			else{
-				up_column.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
+            if (r > moves[0][0]) {
+                down_column.push_back(moves.front());
+                moves.erase(moves.begin());
+            } else {
+                up_column.push_back(moves.front());
+                moves.erase(moves.begin());
+            }
         }
         while (r == moves[0][0]) {
-			if (c>moves[0][1]){
-				sx_row.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
-            else{
-				dx_row.push_back(moves.front());
-				moves.erase(moves.begin());
-			}
+            if (c > moves[0][1]) {
+                sx_row.push_back(moves.front());
+                moves.erase(moves.begin());
+            } else {
+                dx_row.push_back(moves.front());
+                moves.erase(moves.begin());
+            }
         }
-		
+
         while (!moves.empty()) {
             if (moves[0][0] < r && moves[0][1] > c) {
                 low_right.push_back(moves.front());
@@ -389,85 +366,77 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 moves.erase(moves.begin());
             }
         }
-		
-		//inversione vettori sx_row e down_column
-		for (int j=0; j<(int)(sx_row.size()/2); j++){
-			std::vector<short> temp = sx_row[sx_row.size()-1-j];
-			sx_row[sx_row.size()-1-j] = sx_row[0+j];
-			sx_row[0+j] = temp;
-		}
-		
-		for (int j=0; j<(int)(down_column.size()/2); j++){
-			std::vector<short> temp =down_column[down_column.size()-1-j];
-			down_column[down_column.size()-1-j] = down_column[0+j];
-			down_column[0+j] = temp;
-		}
-		
-		//cancellazione mosse non valide
-		//semi-righe e semi-colonne
-		int i=0;
-		while(i<up_column.size()){
-			if (board[up_column[i][0]][up_column[i][1]]->to_char() != ' '){
-				if (board[up_column[i][0]][up_column[i][1]]->get_color() == piece->get_color()){
-					up_column.erase(up_column.begin()+i, up_column.end());
-				}
-				else{
-					up_column.erase(up_column.begin()+i+1, up_column.end());
-					i=up_column.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		i=0;
-		while(i<down_column.size()){
-			if (board[down_column[i][0]][down_column[i][1]]->to_char() != ' '){
-				if (board[down_column[i][0]][down_column[i][1]]->get_color() == piece->get_color()){
-					down_column.erase(down_column.begin()+i, down_column.end());
-				}
-				else{
-					down_column.erase(down_column.begin()+i+1, down_column.end());
-					i=down_column.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		i=0;
-		while(i<sx_row.size()){
-			if (board[sx_row[i][0]][sx_row[i][1]]->to_char() != ' '){
-				if (board[sx_row[i][0]][sx_row[i][1]]->get_color() == piece->get_color()){
-					sx_row.erase(sx_row.begin()+i, sx_row.end());
-				}
-				else{
-					sx_row.erase(sx_row.begin()+i+1, sx_row.end());
-					i=sx_row.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
-		
-		i=0;
-		while(i<dx_row.size()){
-			if (board[dx_row[i][0]][dx_row[i][1]]->to_char() != ' '){
-				if (board[dx_row[i][0]][dx_row[i][1]]->get_color() == piece->get_color()){
-					dx_row.erase(dx_row.begin()+i, dx_row.end());
-				}
-				else{
-					dx_row.erase(dx_row.begin()+i+1, dx_row.end());
-					i=dx_row.size();
-				}
-			}
-			else{
-				i++;
-			}
-		}
+
+        // inversione vettori sx_row e down_column
+        for (int j = 0; j < (int)(sx_row.size() / 2); j++) {
+            std::vector<short> temp = sx_row[sx_row.size() - 1 - j];
+            sx_row[sx_row.size() - 1 - j] = sx_row[0 + j];
+            sx_row[0 + j] = temp;
+        }
+
+        for (int j = 0; j < (int)(down_column.size() / 2); j++) {
+            std::vector<short> temp = down_column[down_column.size() - 1 - j];
+            down_column[down_column.size() - 1 - j] = down_column[0 + j];
+            down_column[0 + j] = temp;
+        }
+
+        // cancellazione mosse non valide
+        // semi-righe e semi-colonne
+        int i = 0;
+        while (i < up_column.size()) {
+            if (board[up_column[i][0]][up_column[i][1]]->to_char() != ' ') {
+                if (board[up_column[i][0]][up_column[i][1]]->get_color() == piece->get_color()) {
+                    up_column.erase(up_column.begin() + i, up_column.end());
+                } else {
+                    up_column.erase(up_column.begin() + i + 1, up_column.end());
+                    i = up_column.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        while (i < down_column.size()) {
+            if (board[down_column[i][0]][down_column[i][1]]->to_char() != ' ') {
+                if (board[down_column[i][0]][down_column[i][1]]->get_color() == piece->get_color()) {
+                    down_column.erase(down_column.begin() + i, down_column.end());
+                } else {
+                    down_column.erase(down_column.begin() + i + 1, down_column.end());
+                    i = down_column.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        while (i < sx_row.size()) {
+            if (board[sx_row[i][0]][sx_row[i][1]]->to_char() != ' ') {
+                if (board[sx_row[i][0]][sx_row[i][1]]->get_color() == piece->get_color()) {
+                    sx_row.erase(sx_row.begin() + i, sx_row.end());
+                } else {
+                    sx_row.erase(sx_row.begin() + i + 1, sx_row.end());
+                    i = sx_row.size();
+                }
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        while (i < dx_row.size()) {
+            if (board[dx_row[i][0]][dx_row[i][1]]->to_char() != ' ') {
+                if (board[dx_row[i][0]][dx_row[i][1]]->get_color() == piece->get_color()) {
+                    dx_row.erase(dx_row.begin() + i, dx_row.end());
+                } else {
+                    dx_row.erase(dx_row.begin() + i + 1, dx_row.end());
+                    i = dx_row.size();
+                }
+            } else {
+                i++;
+            }
+        }
         // controllo diagonali
         i = 0;
         while (i < high_right.size()) {
@@ -518,26 +487,26 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
 
         // riassemblaggio di tutte le mosse (in ordine DIVERSO da quello di input)
-		while (!up_column.empty()){
-			moves.push_back(up_column.front());
-			up_column.erase(up_column.begin());
-		}
-		
-		while(!down_column.empty()){
-			moves.push_back(down_column.front());
-			down_column.erase(down_column.begin());
-		}
-		
-		while (!sx_row.empty()){
-			moves.push_back(sx_row.back());
-			sx_row.erase(sx_row.end());
-		}
-		
-		while(!dx_row.empty()){
-			moves.push_back(dx_row.front());
-			dx_row.erase(dx_row.begin());
-		}
-		
+        while (!up_column.empty()) {
+            moves.push_back(up_column.front());
+            up_column.erase(up_column.begin());
+        }
+
+        while (!down_column.empty()) {
+            moves.push_back(down_column.front());
+            down_column.erase(down_column.begin());
+        }
+
+        while (!sx_row.empty()) {
+            moves.push_back(sx_row.back());
+            sx_row.erase(sx_row.end());
+        }
+
+        while (!dx_row.empty()) {
+            moves.push_back(dx_row.front());
+            dx_row.erase(dx_row.begin());
+        }
+
         while (!high_right.empty()) {
             moves.push_back(high_right.front());
             high_right.erase(high_right.begin());
@@ -601,6 +570,51 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 
+        i = 0;
+        std::vector<std::shared_ptr<Piece>> list_p;
+        piece->get_color() == 0 ? list_p = b.black : list_p = b.white;
+
+        while (i < moves.size()) {
+            bool check = true;
+
+            int counter = 0;
+            while (check && counter < list_p.size()) {
+                auto piece_to_check = list_p[counter];
+                if (std::tolower(piece_to_check->to_char()) != 'r') {
+                    std::vector<std::vector<short>> piece_to_check_moves = get_moves(b, piece_to_check);
+                    bool c = true;
+                    int t = 0;
+                    while (c && t < piece_to_check_moves.size()) {
+                        if (piece_to_check_moves[t][0] == moves[i][0] && piece_to_check_moves[t][1] == moves[i][1]) {
+                            c = false;
+                        }
+                        t++;
+                    }
+                    if (!c) {
+                        check = false;
+                    }
+
+                } else {
+                    std::vector<std::vector<short>> piece_to_check_moves = piece_to_check->get_allowed_moves();
+                    bool c = true;
+                    int t = 0;
+                    while (c && t < piece_to_check_moves.size()) {
+                        if (piece_to_check_moves[t][0] == moves[i][0] && piece_to_check_moves[t][1] == moves[i][1]) {
+                            c = false;
+                        }
+                        t++;
+                    }
+                    if (!c) {
+                        check = false;
+                    }
+                }
+
+                counter++;
+            }
+            if (!check) {
+                moves.erase(moves.begin() + i);
+            }
+        }
         return moves;
     }
 }
