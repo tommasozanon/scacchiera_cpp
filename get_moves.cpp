@@ -74,94 +74,142 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         return moves;
 
     } else if (std::tolower(c) == 't') {
-        std::vector<std::vector<short>> column;
-        std::vector<std::vector<short>> row;
+        std::vector<std::vector<short>> up_column;
+        std::vector<std::vector<short>> down_column;
+        std::vector<std::vector<short>> dx_row;
+        std::vector<std::vector<short>> sx_row;
 
         std::vector<short> pos = piece->get_position();
         int c = pos[1];
         int r = pos[0];
 
-        // suddivisione riga e colonna
+        // suddivisione semi-righe e semi-colonne
         while (c == moves[0][1]) {
-            column.push_back(moves.front());
-            moves.erase(moves.begin());
+			if (r>moves[0][0]){
+				down_column.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+			else{
+				up_column.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
         }
         while (r == moves[0][0]) {
-            row.push_back(moves.front());
-            moves.erase(moves.begin());
+			if (c>moves[0][1]){
+				sx_row.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+            else{
+				dx_row.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
         }
-
-        // check colonna
-        int i = 0;
-        while (i < column.size()) {
-            if (board[column[i][0]][column[i][1]]->to_char() != ' ') {
-
-                if (r > column[i][0]) {
-                    if (board[column[i][0]][column[i][1]]->get_color() == piece->get_color()) {
-                        column.erase(column.begin(), column.begin() + i + 1);
-                        i = 0;
-                    } else {
-                        column.erase(column.begin(), column.begin() + i);
-                    }
-
-                }
-
-                else {
-                    if (board[column[i][0]][column[i][1]]->get_color() == piece->get_color()) {
-                        column.erase(column.begin() + i, column.end());
-                    } else {
-                        column.erase(column.begin() + i + 1, column.end());
-                    }
-
-                    i = column.size();
-                }
-
-            } else {
-                i++;
-            }
-        }
-
-        // controllo riga
-        i = 0;
-        while (i < row.size()) {
-            if (board[row[i][0]][row[i][1]]->to_char() != ' ') {
-                if (c > row[i][1]) {
-                    if (board[row[i][0]][row[i][1]]->get_color() == piece->get_color()) {
-                        row.erase(row.begin(), row.begin() + i + 1);
-                        i = 0;
-                    } else {
-                        row.erase(row.begin(), row.begin() + i);
-                    }
-
-                }
-
-                else {
-                    if (board[row[i][0]][row[i][1]]->get_color() == piece->get_color()) {
-                        row.erase(row.begin() + i, row.end());
-                    } else {
-                        row.erase(row.begin() + i + 1, row.end());
-                    }
-
-                    i = row.size();
-                }
-
-            } else {
-                i++;
-            }
-        }
-
-        // fusione di riga e colonna finali
-        while (column.size() > 0) {
-            moves.push_back(column.front());
-            column.erase(column.begin());
-        }
-
-        while (row.size() > 0) {
-            moves.push_back(row.front());
-            row.erase(row.begin());
-        }
+<<<<<<< HEAD
 
         // controllo eventuale inchiodatura
+=======
+		
+		//inversione vettori sx_row e down_column
+		for (int j=0; j<(int)(sx_row.size()/2); j++){
+			std::vector<short> temp = sx_row[sx_row.size()-1-j];
+			sx_row[sx_row.size()-1-j] = sx_row[0+j];
+			sx_row[0+j] = temp;
+		}
+		
+		for (int j=0; j<(int)(down_column.size()/2); j++){
+			std::vector<short> temp =down_column[down_column.size()-1-j];
+			down_column[down_column.size()-1-j] = down_column[0+j];
+			down_column[0+j] = temp;
+		}
+		
+       //cancellazione mosse non valide
+		int i=0;
+		while(i<up_column.size()){
+			if (board[up_column[i][0]][up_column[i][1]]->to_char() != ' '){
+				if (board[up_column[i][0]][up_column[i][1]]->get_color() == piece->get_color()){
+					up_column.erase(up_column.begin()+i, up_column.end());
+				}
+				else{
+					up_column.erase(up_column.begin()+i+1, up_column.end());
+					i=up_column.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		i=0;
+		while(i<down_column.size()){
+			if (board[down_column[i][0]][down_column[i][1]]->to_char() != ' '){
+				if (board[down_column[i][0]][down_column[i][1]]->get_color() == piece->get_color()){
+					down_column.erase(down_column.begin()+i, down_column.end());
+				}
+				else{
+					down_column.erase(down_column.begin()+i+1, down_column.end());
+					i=down_column.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		i=0;
+		while(i<sx_row.size()){
+			if (board[sx_row[i][0]][sx_row[i][1]]->to_char() != ' '){
+				if (board[sx_row[i][0]][sx_row[i][1]]->get_color() == piece->get_color()){
+					sx_row.erase(sx_row.begin()+i, sx_row.end());
+				}
+				else{
+					sx_row.erase(sx_row.begin()+i+1, sx_row.end());
+					i=sx_row.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		i=0;
+		while(i<dx_row.size()){
+			if (board[dx_row[i][0]][dx_row[i][1]]->to_char() != ' '){
+				if (board[dx_row[i][0]][dx_row[i][1]]->get_color() == piece->get_color()){
+					dx_row.erase(dx_row.begin()+i, dx_row.end());
+				}
+				else{
+					dx_row.erase(dx_row.begin()+i+1, dx_row.end());
+					i=dx_row.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		//fusione dei 4 vettori
+		while (!up_column.empty()){
+			moves.push_back(up_column.front());
+			up_column.erase(up_column.begin());
+		}
+		
+		while(!down_column.empty()){
+			moves.push_back(down_column.front());
+			down_column.erase(down_column.begin());
+		}
+		
+		while (!sx_row.empty()){
+			moves.push_back(sx_row.back());
+			sx_row.erase(sx_row.end());
+		}
+		
+		while(!dx_row.empty()){
+			moves.push_back(dx_row.front());
+			dx_row.erase(dx_row.begin());
+		}
+		
+		//controllo eventuale inchiodatura
+>>>>>>> main
         i = 0;
         std::vector<short> new_pos{0, 0};
         while (i < moves.size()) {
@@ -173,8 +221,13 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
+<<<<<<< HEAD
         return moves;
 
+=======
+		return moves;
+		
+>>>>>>> main
     } else if (std::towlower(c) == 'a') {
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;
@@ -286,8 +339,10 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         return moves;
 
     } else if (std::tolower(c) == 'd') {
-        std::vector<std::vector<short>> column;
-        std::vector<std::vector<short>> row;
+		std::vector<std::vector<short>> up_column;
+        std::vector<std::vector<short>> down_column;
+        std::vector<std::vector<short>> dx_row;
+        std::vector<std::vector<short>> sx_row;
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;
         std::vector<std::vector<short>> low_right;
@@ -297,16 +352,28 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         int c = pos[1];
         int r = pos[0];
 
-        // suddivisione riga, colonna e diagonali
+        // suddivisione semi-righe, semi-colonne e diagonali
         while (c == moves[0][1]) {
-            column.push_back(moves.front());
-            moves.erase(moves.begin());
+			if (r>moves[0][0]){
+				down_column.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+			else{
+				up_column.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
         }
         while (r == moves[0][0]) {
-            row.push_back(moves.front());
-            moves.erase(moves.begin());
+			if (c>moves[0][1]){
+				sx_row.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
+            else{
+				dx_row.push_back(moves.front());
+				moves.erase(moves.begin());
+			}
         }
-
+		
         while (!moves.empty()) {
             if (moves[0][0] < r && moves[0][1] > c) {
                 low_right.push_back(moves.front());
@@ -322,66 +389,85 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 moves.erase(moves.begin());
             }
         }
-
-        // controllo colonna
-        int i = 0;
-        while (i < column.size()) {
-            if (board[column[i][0]][column[i][1]]->to_char() != ' ') {
-
-                if (r > column[i][0]) {
-                    if (board[column[i][0]][column[i][1]]->get_color() == piece->get_color()) {
-                        column.erase(column.begin(), column.begin() + i + 1);
-                        i = 0;
-                    } else {
-                        column.erase(column.begin(), column.begin() + i);
-                    }
-
-                }
-
-                else {
-                    if (board[column[i][0]][column[i][1]]->get_color() == piece->get_color()) {
-                        column.erase(column.begin() + i, column.end());
-                    } else {
-                        column.erase(column.begin() + i + 1, column.end());
-                    }
-
-                    i = column.size();
-                }
-
-            } else {
-                i++;
-            }
-        }
-
-        // controllo riga
-        i = 0;
-        while (i < row.size()) {
-            if (board[row[i][0]][row[i][1]]->to_char() != ' ') {
-                if (c > row[i][1]) {
-                    if (board[row[i][0]][row[i][1]]->get_color() == piece->get_color()) {
-                        row.erase(row.begin(), row.begin() + i + 1);
-                        i = 0;
-                    } else {
-                        row.erase(row.begin(), row.begin() + i);
-                    }
-
-                }
-
-                else {
-                    if (board[row[i][0]][row[i][1]]->get_color() == piece->get_color()) {
-                        row.erase(row.begin() + i, row.end());
-                    } else {
-                        row.erase(row.begin() + i + 1, row.end());
-                    }
-
-                    i = row.size();
-                }
-
-            } else {
-                i++;
-            }
-        }
-
+		
+		//inversione vettori sx_row e down_column
+		for (int j=0; j<(int)(sx_row.size()/2); j++){
+			std::vector<short> temp = sx_row[sx_row.size()-1-j];
+			sx_row[sx_row.size()-1-j] = sx_row[0+j];
+			sx_row[0+j] = temp;
+		}
+		
+		for (int j=0; j<(int)(down_column.size()/2); j++){
+			std::vector<short> temp =down_column[down_column.size()-1-j];
+			down_column[down_column.size()-1-j] = down_column[0+j];
+			down_column[0+j] = temp;
+		}
+		
+		//cancellazione mosse non valide
+		//semi-righe e semi-colonne
+		int i=0;
+		while(i<up_column.size()){
+			if (board[up_column[i][0]][up_column[i][1]]->to_char() != ' '){
+				if (board[up_column[i][0]][up_column[i][1]]->get_color() == piece->get_color()){
+					up_column.erase(up_column.begin()+i, up_column.end());
+				}
+				else{
+					up_column.erase(up_column.begin()+i+1, up_column.end());
+					i=up_column.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		i=0;
+		while(i<down_column.size()){
+			if (board[down_column[i][0]][down_column[i][1]]->to_char() != ' '){
+				if (board[down_column[i][0]][down_column[i][1]]->get_color() == piece->get_color()){
+					down_column.erase(down_column.begin()+i, down_column.end());
+				}
+				else{
+					down_column.erase(down_column.begin()+i+1, down_column.end());
+					i=down_column.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		i=0;
+		while(i<sx_row.size()){
+			if (board[sx_row[i][0]][sx_row[i][1]]->to_char() != ' '){
+				if (board[sx_row[i][0]][sx_row[i][1]]->get_color() == piece->get_color()){
+					sx_row.erase(sx_row.begin()+i, sx_row.end());
+				}
+				else{
+					sx_row.erase(sx_row.begin()+i+1, sx_row.end());
+					i=sx_row.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
+		
+		i=0;
+		while(i<dx_row.size()){
+			if (board[dx_row[i][0]][dx_row[i][1]]->to_char() != ' '){
+				if (board[dx_row[i][0]][dx_row[i][1]]->get_color() == piece->get_color()){
+					dx_row.erase(dx_row.begin()+i, dx_row.end());
+				}
+				else{
+					dx_row.erase(dx_row.begin()+i+1, dx_row.end());
+					i=dx_row.size();
+				}
+			}
+			else{
+				i++;
+			}
+		}
         // controllo diagonali
         i = 0;
         while (i < high_right.size()) {
@@ -431,16 +517,27 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 
-        // riassemblamento di tutte le mosse (in ordine DIVERSO da quello di input)
-        while (column.size() > 0) {
-            moves.push_back(column.front());
-            column.erase(column.begin());
-        }
-
-        while (row.size() > 0) {
-            moves.push_back(row.front());
-            row.erase(row.begin());
-        }
+        // riassemblaggio di tutte le mosse (in ordine DIVERSO da quello di input)
+		while (!up_column.empty()){
+			moves.push_back(up_column.front());
+			up_column.erase(up_column.begin());
+		}
+		
+		while(!down_column.empty()){
+			moves.push_back(down_column.front());
+			down_column.erase(down_column.begin());
+		}
+		
+		while (!sx_row.empty()){
+			moves.push_back(sx_row.back());
+			sx_row.erase(sx_row.end());
+		}
+		
+		while(!dx_row.empty()){
+			moves.push_back(dx_row.front());
+			dx_row.erase(dx_row.begin());
+		}
+		
         while (!high_right.empty()) {
             moves.push_back(high_right.front());
             high_right.erase(high_right.begin());
