@@ -79,45 +79,40 @@ int main() {
     std::cout << "castling: " << is_castling(pos1, pos2, b.board) << std::endl;
 
     // test alfiere, donna, re e torre (con scacco di scoperta e arrocco)
-    short n =2;
+    short n = 2;
     short m = 2;
     pos1[0] = 0;
     pos1[1] = 4;
     pos2[0] = n;
-    pos2[1] = m+2;
+    pos2[1] = m + 1;
     b.move(pos1, pos2);
-	pos1[0] = 6;
-	pos1[1] = 4;
-	pos2[0] = n+1;
-	pos2[1] = m+2;
-	b.move(pos1, pos2);
-	pos1[0] = 6;
-	pos1[1] = 5;
-	pos2[0] = n+2;
-	pos2[1] = m+3;
-	b.move(pos1, pos2);
+    pos1[0] = 6;
+    pos1[1] = 3;
+    pos2[0] = n + 1;
+    pos2[1] = m + 1;
+    // b.move(pos1, pos2);
     b.print();
-	std::vector<std::vector<short>> movesss = get_moves(b, b.board[n][m+2]);
-	std::cout<<b.board[6][3]->to_char()<<"\n";
+    std::vector<std::vector<short>> movesss = get_moves(b, b.board[6][7]);
+    std::cout << b.board[6][7]->to_char() << "\n";
     for (int i = 0; i < movesss.size(); i++) {
         std::cout << "( " << movesss[i][0] + 1 << ", " << (char)(movesss[i][1] + 1 + 96) << ")" << std::endl;
     }
-    /*
-    std::vector<std::vector<short>> movess = get_moves(b, b.board[n][m]);
-    for (int i = 0; i < movess.size(); i++) {
-        std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1+96) << ")" << std::endl;
-    }
-    
-    pos1[0] = 7;
-    pos1[1] = 1;
-    pos2[0] = 5;
-    pos2[1] = 0;
-    b.move(pos1, pos2);
-    b.print();
-    std::vector<std::vector<short>> movess = get_moves(b, b.board[7][0]);
+
+    std::vector<std::vector<short>> movess = b.board[6][7]->get_allowed_moves();
     for (int i = 0; i < movess.size(); i++) {
         std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
     }
-	*/
+    /*
+        pos1[0] = 7;
+        pos1[1] = 1;
+        pos2[0] = 5;
+        pos2[1] = 0;
+        b.move(pos1, pos2);
+        b.print();
+        std::vector<std::vector<short>> movess = get_moves(b, b.board[7][0]);
+        for (int i = 0; i < movess.size(); i++) {
+            std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
+        }
+            */
     return 0;
 }
