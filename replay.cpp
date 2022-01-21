@@ -88,6 +88,7 @@ int main(int args, char* argv[]){
 			out<<line<<"\n";
 		}
 		in.close();
+		out.close();
 	}
 	
 	return 1;
