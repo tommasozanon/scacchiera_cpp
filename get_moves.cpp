@@ -13,7 +13,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
     std::vector<std::vector<short>> moves = piece->get_allowed_moves();
 
     if (std::tolower(c) == 'p') {
-        
+        /*
         short i = 0;
         while (i < moves.size()) {
 
@@ -32,7 +32,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
 		
-		//controllo eventuale inchiodatura
+		controllo eventuale inchiodatura
 		i = 0;
 		std::vector<short> pos = piece->get_position();
         std::vector<short> new_pos{0, 0};
@@ -45,7 +45,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-		
+		*/
 		
         return moves;
 		
@@ -567,12 +567,24 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         short i = 0;
 		//controllo tutte le mosse tranne le ultime due (gli arrocchi)
         while (i < moves.size()-2) {
-            std::vector<short> postn{moves[i][0], moves[i][1]};
-            if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
-                moves.erase(moves.begin() + i);
-            } else {
-                i++;
-            }
+			std::vector<short> postn = {moves[i][0], moves[i][1]};
+			if (board[moves[i][0]][moves[i][1]]->to_char() != ' '){
+				//std::cout<<is_check(postn, board, piece->get_color())<<"\n";
+				if (board[moves[i][0]][moves[i][1]] ->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())){
+					moves.erase(moves.begin()+i);
+				}
+				else{
+					i++;
+				}
+			}
+			else{
+				if (is_check(postn, board, piece->get_color())){
+					moves.erase(moves.begin()+i);
+				}
+				else{
+					i++;
+				}
+			}
         }
 		//controllo arrocchi
 		i=0;
@@ -590,6 +602,18 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
 		else{
 			if (!is_castling(pos, tower2_pos,board)){
 				moves.erase(moves.end()-2);
+			}
+		}
+		
+		//controllo che i pezzi che posso mangiare non siano coperti
+		i=0;
+		while(i<moves.size()){
+			std::vector<short> temp = {moves[i][0], moves[i][1]};
+			if(is_discovery_check(b, pos, temp)){
+				moves.erase(moves.begin()+i);
+			}
+			else{
+				i++;
 			}
 		}
 		

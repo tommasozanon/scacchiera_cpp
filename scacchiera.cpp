@@ -1,6 +1,7 @@
 #include "Board.h"
 #include "special_moves.h"
 #include "get_moves.h"
+#include "pieces/Space.h"
 
 #include <cstdlib>
 
@@ -22,10 +23,11 @@ King
 */
 
 //methods (besides main)
-vector<short> computer_move(Board b, const std::shared_ptr<Piece>& piece);
 void start_playerVScomputer_game(Board b, int playerColour);
-bool is_checkmate();
+vector<short> player_move(Board b);
+vector<short> computer_move(Board b, const std::shared_ptr<Piece>& piece);
 
+//main
 int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funziona
 	
 	//controllo lunghezza input
@@ -47,7 +49,19 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 	}
 	
 	Board chessboard;
-
+	//test:
+	chessboard.print();
+	std::vector<std::vector<short>> movesss = get_moves(chessboard, chessboard.board[1][0]);
+    for (int i = 0; i < movesss.size(); i++) {
+        std::cout << "( " << movesss[i][0] + 1 << ", " << (char)(movesss[i][1] + 1 + 96) << ")" << std::endl;
+    }
+	/*
+	vector<short> ciao = player_move(chessboard);
+	while (ciao[0]==-1){
+		cout<<"The move is not valid, please insert a correct one!"<<"\n";
+		ciao = player_move(chessboard);
+	}
+	*/
 	if (argv[1][1]=='c' && argv[1][0]=='p'){
 		cout<<"How to play:"<<"\n";
 		cout<<"'A1 B3' to move the piece in A1 to B3"<<"\n";
@@ -64,6 +78,7 @@ void start_playerVScomputer_game(Board b, int playerColour){
 	if (playerColour==0){ //gioca prima il player
 	/*
 		while (!is_checkmate() && !is_draw()){
+			
 			player_move();
 			
 			srand(time(NULL));
@@ -107,5 +122,55 @@ vector<short> computer_move(Board b, const std::shared_ptr<Piece>& piece){
 	return possible_moves.at(final_pos);
 }
 
+//player_move(Board)
+
+vector<short> player_move(Board b){
+	vector<vector<shared_ptr<Piece>>> board = b.get_board();
+	
+	vector<short> where = {-1,-1};
+	
+	string s[2];
+	cin>>s[0];
+	cin>>s[1];
+	
+	//controllo input--------
+	//numero di stringhe inserite (boh)
+	int dimension=sizeof(s)/sizeof(s[0]);
+	
+	if (dimension!=2){
+		cout<<"rtvgy"<<"\n";
+		return where;
+	}
+	//validita'
+	if (s[0].length()!=2 || s[1].length()!=2){
+		return where;
+	}
+	
+	int column1 = tolower(s[0][0])-97;
+	int row1 = s[0][1]-49;
+	int column2 = tolower(s[1][0])-97;
+	int row2 = s[1][1]-49;
+	
+	if (column1<0 || column2<0 || column1>7 || column2>7){
+		return where;
+	}
+	
+	if (row1<0 || row2<0 || row1>7 || row2>7){
+		return where;
+	}
+	
+	//muovo il pezzo se e' possibile
+	vector<short> initial_pos = {row1, column1};	
+	vector<short> final_pos = {row2, column2};
+	
+	vector<vector<short>> all_moves = get_moves(b, board[row1][column1]);
+	for (int i=0; i<all_moves.size(); i++){
+		if(all_moves[i][0] == row2 && all_moves[i][1] == column2){
+			b.move (initial_pos, final_pos);
+			where = final_pos;
+		}
+	}
+	return where;
+}
 #include "Board.cpp" //toglie le undefined references
 #include "special_moves.cpp"
