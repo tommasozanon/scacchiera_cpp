@@ -101,4 +101,12 @@ special_moves
 
 target_link_libraries(replay
 Board
+Rook
+Pawn6
+Pawn1
+Bishop
+Queen
+Knight
+King
+Space
 )
