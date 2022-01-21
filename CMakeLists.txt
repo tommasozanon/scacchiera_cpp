@@ -67,6 +67,10 @@ add_executable(scacchiera
 scacchiera.cpp
 )
 
+add_executable(replay
+replay.cpp
+)
+
 target_link_libraries(main
 Board
 Rook
@@ -93,4 +97,8 @@ King
 Space
 get_moves
 special_moves
+)
+
+target_link_libraries(replay
+Board
 )
