@@ -215,7 +215,7 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
     board.board[pos1[0]][pos1[1]]->get_color() == 1 ? list_p = board.black : list_p = board.white;
 
     auto p = list_p[0];
-    if (board.move(pos1, pos2)) {
+    if (board.discovery_move(pos1, pos2)) {
         short i = 0;
         while (i < list_p.size()) {
             p = list_p[i];
