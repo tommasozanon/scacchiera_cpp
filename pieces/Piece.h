@@ -7,42 +7,50 @@ class Piece {
   public:
     Piece(const Piece&) = delete;
     Piece& operator=(Piece const&);
-    /*Metodo to_char: restituisce la rappresentazione del pezzo
-     * input: -
-     * output: la lettera rappresentativa del pezzo
-     */
+	
+/*Method to_char: returns the rapresentation of the piece
+  * input: -
+  * output: piece's char
+*/
     virtual char to_char() = 0;
 
-    /*Metodo set_pos: permette di impostare una nuova posizione
-     * input: un array di short (la nuova posizione)
-     * output: -
-     */
+/*Method set_pos: sets a new position 
+  * input: an array of shorts (the new position)
+  * output: -
+ */
     virtual void set_pos(std::vector<short>) = 0;
 
-    /* Metodo get_allowed_moves: studia le possibili mosse di un pezzo
-     * input: -
-     * output: tutte le posizioni possibili che il pezzo può fare in una scacchiera senza altri pezzi
-     */
+ /* Metodo get_allowed_moves: studies all the possible moves of the piece
+   * input: -
+   * output: matrix (Nx2) of shorts (all the possible moves of the piece)
+*/
     virtual std::vector<std::vector<short>> get_allowed_moves() = 0;
 
-    /*Metodo get_position: restituisce la posizione attuale del pezzo
-     * input: -
-     * output: la posizione attuale del pezzo
-     */
+/*Metodo get_position: return the current position of the piece
+  * input: -
+  * output: array of (2) shorts (current position of the piece)
+*/
     virtual std::vector<short> get_position() = 0;
+	
+/*Method get_color: return the color
+  *input: -
+  *output: 0 if the piece is white, 1 if it is black
+*/
     virtual int get_color() = 0;
+	
+/*Mehod is_first_move: for the piece within is important, return if this is the first move
+ *input: -
+ *output: true if this is the first move, false otherwise
+*/ 
     virtual bool is_first_move() = 0;
 
-    // variabili d'istanza
   protected:
     std::vector<short> position;
     bool first_move = true;
     int value;
     char repr;
-    int color; // 0 se bianco, 1 se nero
+    int color;
     Piece(){};
-
-    //~Piece(){};
 };
 
 #endif

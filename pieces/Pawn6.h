@@ -5,18 +5,18 @@
 #include <vector>
 
 class Pawn6 : public Piece {
-    // variabili d'istanza
+
   protected:
     std::vector<short> position;
     bool first_move = true;
-    int value = 1;
     char repr;
     int color;
 
-  public:
+public:
+//Contructor
     Pawn6(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
-    // Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
+// Methods: see Piece.h for all their description
     char to_char() { return repr; }
 
     std::vector<std::vector<short>> get_allowed_moves();

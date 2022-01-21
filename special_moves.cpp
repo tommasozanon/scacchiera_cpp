@@ -306,3 +306,4 @@ void find_and_erase_piece(std::vector<std::shared_ptr<Piece>>& piece_list, std::
         i++;
     }
 }
+

@@ -4,19 +4,18 @@
 #include "Piece.h"
 #include <vector>
 class King : public Piece {
-
-    // varibili d'istanza
+	
   private:
     std::vector<short> position;
     bool first_move = true;
-    // int value = 0;
     char repr;
     int color;
 
-  public:
+public:
+//Constructor
     King(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
-    // Metodi derivati da Piece: si consulti Piece per la descrizione di ciascuno di essi
+// Methods: see Piece.h for all their description
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
     char to_char() { return repr; }
