@@ -18,7 +18,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
 
             if (piece->get_position()[1] == moves[i][1]) {
                 if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
-                    moves.erase(moves.begin() + i);
+                    moves.erase(moves.begin() + i, moves.end()-1);
                 } else {
                     i++;
                 }
