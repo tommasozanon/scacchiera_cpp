@@ -11,10 +11,10 @@ class Space : public Piece {
     char repr;
 
   public:
-//Constructor
+    // Constructor
     Space(std::vector<short> pos, char c) : position{pos[0], pos[1]}, repr{c} {};
 
-// Methods: see Piece.h for all their description
+    // Methods: see Piece.h for all their description
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
     char to_char() { return repr; }

@@ -162,18 +162,12 @@ bool is_check(std::vector<short> pos, const std::vector<std::vector<std::shared_
         }
     }
 
-    /*
-    for (int i = 0; i < allowed_moves.size(); i++) {
-        std::cout << "(" << allowed_moves[i][0] + 1 << ", " << allowed_moves[i][1] + 1 << ")\n";
-    }
-    */
     for (short i = 0; i < allowed_moves.size(); i++) {
         auto piece = board[allowed_moves[i][0]][allowed_moves[i][1]];
         std::vector<std::vector<short>> piece_moves = piece->get_allowed_moves();
         short a = 0;
-
         while (a < piece_moves.size()) {
-
+            std::cout << piece_moves[a][0] + 1 << " | " << piece_moves[a][1] + 1 << "\n";
             if (piece_moves[a][0] == pos[0] && piece_moves[a][1] == pos[1] && piece->get_color() != my_color) {
                 return true;
             }
@@ -307,3 +301,54 @@ void find_and_erase_piece(std::vector<std::shared_ptr<Piece>>& piece_list, std::
     }
 }
 
+// il colore del re che voglio verificare
+bool is_checkmate(Board& b, short color) {
+
+    std::vector<std::shared_ptr<Piece>> list_p;
+    color == 1 ? list_p = b.black : list_p = b.white;
+
+    // get king's pointer
+
+    std::shared_ptr<Piece> king;
+    short i = 0;
+
+    while (i < list_p.size()) {
+        if (std::tolower(list_p[i]->to_char()) == 'r') {
+            king = list_p[i];
+            i = list_p.size();
+        }
+        i++;
+    }
+
+    // check if king is under check
+    if (!(is_check(king->get_position(), b.board, king->get_color()))) {
+        return false;
+    }
+
+    // checking if the king can move in any square
+    std::vector<std::vector<short>> king_moves = king->get_allowed_moves();
+    i = 0;
+    while (i < king_moves.size()) {
+        std::cout << "king_moves: " << king_moves[i][0] + 1 << " | " << king_moves[i][1] + 1 << "\n";
+        if (!(is_check(king_moves[i], b.board, king->get_color()))) {
+            return false;
+        }
+        i++;
+    }
+    /*
+                // check if any piece can avoid the check
+                i = 0;
+                while (i < list_p.size()) {
+                    auto piece = list_p[i];
+                    std::vector<std::vector<short>> piece_moves = piece->get_allowed_moves();
+                    short c = 0;
+                    while (c < piece_moves.size()) {
+                        if (!(is_check(piece_moves[c], board.board, piece->get_color()))) {
+                            return false;
+                        }
+                        c++;
+                    }
+                }
+                */
+    return true;
+}
