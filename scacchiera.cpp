@@ -3,10 +3,10 @@
 #include "get_moves.h"
 
 #include <cstdlib>
-
 #include <string>
 #include <vector>
 #include <iostream>
+
 using namespace std;
 
 
@@ -30,7 +30,7 @@ creazione del file log (mossa valida da salvare nel file dopo il check, una per 
 
 
 //methods (besides main)
-void start_playerVScomputer_game(Board b, int playerColour);
+void playerVScomputer_game(Board b, int playerColour);
 vector<short> player_move(Board b);
 vector<short> computer_move(Board b, const shared_ptr<Piece>& piece);
 
@@ -58,18 +58,14 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 			cout<<"'pc' ---> player vs computer"<<"\n";//cout di prova
 			Board chessboard;
 			chessboard.print();
-			/*test:
-			cout<<chessboard.board[1][0]->to_char()<<"\n";
-			vector<vector<short>> moves = get_moves(chessboard, chessboard.board[1][0]);
-    		for (int i = 0; i < moves.size(); i++) {
-        	cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << endl;
-    		}*/
 			cout<<"How to play:"<<"\n";
 			cout<<"Write for example 'A1 B3' to move the piece from A1 to B3"<<"\n";	
 			cout<<"Write 'XX XX' to see the chessboard with all the pieces"<<"\n";
 			cout<<"ATTENTION: any other string with differnt structure won't be accepted"<<"\n";
 
-			start_playerVScomputer_game(chessboard, chessboard.board[0][0]->get_color());
+			player_move(chessboard);
+
+			//playerVScomputer_game(chessboard, chessboard.board[0][0]->get_color());
 
 			break;
 		}
@@ -80,40 +76,44 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 			break;
 		}
 
-	}
-/*
-	vector<short> ciao = player_move(chessboard);
-	while (ciao[0]==-1){
-		cout<<"The move is not valid, please insert a correct one!"<<"\n";
-		ciao = player_move(chessboard);
-	}
-*/	
+	}	
 	return 0;
 	
 }
 
 
-void start_playerVScomputer_game(Board b, int playerColour){
+void playerVScomputer_game(Board b, int playerColour){
 /*	if (playerColour==0){ //gioca prima il player
 		while (!is_checkmate() && !is_draw()){
 			
-			player_move();
+			player_move(b);
 			
 			srand(time(NULL));
 			int random_piece = rand()%b.black.size();
 			computer_move(b, b.black.at(random_piece));
+
+			b.print();
 		}
-		if (is_checkmate()){}
-		if (is_draw()){}
+		//if (is_checkmate()){}
+		//if (is_draw()){}
 	}
 	else{ //gioca prima il computer
-		while (!is_checkmate() && !is_draw()){ -->metodi non ancora scritti, danno undefined reference
-			computer_move();
-			player_move();
+		while (!is_checkmate() && !is_draw()){ //-->metodi non ancora scritti, danno undefined reference
+			
+			srand(time(NULL));
+			int random_piece = rand()%b.white.size();
+			computer_move(b, b.white.at(random_piece));
+
+			//modifico b prima di pasarla a player_move 
+			b.move();
+
+			player_move(b);
+
+			b.print();
 		}
 		
-		if (is_checkmate()){}
-		if (is_draw()){}
+		//if (is_checkmate()){}
+		//if (is_draw()){}
 	
 	}*/
 }
@@ -126,7 +126,9 @@ void start_playerVScomputer_game(Board b, int playerColour){
 			 o la posizione di partenza se il pezzo non ha mosse;
 */
 // NON HO TESTATO NULLA
-vector<short> computer_move(Board b, const std::shared_ptr<Piece>& piece){
+
+//computer_move
+vector<short> computer_move(Board b, const shared_ptr<Piece>& piece){
 	vector<vector<short>> possible_moves = get_moves(b, piece);
 	
 	if (possible_moves.size()<=0) {return piece->get_position();}
@@ -138,16 +140,16 @@ vector<short> computer_move(Board b, const std::shared_ptr<Piece>& piece){
 }
 
 //player_move(Board)
-
 vector<short> player_move(Board b){
 	vector<vector<shared_ptr<Piece>>> board = b.get_board();
 	
 	vector<short> where = {-1,-1};
 	
-	/*controllo che l'input sia di cinque caratteri LNSLN (lettera, numero,sapzio, lettera, numero)
+	/*controllo che l'input sia di cinque caratteri LNSLN (lettera, numero, spazio, lettera, numero)
 	obbligatoriamente così da aver le condizioni rispettate sempre per il check della validità e per il
 	passaggio al file log per il replay
 	*/
+
 	string s[2];
 	cin>>s[0];
 	cin>>s[1];
@@ -191,5 +193,6 @@ vector<short> player_move(Board b){
 	}
 	return where;
 }
-#include "Board.cpp" //toglie le undefined references
+//remove undefined references
+#include "Board.cpp" 
 #include "special_moves.cpp"
