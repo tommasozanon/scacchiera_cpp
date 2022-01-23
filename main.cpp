@@ -114,10 +114,12 @@ int main() {
     pos2[0] = 5;
     pos2[1] = 2;
     b.move(pos1, pos2);
+    /*
     pos1[0] = 0;
     pos1[1] = 4;
     pos2[0] = 3;
     pos2[1] = 3;
+    */
     b.move(pos1, pos2);
     pos1[0] = 0;
     pos1[1] = 0;
@@ -147,7 +149,10 @@ int main() {
     b.move(pos1, pos2);
     b.print();
     std::cout << b.last_move[0] << " " << b.last_move[1] << "\n";
-
+    std::vector<std::vector<short>> moves = get_moves(b, b.board[3][6]);
+    for (int i = 0; i < moves.size(); i++) {
+        std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
+    }
     /*
 std::vector<std::vector<short>> movess = b.board[6][7]->get_allowed_moves();
 for (int i = 0; i < movess.size(); i++) {

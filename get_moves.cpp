@@ -31,9 +31,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
             }
         }
-        for (int i = 0; i < moves.size(); i++) {
-            std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
-        }
+
         // controllo eventuale inchiodatura
         i = 0;
         std::vector<short> pos = piece->get_position();
@@ -54,17 +52,19 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         if (piece->get_position()[0] == 3) {
             if (std::tolower(b.last_move[1][0]) == 'p') {
 
-                if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 97)) {
+                if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 98)) {
                     x = ((int)(b.last_move[0][3])) - 97;
 
-                } else if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 95)) {
-                    x = ((int)(b.last_move[0][3])) - 95;
+                } else if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 96)) {
+                    x = ((int)(b.last_move[0][3])) - 96;
+                    std::cout << " bbbbbb " << std::endl;
                 }
                 a[0] = 2;
                 a[1] = x;
                 std::cout << x << std::endl;
                 moves.push_back(a);
             }
+            return moves;
         } else if (piece->get_position()[0] == 4) {
             if (std::tolower(b.last_move[1][0]) == 'p') {
 
@@ -82,7 +82,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
 
         return moves;
-
     } else if (std::tolower(c) == 'c') { // cavallo-----------------------------
         short i = 0;
         while (i < moves.size()) {
@@ -107,7 +106,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
         return moves;
-
     } else if (std::tolower(c) == 't') { // torre------------------------------------
         std::vector<std::vector<short>> up_column;
         std::vector<std::vector<short>> down_column;
@@ -241,7 +239,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
         return moves;
-
     } else if (std::towlower(c) == 'a') { // alfiere--------------------------------------------------------
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;
@@ -351,7 +348,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
         return moves;
-
     } else if (std::tolower(c) == 'd') { // regina-------------------------------------------------
         std::vector<std::vector<short>> up_column;
         std::vector<std::vector<short>> down_column;
@@ -575,7 +571,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             }
         }
         return moves;
-
     } else if (std::tolower(c) == 'r') { // re-------------------------------------------------------------
         short i = 0;
         std::vector<short> pos = piece->get_position();
