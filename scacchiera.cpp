@@ -1,7 +1,7 @@
 #include "Board.h"
 #include "special_moves.h"
 #include "get_moves.h"
-//#include "draw.h"
+#include "draw.h"
 
 #include <cstdlib>
 #include <string>
@@ -29,6 +29,8 @@ vector<string> computerVScomputer_game(Board b, int playerColour);
 string player_move(Board& b);
 string computer_move(Board& b, const shared_ptr<Piece>& piece);
 string converter(int a);
+int Board_hashcode(Board& b);
+bool fifty_move_rule(); //se per 50 mosse non si mangiano pezzi o non si muovono pedoni
 
 //main
 int main (int argc, char*  argv[]){
@@ -41,7 +43,8 @@ int main (int argc, char*  argv[]){
 		
 		return 0;
 	}
-
+	
+	
 	//controllo validità input
 	switch (argv[1][0]){
 		case 'c':{
@@ -63,8 +66,13 @@ int main (int argc, char*  argv[]){
 				cout<<"Enter the name of the file where you want to save the replay:"<<"\n";
 				string file;
 				cin>>file;
-
-
+				ofstream log {file};
+				if (!log){
+					cout<<"can't open output file\n";
+				}
+				for(int i=0; i<game.size(); i++){
+					log<<game[i]<<"\n";
+				}
 			}
 
 			break;
@@ -80,7 +88,7 @@ int main (int argc, char*  argv[]){
 			cout<<"ATTENTION: any other string with differnt structure won't be accepted"<<"\n";
 
 			vector<string> game = playerVScomputer_game(chessboard, chessboard.board[0][0]->get_color());
-
+			
 			for(int i=0; i<game.size(); i++){
 				cout<<game[i]<<"\n";
 			}
@@ -95,7 +103,13 @@ int main (int argc, char*  argv[]){
 				cout<<"Enter the name of the file where you want to save the replay:"<<"\n";
 				string file;
 				cin>>file;
-
+				ofstream log {file};
+				if (!log){
+					cout<<"can't open output file\n";
+				}
+				for(int i=0; i<game.size(); i++){
+					log<<game[i]<<"\n";
+				}
 			}
 
 			break;
@@ -117,12 +131,19 @@ int main (int argc, char*  argv[]){
 
 vector<string> playerVScomputer_game(Board b, int playerColour){
 	int i=0;
+	vector<int> boards_in_the_game; 
+	bool check;
 	if (playerColour==0){ 
 		//play the player first
 		cout<<"You play first"<<"\n";
 		vector<string> move;
+		
+		//the vector stocks all the board's hashcode. If a hashcode is repeated 3 times the game ends in draw
+		//(threefold_repetition rule)
+		//'check' is true when there aren't three identical boards, false otherwise
+		
 
-		while (i<2){
+		while (i<2 || check){
 			
 			//player move
 			string move1 = player_move(b);
@@ -130,8 +151,20 @@ vector<string> playerVScomputer_game(Board b, int playerColour){
 
 				move1 = player_move(b);
 			}
-
 			move.push_back(move1);
+			
+			boards_in_the_game.push_back(Board_hashcode(b)); //threefold_repetition rule
+			int count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
+			
 			
 			//computer move
 			srand(time(NULL));
@@ -143,8 +176,20 @@ vector<string> playerVScomputer_game(Board b, int playerColour){
 				random_piece = rand()%b.black.size();
 				move2 = computer_move(b, b.black.at(random_piece));
 			}
-
 			move.push_back(move2);
+			
+			boards_in_the_game.push_back(Board_hashcode(b));//threefold_repetition rule
+			count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
+			
 			b.print();
 			i++;
 		}
@@ -159,7 +204,7 @@ vector<string> playerVScomputer_game(Board b, int playerColour){
 
 		vector<string> move;
 
-		while (i<2){
+		while (i<2 || check){
 			
 			//computer move
 			srand(time(NULL));
@@ -171,8 +216,20 @@ vector<string> playerVScomputer_game(Board b, int playerColour){
 				random_piece = rand()%b.white.size();
 				move1 = computer_move(b, b.white.at(random_piece));
 			}
-
 			move.push_back(move1);
+			
+			boards_in_the_game.push_back(Board_hashcode(b)); //threefold_repetition rule
+			int count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
+			
 			b.print();
 
 			//player move
@@ -181,9 +238,19 @@ vector<string> playerVScomputer_game(Board b, int playerColour){
 
 				move2 = player_move(b);
 			}
-
 			move.push_back(move2);
-
+			
+			boards_in_the_game.push_back(Board_hashcode(b));//threefold_repetition rule
+			count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
 			i++;
 		}
 		
@@ -194,13 +261,15 @@ vector<string> playerVScomputer_game(Board b, int playerColour){
 }
 
 vector<string> computerVScomputer_game(Board b, int playerColour){
-	int i=0;
+	int i=0; //checks if the game has too much moves played (limit-->100+100=200)
+	vector<int> boards_in_the_game; 
+	bool check;
 	if (playerColour==0){ 
 		//computer1 play first
 
 		vector<string> move;
 
-		while (i<4){
+		while (i<50 || check){
 			
 			//computer1 move
 			srand(time(NULL));
@@ -212,9 +281,21 @@ vector<string> computerVScomputer_game(Board b, int playerColour){
 				random_wpiece = rand()%b.white.size();
 				move1 = computer_move(b, b.white.at(random_wpiece));
 			}
-
 			move.push_back(move1);
 			cout<<"Computer1 move"<<"\n";
+			
+			boards_in_the_game.push_back(Board_hashcode(b));//threefold_repetition rule
+			int count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				cout<<boards_in_the_game[x]<<"\n";
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
 			b.print();
 
 			//computer2 move
@@ -226,11 +307,24 @@ vector<string> computerVScomputer_game(Board b, int playerColour){
 				random_bpiece = rand()%b.black.size();
 				move2 = computer_move(b, b.black.at(random_bpiece));
 			}
-			
 			move.push_back(move2);
 			cout<<"Computer2 move"<<"\n";
+			
+			boards_in_the_game.push_back(Board_hashcode(b));//threefold_repetition rule
+			count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				cout<<boards_in_the_game[x]<<"\n";
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
 			b.print();
 			i++;
+			cout<<i<<"--------------------------------------------\n";
 		}
 		//if (is_checkmate()){}
 		//if (is_draw()){}
@@ -239,7 +333,7 @@ vector<string> computerVScomputer_game(Board b, int playerColour){
 	else{ 
 		//computer2 play first
 		vector<string> move;
-		while (i<4){
+		while (i<50 || check){
 			
 			//computer2 move
 			srand(time(NULL));
@@ -251,9 +345,21 @@ vector<string> computerVScomputer_game(Board b, int playerColour){
 				random_wpiece = rand()%b.white.size();
 				move1 = computer_move(b, b.white.at(random_wpiece));
 			}
-
 			move.push_back(move1);
 			cout<<"Computer2 move"<<"\n";
+			
+			boards_in_the_game.push_back(Board_hashcode(b));//threefold_repetition rule
+			int count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				cout<<boards_in_the_game[x]<<"\n";
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
 			b.print();
 
 			//computer1 move
@@ -265,12 +371,25 @@ vector<string> computerVScomputer_game(Board b, int playerColour){
 				random_bpiece = rand()%b.black.size();
 				move2 = computer_move(b, b.black.at(random_bpiece));
 			}
-			
 			move.push_back(move2);
 			cout<<"Computer1 move"<<"\n";
+			
+			boards_in_the_game.push_back(Board_hashcode(b));//threefold_repetition rule
+			count=0;
+			for(int x=0; x<boards_in_the_game.size(); x++){
+				cout<<boards_in_the_game[x]<<"\n";
+				if (Board_hashcode(b)==boards_in_the_game[x])
+					count++;
+				
+				if(count>=3){
+					check=false;
+					break;
+				}
+			}
 			b.print();
 
 			i++;
+			cout<<i<<"--------------------------------------------\n";
 		}
 		
 		//if (is_checkmate()){}
@@ -380,6 +499,21 @@ string converter(int a){
 		case 7: return "H";
 			break;
 	}
+}
+
+int Board_hashcode(Board& b){
+	vector<vector<shared_ptr<Piece>>> board = b.get_board();
+	int hash=0;
+	for (int i=0; i<board.size(); i++){
+		for (int j=0; j<board[i].size(); j++){
+			if (board[i][j]->to_char() != ' '){
+				int value = (int)board[i][j]->to_char();
+				int temp = (i+1)*(j+1)*value;
+				hash+=temp;
+			}
+		}
+	}
+	return hash;
 }
 //remove undefined references
 #include "Board.cpp" 
