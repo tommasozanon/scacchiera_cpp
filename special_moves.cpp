@@ -422,9 +422,6 @@ bool is_checkmate(Board& b, short color) {
                     allowed_moves.erase(allowed_moves.end() - 1);
                 }
 
-                for (int i = 0; i < allowed_moves.size(); i++) {
-                    std::cout << "( " << allowed_moves[i][0] + 1 << ", " << (char)(allowed_moves[i][1] + 1 + 96) << ")" << std::endl;
-                }
                 int a = 0;
                 while (a < allowed_moves.size()) {
                     if (is_check(allowed_moves[a], b.board, list_opponent[i]->get_color())) {

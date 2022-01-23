@@ -4,6 +4,7 @@
 
 #include "pieces/Piece.h"
 #include <memory>
+#include <string>
 #include <vector>
 
 class Board {
@@ -14,6 +15,7 @@ class Board {
     std::vector<std::shared_ptr<Piece>> white;
     std::vector<std::shared_ptr<Piece>> black;
     std::vector<std::vector<std::shared_ptr<Piece>>> board;
+    std::vector<std::string> last_move{"", ""};
 
     /*Constructor of Board: initialize a chessboard with all the pieces in the right place
      *input: -

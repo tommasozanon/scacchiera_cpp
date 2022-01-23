@@ -130,11 +130,23 @@ int main() {
     pos2[0] = 4;
     pos2[1] = 5;
     b.move(pos1, pos2);
-    /**/
-    // provare il cavallo
+
     b.print();
     std::cout << "is it checkmate? : \n"
               << is_checkmate(b, b.board[3][3]->get_color()) << std::endl;
+
+    pos1[0] = 6;
+    pos1[1] = 6;
+    pos2[0] = 3;
+    pos2[1] = 6;
+    b.move(pos1, pos2);
+    pos1[0] = 1;
+    pos1[1] = 7;
+    pos2[0] = 3;
+    pos2[1] = 7;
+    b.move(pos1, pos2);
+    b.print();
+    std::cout << b.last_move[0] << " " << b.last_move[1] << "\n";
 
     /*
 std::vector<std::vector<short>> movess = b.board[6][7]->get_allowed_moves();

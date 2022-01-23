@@ -31,7 +31,9 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
             }
         }
-
+        for (int i = 0; i < moves.size(); i++) {
+            std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
+        }
         // controllo eventuale inchiodatura
         i = 0;
         std::vector<short> pos = piece->get_position();
@@ -45,6 +47,40 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
+
+        // en passant
+        std::vector<short> a{0, 0};
+        short x = 0;
+        if (piece->get_position()[0] == 3) {
+            if (std::tolower(b.last_move[1][0]) == 'p') {
+
+                if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 97)) {
+                    x = ((int)(b.last_move[0][3])) - 97;
+
+                } else if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 95)) {
+                    x = ((int)(b.last_move[0][3])) - 95;
+                }
+                a[0] = 2;
+                a[1] = x;
+                std::cout << x << std::endl;
+                moves.push_back(a);
+            }
+        } else if (piece->get_position()[0] == 4) {
+            if (std::tolower(b.last_move[1][0]) == 'p') {
+
+                if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 97)) {
+                    x = ((int)(b.last_move[0][3])) - 97;
+
+                } else if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 95)) {
+                    x = ((int)(b.last_move[0][3])) - 95;
+                }
+                a[0] = 5;
+                a[1] = x;
+                std::cout << x << std::endl;
+                moves.push_back(a);
+            }
+        }
+
         return moves;
 
     } else if (std::tolower(c) == 'c') { // cavallo-----------------------------

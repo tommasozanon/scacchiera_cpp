@@ -141,10 +141,15 @@ void Board::initialize_board(int white_n, int black_n) {
     }
 }
 
+std::string convert(std::vector<short> pos1, std::vector<short> pos2) {
+    std::string res = (char)(pos1[1] + 1 + 96) + std::to_string(pos1[0] + 1) + " " + (char)(pos2[1] + 1 + 96) + std::to_string(pos2[0] + 1);
+    return res;
+}
+
 bool Board::move(std::vector<short> pos1, std::vector<short> pos2) {
 
     auto piece = board[pos1[0]][pos1[1]];
-
+    convert(pos1, pos2);
     if (board[pos2[0]][pos2[1]]->to_char() == ' ') {
 
         board[pos2[0]][pos2[1]]->set_pos(pos1);
@@ -182,10 +187,13 @@ bool Board::move(std::vector<short> pos1, std::vector<short> pos2) {
         piece->set_pos(pos2);
 
         board[pos2[0]][pos2[1]] = piece;
-        piece.reset();
+        // piece.reset();
     } else {
         return false;
     }
+
+    last_move[0] = convert(pos1, pos2);
+    last_move[1] = piece->to_char();
     return true;
 }
 
