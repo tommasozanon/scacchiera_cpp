@@ -1,11 +1,13 @@
 #include "Board.h"
 #include "special_moves.h"
 #include "get_moves.h"
+//#include "draw.h"
 
 #include <cstdlib>
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -21,21 +23,15 @@ using namespace std;
 #include "pieces/Space.h"
 */
 
-/*
-controllo lunghezza stringa
-mosse del giocatore/computer numero di stringhe
-gestione della partita cc
-creazione del file log (mossa valida da salvare nel file dopo il check, una per ogni riga per il replay)
-*/
-
-
 //methods (besides main)
-void playerVScomputer_game(Board b, int playerColour);
+vector<string> playerVScomputer_game(Board b, int playerColour);
+vector<string> computerVScomputer_game(Board b, int playerColour);
 string player_move(Board& b);
 string computer_move(Board& b, const shared_ptr<Piece>& piece);
+string converter(int a);
 
 //main
-int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funziona
+int main (int argc, char*  argv[]){
 	
 	//controllo lunghezza input
 	if (argc!=2){ 
@@ -49,13 +45,33 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 	//controllo validità input
 	switch (argv[1][0]){
 		case 'c':{
+			
 			//indirizzamento game computer vs computer
-			cout<<"'cc' ---> computer vs computer"<<"\n"; //cout di prova
+			cout<<"'cc' ---> computer vs computer"<<"\n";
+
+			Board chessboard;
+
+			vector<string> game = computerVScomputer_game(chessboard, chessboard.board[0][0]->get_color());
+
+			//request to see the replay
+			cout<<"Do you want to see the replay af the all game? s/n ";
+			string replay;
+			cin>>replay;
+
+			if(replay[0] == 's'){
+
+				cout<<"Enter the name of the file where you want to save the replay:"<<"\n";
+				string file;
+				cin>>file;
+
+
+			}
+
 			break;
 		}
 		case 'p':{
+			
 			//indirizzamento game player vs computer
-			cout<<"'pc' ---> player vs computer"<<"\n";//cout di prova
 			Board chessboard;
 			chessboard.print();
 			cout<<"How to play:"<<"\n";
@@ -63,11 +79,30 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 			cout<<"Write 'XX XX' to see the chessboard with all the pieces"<<"\n";
 			cout<<"ATTENTION: any other string with differnt structure won't be accepted"<<"\n";
 
-			playerVScomputer_game(chessboard, chessboard.board[0][0]->get_color());
+			vector<string> game = playerVScomputer_game(chessboard, chessboard.board[0][0]->get_color());
+
+			for(int i=0; i<game.size(); i++){
+				cout<<game[i]<<"\n";
+			}
+
+			//request to see the replay
+			cout<<"Do you want to see the replay af the all game? s/n ";
+			string replay;
+			cin>>replay;
+
+			if(replay[0] == 's'){
+
+				cout<<"Enter the name of the file where you want to save the replay:"<<"\n";
+				string file;
+				cin>>file;
+
+			}
 
 			break;
 		}
 		default: {
+			
+			//error message for invalid input
 			cout<<"Insert a valid string to play a game:"<<"\n";
 			cout<<"'cc' ---> computer vs computer"<<"\n";
 			cout<<"'pc' ---> player vs computer"<<"\n";
@@ -80,17 +115,25 @@ int main (int argc, char*  argv[]){ // tutto cio' che ho scritto nel main funzio
 }
 
 
-void playerVScomputer_game(Board b, int playerColour){
+vector<string> playerVScomputer_game(Board b, int playerColour){
 	int i=0;
-	if (playerColour==0){ //gioca prima il player
-		while (i<4){
+	if (playerColour==0){ 
+		//play the player first
+		cout<<"You play first"<<"\n";
+		vector<string> move;
+
+		while (i<2){
 			
+			//player move
 			string move1 = player_move(b);
 			while (move1[0] == '-'){
 
 				move1 = player_move(b);
 			}
+
+			move.push_back(move1);
 			
+			//computer move
 			srand(time(NULL));
 			int random_piece = rand()%b.black.size();
 			string move2 = computer_move(b, b.black.at(random_piece));
@@ -101,15 +144,24 @@ void playerVScomputer_game(Board b, int playerColour){
 				move2 = computer_move(b, b.black.at(random_piece));
 			}
 
+			move.push_back(move2);
 			b.print();
 			i++;
 		}
 		//if (is_checkmate()){}
 		//if (is_draw()){}
+
+		return move;
 	}
-	else{ //gioca prima il computer
-		while (i<4){
+	else{ 
+		//play the computer first
+		cout<<"Play the computer first"<<"\n";
+
+		vector<string> move;
+
+		while (i<2){
 			
+			//computer move
 			srand(time(NULL));
 			int random_piece = rand()%b.white.size();
 			string move1 = computer_move(b, b.white.at(random_piece));
@@ -120,21 +172,110 @@ void playerVScomputer_game(Board b, int playerColour){
 				move1 = computer_move(b, b.white.at(random_piece));
 			}
 
+			move.push_back(move1);
 			b.print();
 
+			//player move
 			string move2 = player_move(b);
 			while (move2[0] == '-'){
 
 				move2 = player_move(b);
 			}
 
-			if (i==3){b.print();}
+			move.push_back(move2);
+
 			i++;
 		}
 		
 		//if (is_checkmate()){}
 		//if (is_draw()){}
-	
+		return move;
+	}
+}
+
+vector<string> computerVScomputer_game(Board b, int playerColour){
+	int i=0;
+	if (playerColour==0){ 
+		//computer1 play first
+
+		vector<string> move;
+
+		while (i<4){
+			
+			//computer1 move
+			srand(time(NULL));
+			int random_wpiece = rand()%b.white.size();
+			string move1 = computer_move(b, b.white.at(random_wpiece));
+			while (move1[0] == '-'){
+
+				srand(time(NULL));
+				random_wpiece = rand()%b.white.size();
+				move1 = computer_move(b, b.white.at(random_wpiece));
+			}
+
+			move.push_back(move1);
+			cout<<"Computer1 move"<<"\n";
+			b.print();
+
+			//computer2 move
+			int random_bpiece = rand()%b.black.size();
+			string move2 = computer_move(b, b.black.at(random_bpiece));
+			while (move2[0] == '-'){
+
+				srand(time(NULL));
+				random_bpiece = rand()%b.black.size();
+				move2 = computer_move(b, b.black.at(random_bpiece));
+			}
+			
+			move.push_back(move2);
+			cout<<"Computer2 move"<<"\n";
+			b.print();
+			i++;
+		}
+		//if (is_checkmate()){}
+		//if (is_draw()){}
+		return move;
+	}
+	else{ 
+		//computer2 play first
+		vector<string> move;
+		while (i<4){
+			
+			//computer2 move
+			srand(time(NULL));
+			int random_wpiece = rand()%b.white.size();
+			string move1 = computer_move(b, b.white.at(random_wpiece));
+			while (move1[0] == '-'){
+
+				srand(time(NULL));
+				random_wpiece = rand()%b.white.size();
+				move1 = computer_move(b, b.white.at(random_wpiece));
+			}
+
+			move.push_back(move1);
+			cout<<"Computer2 move"<<"\n";
+			b.print();
+
+			//computer1 move
+			int random_bpiece = rand()%b.black.size();
+			string move2 = computer_move(b, b.black.at(random_bpiece));
+			while (move2[0] == '-'){
+
+				srand(time(NULL));
+				random_bpiece = rand()%b.black.size();
+				move2 = computer_move(b, b.black.at(random_bpiece));
+			}
+			
+			move.push_back(move2);
+			cout<<"Computer1 move"<<"\n";
+			b.print();
+
+			i++;
+		}
+		
+		//if (is_checkmate()){}
+		//if (is_draw()){}
+		return move;
 	}
 }
 
@@ -143,42 +284,54 @@ string computer_move(Board& b, const shared_ptr<Piece>& piece){
 	vector<vector<short>> possible_moves = get_moves(b, piece);
 	
 	string where = "----";
+
+	//check possible moves
 	if (possible_moves.size()<=0) {return where;}
 
+	//get initial position
 	vector<short> initial_pos = piece->get_position();
-
+	
+	//set final position
 	srand(time(NULL));
 	int final = rand()%possible_moves.size();
 	vector<short> final_pos = possible_moves.at(final);
 
+	//move the piece
 	b.move(initial_pos, final_pos);
 
-	string i1 = to_string(initial_pos.at(0));
-	string i2 = to_string(initial_pos.at(1));
-	string f1 = to_string(final_pos.at(0));
-	string f2 = to_string(final_pos.at(1));
-	where = i1+i2+ " " +f1+f2;
+	string i1 = to_string(initial_pos.at(0)+1);
+	string i2 = converter(initial_pos.at(1));
+	string f1 = to_string(final_pos.at(0)+1);
+	string f2 = converter(final_pos.at(1));
+	where = i2+i1+ " " +f2+f1;
 
 	return where;
 }
 
-//player_move(Board)
+//player_move
 string player_move(Board& b){
 	vector<vector<shared_ptr<Piece>>> board = b.get_board();
 	
 	string where = "----";
 
-	//aquisizione da input della stringa con le coordinate di partenza e arrivo del pezzo
+	//acquisition of initial position
 	string positions[2];
 	string p1 = positions[0];
 	string p2 = positions[1];
 	cin>>p1;
 	cin>>p2;
 
-	//controllo input
+	//check input
 	if (p1.length()!=2 || p2.length()!=2){
 
-		cout<<"Input errato"<<"\n";
+		cout<<"Invalid input"<<"\n";
+		return where;
+	}
+
+	//request chessboard print from the player
+	if (p1 == "XX" && p2 == "XX"){
+
+		b.print();
 		return where;
 	}
 
@@ -187,22 +340,14 @@ string player_move(Board& b){
 	int column2 = tolower(p2[0])-97;
 	int row2 = p2[1]-49;
 
-	if (column1<0 || column2<0 || column1>7 || column2>7){
-
-
-		return where;
-	}
+	//check validity of row and column
+	if (column1<0 || column2<0 || column1>7 || column2>7){return where;}
 	
-	if (row1<0 || row2<0 || row1>7 || row2>7){
-
-
-		return where;
-	}
+	if (row1<0 || row2<0 || row1>7 || row2>7){return where;}
 	
-	//muovo il pezzo se e' possibile
+	//chech and move the piece
 	vector<short> initial_pos {row1, column1};	
 	vector<short> final_pos {row2, column2};
-	
 	
 	vector<vector<short>> all_moves = get_moves(b, board[row1][column1]);
 	for (int i=0; i<all_moves.size(); i++){
@@ -213,6 +358,28 @@ string player_move(Board& b){
 	}
 
 	return where;
+}
+
+string converter(int a){
+
+	switch (a){
+		case 0: return "A";
+			break;
+		case 1: return "B";
+			break;
+		case 2: return "C";
+			break;
+		case 3: return "D";
+			break;
+		case 4: return "E";
+			break;
+		case 5: return "F";
+			break;
+		case 6: return "G";
+			break;
+		case 7: return "H";
+			break;
+	}
 }
 //remove undefined references
 #include "Board.cpp" 
