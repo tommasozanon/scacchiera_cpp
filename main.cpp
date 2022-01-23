@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "draw.h"
 #include "get_moves.h"
 #include "pieces/Space.h"
 #include "special_moves.h"
@@ -185,3 +186,5 @@ std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) <
 */
     return 0;
 }
+
+#include "draw.cpp"
