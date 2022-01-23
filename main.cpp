@@ -158,7 +158,7 @@ int main() {
     pos2[0] = 0;
     pos2[1] = 7;
     b.move(pos1, pos2);
-    promotion(b, b.board[pos2[0]][pos2[1]]);
+    promotion(b, b.board[pos2[0]][pos2[1]], 'd');
     b.print();
     // std::cout << b.last_move[0] << " " << b.last_move[1] << "\n";
     // std::vector<std::vector<short>> moves = get_moves(b, b.board[3][4]);
