@@ -1,3 +1,5 @@
+//Margherita Cattapan, 2008798
+
 #include "Board.h"
 #include "draw.h"
 #include "get_moves.h"
@@ -11,20 +13,9 @@
 
 using namespace std;
 
-/*Da includere se servono
-#include "pieces/Bishop.h"
-#include "pieces/King.h"
-#include "pieces/Knight.h"
-#include "pieces/Pawn1.h"
-#include "pieces/Pawn6.h"
-#include "pieces/Queen.h"
-#include "pieces/Rook.h"
-#include "pieces/Space.h"
-*/
-
 // methods (besides main)
-vector<string> playerVScomputer_game(Board b, int playerColour);
-vector<string> computerVScomputer_game(Board b, int playerColour);
+vector<string> playerVScomputer_game(Board& b, int playerColour);
+vector<string> computerVScomputer_game(Board& b, int playerColour);
 string player_move(Board& b);
 string computer_move(Board& b, const shared_ptr<Piece>& piece);
 string converter(int a);
@@ -131,16 +122,18 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-vector<string> playerVScomputer_game(Board b, int playerColour) {
+vector<string> playerVScomputer_game(Board& b, int playerColour) {
     int i = 0;
-    bool check;
+    bool check=true;
+	bool check1 = true;
+	bool check2 = true;
     if (playerColour == 0) {
         // play the player first
         cout << "You play first"
              << "\n";
         vector<string> move;
 
-        while (i < 2 || check) {
+        while (check || check1 || check2) {
 
             // player move
             string move1 = player_move(b);
@@ -149,7 +142,10 @@ vector<string> playerVScomputer_game(Board b, int playerColour) {
                 move1 = player_move(b);
             }
             move.push_back(move1);
-
+			
+			check = is_checkmate(b, 0);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
             // computer move
             srand(time(NULL));
             int random_piece = rand() % b.black.size();
@@ -161,21 +157,24 @@ vector<string> playerVScomputer_game(Board b, int playerColour) {
                 move2 = computer_move(b, b.black.at(random_piece));
             }
             move.push_back(move2);
-
+			check = is_checkmate(b, 1);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
             i++;
         }
-        // if (is_checkmate()){}
-        // if (is_draw()){}
+		return move;
+	}
+		
 
-        return move;
-    } else {
+        
+	else {
         // play the computer first
         cout << "Play the computer first"
              << "\n";
 
         vector<string> move;
 
-        while (i < 2 || check) {
+        while (check || check1 || check2) {
 
             // computer move
             srand(time(NULL));
@@ -188,6 +187,10 @@ vector<string> playerVScomputer_game(Board b, int playerColour) {
                 move1 = computer_move(b, b.white.at(random_piece));
             }
             move.push_back(move1);
+			
+			check = is_checkmate(b, 0);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
 
             // player move
             string move2 = player_move(b);
@@ -196,24 +199,28 @@ vector<string> playerVScomputer_game(Board b, int playerColour) {
                 move2 = player_move(b);
             }
             move.push_back(move2);
+			
+			check = is_checkmate(b, 1);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
             i++;
         }
 
-        // if (is_checkmate()){}
-        // if (is_draw()){}
         return move;
     }
 }
 
-vector<string> computerVScomputer_game(Board b, int playerColour) {
+vector<string> computerVScomputer_game(Board& b, int playerColour) {
     int i = 0; // checks if the game has too much moves played (limit-->100+100=200)
-    bool check;
+    bool check=true;
+	bool check1 = true;
+	bool check2 = true;
     if (playerColour == 0) {
         // computer1 play first
 
         vector<string> move;
 
-        while (i < 50 || check) {
+        while (i < 50 || check || check1 || check2) {
 
             // computer1 move
             srand(time(NULL));
@@ -226,7 +233,11 @@ vector<string> computerVScomputer_game(Board b, int playerColour) {
                 move1 = computer_move(b, b.white.at(random_wpiece));
             }
             move.push_back(move1);
-
+			
+			check = is_checkmate(b, 0);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
+			
             // computer2 move
             int random_bpiece = rand() % b.black.size();
             string move2 = computer_move(b, b.black.at(random_bpiece));
@@ -237,16 +248,17 @@ vector<string> computerVScomputer_game(Board b, int playerColour) {
                 move2 = computer_move(b, b.black.at(random_bpiece));
             }
             move.push_back(move2);
-
+			
+			check = is_checkmate(b, 1);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
             i++;
         }
-        // if (is_checkmate()){}
-        // if (is_draw()){}
         return move;
     } else {
         // computer2 play first
         vector<string> move;
-        while (i < 50 || check) {
+        while (i < 50 || check || check1 || check2) {
 
             // computer2 move
             srand(time(NULL));
@@ -259,7 +271,10 @@ vector<string> computerVScomputer_game(Board b, int playerColour) {
                 move1 = computer_move(b, b.white.at(random_wpiece));
             }
             move.push_back(move1);
-
+			
+			check = is_checkmate(b, 0);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
             // computer1 move
             int random_bpiece = rand() % b.black.size();
             string move2 = computer_move(b, b.black.at(random_bpiece));
@@ -270,12 +285,11 @@ vector<string> computerVScomputer_game(Board b, int playerColour) {
                 move2 = computer_move(b, b.black.at(random_bpiece));
             }
             move.push_back(move2);
-
+			check = is_checkmate(b, 1);
+			check1 = stalemate(b);
+			check2 = dead_position(b);
             i++;
         }
-
-        // if (is_checkmate()){}
-        // if (is_draw()){}
         return move;
     }
 }
@@ -401,5 +415,6 @@ string converter(int a) {
     }
 }
 // remove undefined references
-#include "Board.cpp"
+//#include "Board.cpp"
 #include "special_moves.cpp"
+#include "draw.cpp"
