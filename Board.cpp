@@ -145,13 +145,44 @@ std::string convert(std::vector<short> pos1, std::vector<short> pos2) {
     std::string res = (char)(pos1[1] + 1 + 96) + std::to_string(pos1[0] + 1) + " " + (char)(pos2[1] + 1 + 96) + std::to_string(pos2[0] + 1);
     return res;
 }
+void Board::find_and_erase_piece(std::shared_ptr<Piece> piece) {
+    std::vector<std::shared_ptr<Piece>> piece_list;
+    piece->get_color() == 0 ? piece_list = white : piece_list = black;
+    short i = 0;
+    while (i < piece_list.size()) {
+        if (piece == piece_list[i]) {
+            piece_list[i].reset();
+            piece_list.erase(piece_list.begin() + i);
+            i = piece_list.size();
+        }
+        i++;
+    }
+}
 
 bool Board::move(std::vector<short> pos1, std::vector<short> pos2) {
 
     auto piece = board[pos1[0]][pos1[1]];
     convert(pos1, pos2);
+    // en passant
+    std::vector<short> del{0, 0};
     if (board[pos2[0]][pos2[1]]->to_char() == ' ') {
+        if (board[pos2[0]][pos2[1]]->get_position()[1] != board[pos1[0]][pos1[1]]->get_position()[1]) {
+            if (pos2[0] > pos1[0]) {
+                auto piece = board[pos2[0] - 1][pos2[1]];
+                find_and_erase_piece(piece);
+                std::vector<short> del{pos2[0], pos2[1]};
+                del[0]--;
 
+                board[pos2[0] - 1][pos2[1]] = std::shared_ptr<Piece>(new Space(del, ' '));
+            } else if (pos2[0] < pos1[0]) {
+                auto piece = board[pos2[0] + 1][pos2[1]];
+                find_and_erase_piece(piece);
+                std::vector<short> del{pos2[0], pos2[1]};
+                del[0]++;
+
+                board[pos2[0] + 1][pos2[1]] = std::shared_ptr<Piece>(new Space(del, ' '));
+            }
+        }
         board[pos2[0]][pos2[1]]->set_pos(pos1);
         board[pos1[0]][pos1[1]]->set_pos(pos2);
 

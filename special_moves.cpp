@@ -223,7 +223,7 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
             }
             i++;
         }
-        if (is_check(pos2, board.board, p->get_color())) {
+        if (is_check(p->get_position(), board.board, p->get_color())) {
             return true;
         }
     }

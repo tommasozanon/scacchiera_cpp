@@ -15,6 +15,8 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
 
     if (std::tolower(c) == 'p') { // pedone-----------------------------------------
         short i = 0;
+        short dir;
+        moves[0][0] > piece->get_position()[0] ? dir = 1 : dir = -1;
         while (i < moves.size()) {
 
             if (piece->get_position()[1] == moves[i][1]) {
@@ -31,7 +33,9 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
             }
         }
-
+        for (int i = 0; i < moves.size(); i++) {
+            std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
+        }
         // controllo eventuale inchiodatura
         i = 0;
         std::vector<short> pos = piece->get_position();
@@ -45,19 +49,20 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 i++;
             }
         }
-
+        for (int i = 0; i < moves.size(); i++) {
+            std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
+        }
         // en passant
         std::vector<short> a{0, 0};
         short x = 0;
-        if (piece->get_position()[0] == 3) {
+        if (dir == -1 && piece->get_position()[0] == 3) {
             if (std::tolower(b.last_move[1][0]) == 'p') {
 
                 if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 98)) {
                     x = ((int)(b.last_move[0][3])) - 97;
 
                 } else if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 96)) {
-                    x = ((int)(b.last_move[0][3])) - 96;
-                    std::cout << " bbbbbb " << std::endl;
+                    x = ((int)(b.last_move[0][3])) - 97;
                 }
                 a[0] = 2;
                 a[1] = x;
@@ -65,7 +70,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 moves.push_back(a);
             }
             return moves;
-        } else if (piece->get_position()[0] == 4) {
+        } else if (dir == 1 && piece->get_position()[0] == 4) {
             if (std::tolower(b.last_move[1][0]) == 'p') {
 
                 if ((char)(b.last_move[0][3]) == (char)(piece->get_position()[1] + 97)) {

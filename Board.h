@@ -10,6 +10,7 @@
 class Board {
   private:
     void initialize_board(int, int);
+    void find_and_erase_piece(std::shared_ptr<Piece> piece);
 
   public:
     std::vector<std::shared_ptr<Piece>> white;
