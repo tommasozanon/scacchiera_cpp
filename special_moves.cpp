@@ -380,13 +380,11 @@ bool is_checkmate(Board& b, short color) {
                 if (iter < (int)allowed_moves.size() / 7) {
                     allowed_moves.erase(allowed_moves.begin() + 7, allowed_moves.end());
                 }
-
                 c = 0;
                 // inserisco nella lista delle mosse possibili anche la posizione del pezzo che può fare queste mosse
                 while (c < allowed_moves.size()) {
                     if (allowed_moves[c][0] >= list_opponent[i]->get_position()[0] && allowed_moves[c][1] >= list_opponent[i]->get_position()[1]) {
                         allowed_moves.insert(allowed_moves.begin() + c, list_opponent[i]->get_position());
-
                         c = allowed_moves.size();
                     }
                     c++;
@@ -411,13 +409,10 @@ bool is_checkmate(Board& b, short color) {
                         }
                     } else {
                         if ((allowed_moves[c][0] == king->get_position()[0] && allowed_moves[c][1] == king->get_position()[1]) || (allowed_moves[c][0] == list_opponent[i]->get_position()[0] && allowed_moves[c][1] == list_opponent[i]->get_position()[1])) {
-
                             allowed_moves.erase(allowed_moves.begin() + c + 1, allowed_moves.end());
-
                             c = allowed_moves.size();
                         }
                     }
-
                     c++;
                 }
                 if (allowed_moves[0][0] == king->get_position()[0] && allowed_moves[0][1] == king->get_position()[1]) {

@@ -42,11 +42,4 @@ bool is_checkmate(Board& board, short color);
  *output: true if we can promote, false otherwise
  */
 bool promotion(Board& b, std::shared_ptr<Piece> piece, char promote = 'd');
-
-// patta
-bool is_draw();
-
-// stallo, iterare nella lista dei pezzi e vedere se ci sono mosse possibili
-
-bool is_en_passant(short[2]);
 #endif
