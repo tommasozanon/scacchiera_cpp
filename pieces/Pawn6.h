@@ -1,3 +1,4 @@
+// Giulio Piccolin, 2008817
 #ifndef PAWN7_H
 #define PAWN7_H
 
@@ -12,11 +13,11 @@ class Pawn6 : public Piece {
     char repr;
     int color;
 
-public:
-//Contructor
+  public:
+    // Contructor
     Pawn6(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
-// Methods: see Piece.h for all their description
+    // Methods: see Piece.h for all their description
     char to_char() { return repr; }
 
     std::vector<std::vector<short>> get_allowed_moves();

@@ -1,3 +1,4 @@
+// Margherita Cattapan, 2008798
 #ifndef BISHOP_H
 #define BISHOP_H
 
@@ -11,11 +12,11 @@ class Bishop : public Piece {
     char repr;
     int color;
 
-public:
-//Constructor
+  public:
+    // Constructor
     Bishop(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
-	
-// Methods: see Piece.h for all their description 
+
+    // Methods: see Piece.h for all their description
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
     char to_char() { return repr; }

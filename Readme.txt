@@ -1,0 +1,3 @@
+Progetto di Cattapan Margherita, Piccolin Giulio e Tommaso Zanon
+1) Nel caso di partite computer vs computer potrebbe dare errore di "segmentation fault (core dump)", in tal caso riprovi ad eseguire il programma;
+2) Non tutti i casi di patta sono stati implementati, mancano il caso in cui nessun pezzo venga mangianto per 50 mosse di fila e il caso in cui la medesima configurazione della scacchiera si presenti per più di tre volte all'interno della stessa partita;

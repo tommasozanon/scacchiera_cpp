@@ -1,21 +1,22 @@
+// Margherita Cattapan, 2008798
 #ifndef KING_H
 #define KING_H
 
 #include "Piece.h"
 #include <vector>
 class King : public Piece {
-	
+
   private:
     std::vector<short> position;
     bool first_move = true;
     char repr;
     int color;
 
-public:
-//Constructor
+  public:
+    // Constructor
     King(short pos[2], char c, int col) : position{pos[0], pos[1]}, repr{c}, color{col} {};
 
-// Methods: see Piece.h for all their description
+    // Methods: see Piece.h for all their description
     std::vector<std::vector<short>> get_allowed_moves();
     std::vector<short> get_position() { return position; };
     char to_char() { return repr; }
