@@ -58,6 +58,10 @@ special_moves.h
 special_moves.cpp
 )
 
+add_library(draw
+draw.h
+draw.cpp
+)
 
 add_executable(main
 main.cpp
@@ -83,6 +87,7 @@ King
 Space
 get_moves
 special_moves
+draw
 )
 
 target_link_libraries(scacchiera
@@ -97,6 +102,7 @@ King
 Space
 get_moves
 special_moves
+draw
 )
 
 target_link_libraries(replay

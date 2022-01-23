@@ -39,10 +39,5 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
  */
 bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote = 'd');
 
-// patta
-bool is_draw();
-
-// stallo, iterare nella lista dei pezzi e vedere se ci sono mosse possibili
-
 bool is_en_passant(short[2]);
 #endif

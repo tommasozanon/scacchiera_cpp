@@ -2,6 +2,7 @@
 #include "get_moves.h"
 #include "pieces/Space.h"
 #include "special_moves.h"
+#include "draw.h"
 #include <iostream>
 #include <vector>
 
@@ -96,6 +97,7 @@ int main() {
     for (int i = 0; i < movesss.size(); i++) {
         std::cout << "( " << movesss[i][0] + 1 << ", " << (char)(movesss[i][1] + 1 + 96) << ")" << std::endl;
     }
+	std::cout<<stalemate(b)<<"\n";
 	/*
     std::vector<std::vector<short>> movess = b.board[6][7]->get_allowed_moves();
     for (int i = 0; i < movess.size(); i++) {
@@ -115,3 +117,5 @@ int main() {
             */
     return 0;
 }
+
+ #include "draw.cpp"
