@@ -4,7 +4,6 @@
 #include "special_moves.h"
 #include <iostream>
 #include <vector>
-
 int main() {
     Board b;
     /*
@@ -120,6 +119,19 @@ int main() {
     pos2[0] = 3;
     pos2[1] = 3;
     b.move(pos1, pos2);
+    pos1[0] = 0;
+    pos1[1] = 0;
+    pos2[0] = 4;
+    pos2[1] = 0;
+    b.move(pos1, pos2);
+
+    pos1[0] = 7;
+    pos1[1] = 6;
+    pos2[0] = 4;
+    pos2[1] = 5;
+    b.move(pos1, pos2);
+    /**/
+    // provare il cavallo
     b.print();
     std::cout << "is it checkmate? : \n"
               << is_checkmate(b, b.board[3][3]->get_color()) << std::endl;

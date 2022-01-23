@@ -199,8 +199,7 @@ bool Board::discovery_move(std::vector<short> pos1, std::vector<short> pos2) {
         piece.reset();
     } else if (piece->get_color() != board[pos2[0]][pos2[1]]->get_color()) {
 
-        // toglie il pezzo mangiato dalla lista dei pezzi di quel colore
-        if (board[pos2[0]][pos2[1]]->get_color() == 0) {
+        if (board[pos2[0]][pos2[1]]->get_color() != board[pos1[0]][pos1[1]]->get_color()) {
 
             board[pos1[0]][pos1[1]] = std::shared_ptr<Piece>(new Space(pos1, ' '));
 
