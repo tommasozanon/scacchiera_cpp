@@ -12,13 +12,13 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
     char c = piece->to_char();
     std::vector<std::vector<short>> moves = piece->get_allowed_moves();
 
-    if (std::tolower(c) == 'p') {
+    if (std::tolower(c) == 'p') { //pedone-----------------------------------------
         short i = 0;
         while (i < moves.size()) {
 
             if (piece->get_position()[1] == moves[i][1]) {
                 if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
-                    moves.erase(moves.begin() + i);
+                    moves.erase(moves.begin() + i, moves.end()-1);
                 } else {
                     i++;
                 }
@@ -46,7 +46,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
         return moves;
 
-    } else if (std::tolower(c) == 'c') {
+    } else if (std::tolower(c) == 'c') { //cavallo-----------------------------
         short i = 0;
         while (i < moves.size()) {
             if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color()) {
@@ -71,7 +71,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
         return moves;
 
-    } else if (std::tolower(c) == 't') {
+    } else if (std::tolower(c) == 't') {//torre------------------------------------
         std::vector<std::vector<short>> up_column;
         std::vector<std::vector<short>> down_column;
         std::vector<std::vector<short>> dx_row;
@@ -205,7 +205,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
         return moves;
 
-    } else if (std::towlower(c) == 'a') {
+    } else if (std::towlower(c) == 'a') {//alfiere--------------------------------------------------------
         std::vector<std::vector<short>> high_right;
         std::vector<std::vector<short>> high_left;
         std::vector<std::vector<short>> low_right;
@@ -315,7 +315,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
         return moves;
 
-    } else if (std::tolower(c) == 'd') {
+    } else if (std::tolower(c) == 'd') {//regina-------------------------------------------------
         std::vector<std::vector<short>> up_column;
         std::vector<std::vector<short>> down_column;
         std::vector<std::vector<short>> dx_row;
@@ -539,41 +539,61 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
         }
         return moves;
 
-    } else if (std::tolower(c) == 'r') {
+    } else if (std::tolower(c) == 'r') {//re-------------------------------------------------------------
         short i = 0;
-        // controllo tutte le mosse tranne le ultime due (gli arrocchi)
-        while (i < moves.size() - 2) {
-            std::vector<short> postn = {moves[i][0], moves[i][1]};
-            if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
-                // std::cout<<is_check(postn, board, piece->get_color())<<"\n";
-                if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
-                    moves.erase(moves.begin() + i);
+        std::vector<short> pos = piece->get_position();
+
+        if (piece->is_first_move()) {
+            // controllo tutte le mosse tranne le ultime due (gli arrocchi)
+            while (i < moves.size() - 2) {
+                std::vector<short> postn = {moves[i][0], moves[i][1]};
+                if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
+                    if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
+                        moves.erase(moves.begin() + i);
+                    } else {
+                        i++;
+                    }
                 } else {
-                    i++;
+                    if (is_check(postn, board, piece->get_color())) {
+                        moves.erase(moves.begin() + i);
+                    } else {
+                        i++;
+                    }
+                }
+            }
+            // controllo arrocchi
+            i = 0;
+            std::vector<short> tower1_pos = {pos[0], 0};
+            std::vector<short> tower2_pos = {pos[0], 7};
+
+            if (!is_castling(pos, tower1_pos, board)) {
+                moves.erase(moves.end() - 1);
+
+                if (!is_castling(pos, tower2_pos, board)) {
+                    moves.erase(moves.end() - 1);
                 }
             } else {
-                if (is_check(postn, board, piece->get_color())) {
-                    moves.erase(moves.begin() + i);
-                } else {
-                    i++;
+                if (!is_castling(pos, tower2_pos, board)) {
+                    moves.erase(moves.end() - 2);
                 }
             }
-        }
-        // controllo arrocchi
-        i = 0;
-        std::vector<short> pos = piece->get_position();
-        std::vector<short> tower1_pos = {pos[0], 0};
-        std::vector<short> tower2_pos = {pos[0], 7};
-
-        if (!is_castling(pos, tower1_pos, board)) {
-            moves.erase(moves.end() - 1);
-
-            if (!is_castling(pos, tower2_pos, board)) {
-                moves.erase(moves.end() - 1);
-            }
         } else {
-            if (!is_castling(pos, tower2_pos, board)) {
-                moves.erase(moves.end() - 2);
+            // controllo tutte le mosse
+            while (i < moves.size()) {
+                std::vector<short> postn = {moves[i][0], moves[i][1]};
+                if (board[moves[i][0]][moves[i][1]]->to_char() != ' ') {
+                    if (board[moves[i][0]][moves[i][1]]->get_color() == piece->get_color() || is_check(postn, board, piece->get_color())) {
+                        moves.erase(moves.begin() + i);
+                    } else {
+                        i++;
+                    }
+                } else {
+                    if (is_check(postn, board, piece->get_color())) {
+                        moves.erase(moves.begin() + i);
+                    } else {
+                        i++;
+                    }
+                }
             }
         }
 

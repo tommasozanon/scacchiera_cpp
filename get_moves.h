@@ -3,6 +3,7 @@
 
 #include "memory"
 #include "pieces/Piece.h"
+#include "Board.h"
 #include <cctype>
 #include <vector>
 

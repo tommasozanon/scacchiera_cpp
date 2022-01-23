@@ -31,15 +31,13 @@ bool is_castling(std::vector<short> pos_re, std::vector<short> pos_torre, const 
 */
 bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short> pos2);
 
-/*input: il pezzo che si vuole promuovere
- *output: il puntatore al pezzo eventualmente promosso
+/*Method promotion: verifies if a pawn can be promoted and substitute the old piece with the new one
+ *input: - a Board (game's chessboard)
+				- the pawn we want ot promote
+				- a char to suggest what is the new piece: d = queen, t = rook, a = bishop, c=knight
+ *output: true if we can promote, false otherwise
  */
 bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote = 'd');
-
-// patta
-bool is_draw();
-
-// stallo, iterare nella lista dei pezzi e vedere se ci sono mosse possibili
 
 bool is_en_passant(short[2]);
 #endif

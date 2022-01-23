@@ -2,6 +2,7 @@
 #include "get_moves.h"
 #include "pieces/Space.h"
 #include "special_moves.h"
+#include "draw.h"
 #include <iostream>
 #include <vector>
 
@@ -87,17 +88,17 @@ int main() {
     pos2[1] = m + 1;
     b.move(pos1, pos2);
     pos1[0] = 6;
-    pos1[1] = 3;
-    pos2[0] = n + 1;
-    pos2[1] = m + 1;
-    // b.move(pos1, pos2);
+    pos1[1] = 4;
+    pos2[0] = n;
+    pos2[1] = m+2;
+    //b.move(pos1, pos2);
     b.print();
-    std::vector<std::vector<short>> movesss = get_moves(b, b.board[6][7]);
-    std::cout << b.board[6][7]->to_char() << "\n";
+    std::vector<std::vector<short>> movesss = get_moves(b, b.board[1][3]);
     for (int i = 0; i < movesss.size(); i++) {
         std::cout << "( " << movesss[i][0] + 1 << ", " << (char)(movesss[i][1] + 1 + 96) << ")" << std::endl;
     }
-
+	std::cout<<stalemate(b)<<"\n";
+	/*
     std::vector<std::vector<short>> movess = b.board[6][7]->get_allowed_moves();
     for (int i = 0; i < movess.size(); i++) {
         std::cout << "( " << movess[i][0] + 1 << ", " << (char)(movess[i][1] + 1 + 96) << ")" << std::endl;
@@ -116,3 +117,5 @@ int main() {
             */
     return 0;
 }
+
+ #include "draw.cpp"
