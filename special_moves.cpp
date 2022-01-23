@@ -235,7 +235,7 @@ bool is_discovery_check(Board board, std::vector<short> pos1, std::vector<short>
 bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote) {
     std::vector<short> pos = piece->get_position();
     if (!(pos[0] == 0 || pos[0] == 7)) {
-        std::cout << "promozione non valida, il pedone non è arrivato all'ultima riga\n";
+        // std::cout << "promozione non valida, il pedone non è arrivato all'ultima riga\n";
         return false;
     }
     promote = std::tolower(promote);
@@ -249,7 +249,7 @@ bool promotion(Board& board, std::shared_ptr<Piece> piece, char promote) {
         i++;
     }
     if (!(check)) {
-        std::cout << "promozione non valida, il pedone carattere inserito non è accettabile\n";
+        // std::cout << "promozione non valida, il pedone carattere inserito non è accettabile\n";
         return false;
     }
     std::vector<std::shared_ptr<Piece>>* list_ptr;

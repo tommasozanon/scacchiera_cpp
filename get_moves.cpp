@@ -5,7 +5,6 @@
 #include "special_moves.h"
 #include <algorithm>
 #include <cctype>
-#include <iostream>
 #include <vector>
 
 std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>& piece) {
@@ -33,9 +32,7 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
             }
         }
-        for (int i = 0; i < moves.size(); i++) {
-            std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
-        }
+
         // controllo eventuale inchiodatura
         i = 0;
         std::vector<short> pos = piece->get_position();
@@ -48,9 +45,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
             } else {
                 i++;
             }
-        }
-        for (int i = 0; i < moves.size(); i++) {
-            std::cout << "( " << moves[i][0] + 1 << ", " << (char)(moves[i][1] + 1 + 96) << ")" << std::endl;
         }
         // en passant
         std::vector<short> a{0, 0};
@@ -66,7 +60,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
                 a[0] = 2;
                 a[1] = x;
-                std::cout << x << std::endl;
                 moves.push_back(a);
             }
             return moves;
@@ -81,7 +74,6 @@ std::vector<std::vector<short>> get_moves(Board& b, const std::shared_ptr<Piece>
                 }
                 a[0] = 5;
                 a[1] = x;
-                std::cout << x << std::endl;
                 moves.push_back(a);
             }
         }
