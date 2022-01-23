@@ -7,7 +7,10 @@
 #include "pieces/Piece.h"
 #include "pieces/King.h"
 
-//se un giocatore non ha mosse e non è sotto scacco
+/*Method stalemate: verifies if there are the conditions for a stalemate
+  *input: a Board (game's chessboard)
+  *output: true if it is stalemate, false otherwise
+*/
 bool stalemate(Board& b);
 
 /*se si fanno più di 50 mosse in cc
@@ -20,6 +23,9 @@ bool threefold_repetition();
 bool fifty_move_rule();
 */
 
-//rimangono solo re e re, re e alfiere contro re o re e cavallo contro re (sarebbero molte di più, ma ciaone)
+/*Method dead_position: verifies if there aren't enougth pieces to win a game
+  *input: a Board (game's chessboard)
+  *output: true if there aren't enougth pieces, false otherwise
+*/
 bool dead_position(Board& b);
 #endif
